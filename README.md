@@ -8,3 +8,4 @@
 
 ## 案例列表
 [蜂巢形样式的实现](./pages/honeycomb.md)
+[八种垂直居中样式](./pages/vertical-center.md)
