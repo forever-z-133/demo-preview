@@ -7,5 +7,5 @@
 [Online Pages](https://foreverz133.github.io/demo-preview/)
 
 ## 案例列表
-[蜂巢形样式的实现](./pages/honeycomb.md)
-[九种垂直居中样式](./pages/vertical-center.md)
+* [蜂巢形样式的实现](./pages/honeycomb.md)
+* [九种垂直居中样式](./pages/vertical-center.md)
