@@ -1,4 +1,4 @@
-# 八种垂直居中样式
+# 九种垂直居中样式
 
 ```html
 <div class="wrap">
@@ -60,7 +60,18 @@
 }
 ```
 
-<iframe height="310" style="width: 100%;" scrolling="no" title="垂直居中 align-items" src="//codepen.io/foreverZ133/embed/gqeNwq/?height=310&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+子级用 `align-self` 也可以。
+
+```css
+.wrap {
+  display: flex;
+}
+.wrap > * {
+  align-self: center;
+}
+```
+
+<iframe height="340" style="width: 100%;" scrolling="no" title="垂直居中 align-items" src="//codepen.io/foreverZ133/embed/gqeNwq/?height=340&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/foreverZ133/pen/gqeNwq/'>垂直居中 align-items</a> by 张永恒
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
@@ -157,6 +168,25 @@
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
-### 方法 9：已知子级高度
+### 方法 9：grid + gird-template-rows
 
-此时是用 `:before + margin` 或者 `padding` 或者 `margin 负值` 都是可以的，毕竟只需纯计算即可。
+**其他缺点：** 兼容性问题。
+
+```css
+.wrap {
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+}
+.wrap:before {
+  content: "";
+}
+```
+
+<iframe height="360" style="width: 100%;" scrolling="no" title="垂直居中 grid + gird-template-rows" src="//codepen.io/foreverZ133/embed/QYrzrg/?height=360&theme-id=0&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/QYrzrg/'>垂直居中 grid + gird-template-rows</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+### 方法 10：已知子级高度
+
+此时是用 `:before + margin` 或者 `padding` 或者 `margin 负值` 或者 `calc 计算` 等等都是可以的，毕竟只需纯计算即可。
