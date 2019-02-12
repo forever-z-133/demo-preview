@@ -12,6 +12,7 @@
 
 还需考虑的事情：
 * 子级高度大于父级高度时是否仍需居中
+* 子级是否有多个元素，是否都需垂直居中
 
 ### 方法 1：vertical-align: middle;
 
@@ -51,7 +52,7 @@
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
-### 方法 3：flex + align-items
+### 方法 3：flex 布局
 
 ```css
 .wrap {
@@ -168,7 +169,7 @@
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
-### 方法 9：grid + gird-template-rows
+### 方法 9：grid 布局
 
 **其他缺点：** 兼容性问题。
 
@@ -179,6 +180,26 @@
 }
 .wrap:before {
   content: "";
+}
+```
+
+子级用 `align-self` 也可以。
+
+```css
+.wrap {
+  display: grid;
+}
+.wrap > * {
+  align-self: center;
+}
+```
+
+或者 `grid-row` 等各式花样操作。
+
+```css
+.wrap {
+  display: grid;
+  grid-row: 1 / span 1;
 }
 ```
 
