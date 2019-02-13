@@ -40,7 +40,7 @@
   position: relative;
 }
 .markdown-section pre {
-  max-height: 500px;
+  max-height: 450px;
   padding: 0 .7rem;
   line-height: 1.25rem;
 }
