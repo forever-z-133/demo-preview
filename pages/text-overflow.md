@@ -92,3 +92,42 @@
 </iframe>
 
 ## 扩展阅读：不同宽度时显示不同文本
+```html
+<span class="overflower control">
+  <span class="overflower-short">Short text here is.</span>
+  <span class="overflower-long">Some long text that could become shorter.</span>
+</span>
+```
+```css
+.control {
+  resize: horizontal;
+}
+.overflower {
+  height: 1.5em;
+  line-height: 1.5em;
+  display: inline-block;
+  overflow: hidden;
+  max-width: 100%;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+.overflower-short {
+  width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+}
+.overflower-long {
+  display: inline;
+  flex-basis: 100%;
+}
+```
+
+在子级中继续嵌套 `.overflower` 可实现更多宽度变化下的不同文本。
+
+<iframe height="265" style="width: 100%;" scrolling="no" title="不同宽度显示不同文字" src="//codepen.io/foreverZ133/embed/XOPpYb/?height=265&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/XOPpYb/'>不同宽度显示不同文字</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
