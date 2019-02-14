@@ -16,40 +16,43 @@ a { color: inherit; text-decoration: none; display: block; }
 
 ## 方法 1：CSS clip-path
 
-```css
+```scss
 .comb {
   -webkit-clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
   clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
-}
-.comb:before { /* 用来撑起高度 */
-  content: "";
-  display: block;
-  padding-top: 86.602%;
-}
-.comb:after { /* 用来画背景，边框实为原背景色 */
-  content: "";
-  position: absolute;
-  top: 0; bottom: 0;
-  left: 0; right: 0;
-  -webkit-clip-path: inherit;
-  clip-path: inherit;
-  background-color: #fff;
+  
+  &:before { /* 用来撑起高度 */
+    content: "";
+    display: block;
+    padding-top: 86.602%;
+  }
+  &:after { /* 用来画背景，边框实为原背景色 */
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    -webkit-clip-path: inherit;
+    clip-path: inherit;
+    background-color: #fff;
+  }
 }
 ```
-```css
-.comb.bgImage:after {
-  @extend .image;
-  background-size: cover;
-}
-.comb.border {
-  background: #aaa;
-}
-.comb.border:after {
-  $borderWidth: 10px;
-  top: $borderWidth;
-  left: $borderWidth;
-  right: $borderWidth;
-  bottom: $borderWidth;
+```scss
+.comb {
+  &.bgImage:after {
+    @extend .image;
+    background-size: cover;
+  }
+  &.border {
+    background: #aaa;
+  }
+  &.border:after {
+    $borderWidth: 10px;
+    top: $borderWidth;
+    left: $borderWidth;
+    right: $borderWidth;
+    bottom: $borderWidth;
+  }
 }
 ```
 
@@ -97,51 +100,54 @@ a { color: inherit; text-decoration: none; display: block; }
 </div>
 ```
 
-```css
+```scss
 .comb {
   background-size: 0 0;
   background-position: center;
-}
-.comb:before {
-  content: "";
-  display: block;
-  padding-top: 86.602%;
-}
-.comb > * {
-  position: absolute;
-  top: 0; bottom: 0;
-  left: 25%; right: 25%;
-  background: inherit;
-  overflow: hidden;
-}
-.comb > .center {
-  background-size: auto 100%;
-}
-.comb > .corner1,
-.comb > .corner2:after {
-  transform: rotate(60deg);
-}
-.comb > .corner2,
-.comb > .corner1:after {
-  transform: rotate(-60deg);
-}
-.comb > .corner1:after,
-.comb > .corner2:after {
-  content: "";
-  position: absolute;
-  top: 0; bottom: 0;
-  left: -50%; right: -50%;
-  background: inherit;
-  background-size: auto 100%;
+  &:before {
+    content: "";
+    display: block;
+    /* 正六边形，假设宽为 1+2+1，则高为 2*根号3 */
+    padding-top: 86.602%;
+  }
+  & > * {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 25%; right: 25%;
+    background: inherit;
+    overflow: hidden;
+  }
+  & > .center {
+    background-size: auto 100%;
+  }
+  & > .corner1,
+  & > .corner2:after {
+    transform: rotate(60deg);
+  }
+  & > .corner2,
+  & > .corner1:after {
+    transform: rotate(-60deg);
+  }
+  & > .corner1:after,
+  & > .corner2:after {
+    content: "";
+    position: absolute;
+    top: 0; bottom: 0;
+    left: -50%; right: -50%;
+    background: inherit;
+    background-size: auto 100%;
+  }
 }
 ```
 ```scss
-.comb.bgImage {
-  @extend .image;
-}
-.comb.border > * {
-  border: 0 solid red;
-  border-width: 2px 0;
+.comb {
+  &.bgImage {
+    @extend .image;
+  }
+  &.border > * {
+    border: 0 solid red;
+    border-width: 2px 0;
+  }
 }
 ```
 
