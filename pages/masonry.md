@@ -10,7 +10,7 @@
 .title, .desc { margin: 0; }
 ```
 
-## 一、CSS3 的 column 属性
+### 一、CSS3 的 column 属性
 
 非常简陋的瀑布流，且请 **特别注意** 子级顺序哟。
 
@@ -26,12 +26,12 @@
 }
 ```
 
-<iframe height="340" style="width: 100%;" scrolling="no" title="瀑布流布局 CSS column" src="//codepen.io/foreverZ133/embed/oVbGyZ/?height=340&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+<iframe height="340" style="width: 100%;" scrolling="no" title="瀑布流布局 CSS column" src="//codepen.io/foreverZ133/embed/oVbGyZ/?height=340&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/foreverZ133/pen/oVbGyZ/'>瀑布流布局 CSS column</a> by 张永恒
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
-## 二、仿百度图片的 flex-grow 横排瀑布流
+### 二、仿百度图片的 flex-grow 横排瀑布流
 
 子级宽度是不受控制的哟，且对 `object-fit` 的兼容性有要求。
 
@@ -59,12 +59,12 @@
 }
 ```
 
-<iframe height="460" style="width: 100%;" scrolling="no" title="瀑布流布局 CSS flex-grow" src="//codepen.io/foreverZ133/embed/QoyqoP/?height=460&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+<iframe height="460" style="width: 100%;" scrolling="no" title="瀑布流布局 CSS flex-grow" src="//codepen.io/foreverZ133/embed/QoyqoP/?height=460&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/foreverZ133/pen/QoyqoP/'>瀑布流布局 CSS flex-grow</a> by 张永恒
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
-## 三、仿花瓣的多栏竖排瀑布流
+### 三、仿花瓣的多栏竖排瀑布流
 
 获取高度挺耗性能的，虽然有很多优化途径，但感觉还是不太妙。  
 再者，如果某栏突然有条超长，其实会比较丑。
@@ -90,20 +90,20 @@ listData.reduce((re, item) => {
 }, columns);
 ```
 
-<iframe height="400" style="width: 100%;" scrolling="no" title="瀑布流 分栏式计算" src="//codepen.io/foreverZ133/embed/rRxYzj/?height=400&theme-id=dark&default-tab=js,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+<iframe height="400" style="width: 100%;" scrolling="no" title="瀑布流 分栏式计算" src="//codepen.io/foreverZ133/embed/rRxYzj/?height=400&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/foreverZ133/pen/rRxYzj/'>瀑布流 分栏式计算</a> by 张永恒
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
-## 四、纯 js 计算的 float 瀑布流
+### 四、纯 js 计算的 float 瀑布流
 
 很难算，整理中...
 
-## 其他：固定宽高的 grid 瀑布流
+### 其他：固定宽高的 grid 瀑布流
 
 其实用 `table` 合并单元格也是类似的原理，但数量宽高等都是定死的就对了。
 
-<iframe height="400" style="width: 100%;" scrolling="no" title="瀑布流 CSS grid 固定宽高" src="//codepen.io/foreverZ133/embed/JzGMxg/?height=400&theme-id=dark&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+<iframe height="400" style="width: 100%;" scrolling="no" title="瀑布流 CSS grid 固定宽高" src="//codepen.io/foreverZ133/embed/JzGMxg/?height=400&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/foreverZ133/pen/JzGMxg/'>瀑布流 CSS grid 固定宽高</a> by 张永恒
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>

@@ -58,3 +58,18 @@
   max-width: 1430px;
   padding: 0 30px;
 }
+
+@media (max-width: 768px) {
+  .markdown-section h1,
+  .markdown-section h2,
+  .markdown-section h3,
+  .markdown-section h4,
+  .markdown-section h5,
+  .markdown-section h6 {
+    margin: 8px 0;
+  }
+  .markdown-section {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
