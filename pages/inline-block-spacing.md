@@ -1,6 +1,6 @@
 # 解决 inline-block 的空隙问题
 
-<iframe height="265" style="width: 100%;" scrolling="no" title="inline-block 空隙问题" src="//codepen.io/foreverZ133/embed/ywJQVr/?height=265&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+<iframe height="380" style="width: 100%;" scrolling="no" title="inline-block 空隙问题" src="//codepen.io/foreverZ133/embed/ywJQVr/?height=380&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/foreverZ133/pen/ywJQVr/'>inline-block 空隙问题</a> by 张永恒
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
