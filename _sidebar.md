@@ -6,6 +6,7 @@
 * [四种子级等高布局的实现](./pages/child-same-height.md)
 * [两种文本均匀留隙的实现](./pages/text-align-justify.md)
 * [三种子级均匀留隙的实现](./pages/child-align-justify.md)
+* [inline-block 的空隙问题](./pages/inline-block-spacing.md)
 
 ## 效果实现
 * [六种蜂巢形样式](./pages/honeycomb.md)
