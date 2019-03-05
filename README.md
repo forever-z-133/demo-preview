@@ -10,6 +10,7 @@
 > #### 基础布局
 
 * [九种垂直居中样式](./pages/vertical-center.md)
+* [四种底部对齐的实现](./pages/child-align-bottom.md)
 * [三种文本溢出省略](./pages/text-overflow.md)
 * [四种瀑布流布局的实现](./pages/masonry.md)
 * [四种子级等高布局的实现](./pages/child-same-height.md)
