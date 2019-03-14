@@ -14,4 +14,5 @@
 * [遮罩/蒙版/裁剪效果](./pages/css-mask.md)
 
 ## 其他
+* [对象的深拷贝](./pages/deep-clone.md)
 * [日常的瞎鸡儿玩](./pages/others.md)

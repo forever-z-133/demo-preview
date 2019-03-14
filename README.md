@@ -24,4 +24,5 @@
 * [遮罩/蒙版/裁剪效果](https://foreverz133.github.io/demo-preview/#/./pages/css-mask.md)
 
 ## 其他
+* [对象的深拷贝](https://foreverz133.github.io/demo-preview/#/./pages/deep-clone.md)
 * [日常的瞎鸡儿玩](https://foreverz133.github.io/demo-preview/#/./pages/others.md)
