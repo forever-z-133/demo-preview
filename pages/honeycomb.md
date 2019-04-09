@@ -69,7 +69,7 @@ a { color: inherit; text-decoration: none; display: block; }
       <path id="combLine" d="M25,0  L75,0 L100,43.301 L75,86.602 L25,86.602 L0,43.301 Z" />
     </clipPath>
   </defs>
- </svg>
+</svg>
 
 <div class="comb">
   <svg width="100%" viewBox="0 0 100 86.602">
@@ -170,7 +170,9 @@ a { color: inherit; text-decoration: none; display: block; }
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
-### 方法 5：特殊背景图
+### 方法 5：左右加个小尖角
+
+### 方法 6：特殊背景图
 
 原图长这个样子：
 ![蜂巢状特殊背景原图](http://mall.kdcer.com/Content/img/comb.png)
@@ -180,4 +182,5 @@ a { color: inherit; text-decoration: none; display: block; }
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
-### 方法 6：左右加个小尖角
+### 其他方法
+还有 CSS 的 `-webkit-mask` 或 canvas 做等直接蒙版或裁剪的操作，可跳往 [此处](./css-mask.md) 查看。
