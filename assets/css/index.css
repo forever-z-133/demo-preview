@@ -48,6 +48,9 @@
   margin: 0 0;
   padding: .5rem 0;
 }
+.markdown-section pre {
+  max-height: 350px;
+}
 /*.markdown-section pre::-webkit-scrollbar {
   width: 10px;
   height: 1px;

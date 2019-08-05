@@ -16,3 +16,4 @@
 ## 其他
 * [对象的深拷贝](./pages/deep-clone.md)
 * [日常的瞎鸡儿玩](./pages/others.md)
+* [日常的公共方法](./pages/someFunction.md)
