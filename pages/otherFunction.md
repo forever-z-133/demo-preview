@@ -59,8 +59,9 @@ function download() {
 }
 ```
 
-## * 生成二维码
+## * 生成二维码 `$`
 ```js
+// createQrCode('xx', ($img) => download($img.attr('src'), '文字.jpg', 'image/jpeg'))
 function createQrCode(text, callback, options) {
   options = options || {};
   var scriptId = 'qrCodeScript';

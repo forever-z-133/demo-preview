@@ -1,5 +1,38 @@
 # 时间相关的公共方法
 
+## * 日期转为字符串
+```js
+function dateToString(date, format, addZero) {
+  format = format || 'yyyy-MM-dd';
+  addZero = addZero || true;
+  var d = new Date(date);
+  var result = format;
+  var _config = {
+    'M+': d.getMonth() + 1, // 月
+    'd+': d.getDate(), // 日
+    'h+': d.getHours(), // 小时
+    'm+': d.getMinutes(), // 分
+    's+': d.getSeconds(), // 秒
+    'q+': 1 + d.getMonth() / 3 >> 0, //季度
+  };
+
+  if (/(y+)/.test(result)) { // 年
+    var value = d.getFullYear() + '';
+    value = value.slice(-RegExp.$1.length);
+    result = result.replace(RegExp.$1, value);
+  }
+  for (var reg in _config) {
+    if (new RegExp("(" + reg + ")").test(result)) {
+      var value = _config[reg] + '';
+      value = addZero && value.length < 2 ? '0' + value : value;
+      result = result.replace(RegExp.$1, value);
+    }
+  }
+
+  return result;
+}
+```
+
 ## * 时间加减
 ```js
 // addDate(new Date(2019,5,19,10,40,0), 1); // Thu Jun 20 2019 10:40:00

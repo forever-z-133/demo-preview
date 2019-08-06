@@ -19,6 +19,25 @@ function isEmpty(obj) {
 }
 ```
 
+## * 自动补零
+```js
+function addZero(num, ) {
+  len = len || 2;
+  return (Array(len).join(0) + num).slice(-len);
+}
+```
+
+## * 获取随机数
+```js
+function random(min, max) {
+  if (typeof max !== 'number') {
+    min = 0; max = min;
+  }
+  min = min || 0, max = max || 1;
+  return min + Math.random() * max - min;
+}
+```
+
 ## * 数组或数据去重
 ```js
 function unique(arr, key) {
@@ -67,27 +86,9 @@ function pushToNoSameArray(arr, newItem, key, remove) {
 }
 ```
 
-## * 自动补零
-```js
-function addZero(num, ) {
-  len = len || 2;
-  return (Array(len).join(0) + num).slice(-len);
-}
-```
-
-## * 获取随机数
-```js
-function random(min, max) {
-  if (typeof max !== 'number') {
-    min = 0; max = min;
-  }
-  min = min || 0, max = max || 1;
-  return min + Math.random() * max - min;
-}
-```
-
 ## * 折算成金额
 ```js
+// numberToMoney(12345.6789);  // 12,345.6789
 function numberToMoney(num) {
   if (!num) return '0.00';
   num = num.toString().replace(/\$|\,/g, '');
@@ -102,6 +103,7 @@ function numberToMoney(num) {
 
 ## * 返回非空对象
 ```js
+// returnObject({});  // null
 function returnObject(obj) {
   if (Object.keys) {
     if (Object.keys(obj).length) return obj
@@ -216,6 +218,8 @@ function objectEqual(a, b) {
 
 ## * 数字计算公共方法
 ```js
+// 解决，1. 非数字型数字的运算 2. 小数计算的精度问题
+// count('+', 0.1, 0.2);  // 0.3
 function count(type, options) {
   var nums = [].slice.call(arguments, 2);
   var _startConfig = { '+': 0, '-': 0, '*': 1, '/': 1 };
