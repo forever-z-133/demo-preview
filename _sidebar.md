@@ -16,4 +16,6 @@
 ## 其他
 * [对象的深拷贝](./pages/deep-clone.md)
 * [日常的瞎鸡儿玩](./pages/others.md)
-* [日常的公共方法](./pages/someFunction.md)
+* [数据处理的公共方法](./pages/someFunction.md)
+* [不常用的公共方法](./pages/otherFunction.md)
+* [时间相关的公共方法](./pages/dateFunction.md)
