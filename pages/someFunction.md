@@ -21,7 +21,7 @@ function isEmpty(obj) {
 
 ## * 自动补零
 ```js
-function addZero(num, ) {
+function addZero(num, len) {
   len = len || 2;
   return (Array(len).join(0) + num).slice(-len);
 }
@@ -55,15 +55,19 @@ function unique(arr, key) {
 ```js
 // getArrayFromData([{id:1,x:[{id:2}]}], 'id', { deepKey: 'x' });  // [1,2]
 function getArrayFromData(data, key, options) {
+  if (type(data) !== 'array' || !data.length) return [];
+  if (!key) throw new Error('缺少必要的入参 key');
+
   options = options || {};
   var noEmpty = options.noEmpty || false; // 排除值为空的
   var deepKey = options.deepKey || ''; // 按某 key 向下递归
-  if (!key) return new Error('缺少必要的入参 key');
+
   return data.reduce(function(re, item) {
     var value = item[key], deep = [];
     if (noEmpty && value == undefined) return re;
-    if (deepKey && item[deepKey] && item[deepKey].length) {
-      deep = getArrayFromData(item[deepKey], key, options);
+    if (deepKey) {
+      var child = type(item) === 'array' ? item : item[deepKey];
+      deep = getArrayFromData(child, key, options);
     }
     return re.concat([value], deep);
   }, []);
@@ -78,10 +82,46 @@ function getArrayFromData(data, key, options) {
 // pushToNoSameArray([1, 2], 2, null, true);  // [1]
 // pushToNoSameArray([{a:1}, {a:2}], {a:2}, 'a', true);  // [{a:1}]
 function pushToNoSameArray(arr, newItem, key, remove) {
+  if (type(arr) !== 'array') return [];
   if (arr.length < 1) return [newItem];
-  return (arr || []).reduce(function(re, item) {
+
+  return arr.reduce(function(re, item) {
     var inArray = key ? (newItem[key] === item[key]) : (newItem === item);
     return inArray && remove ? re : re.concat([item]);
+  }, []);
+}
+```
+
+## * 筛选数据
+```js
+// filterData([{id:1},{id:5}], 2, 'id', { type: '>=' }); // [{id:5}]
+function filterData(data, value, key, options) {
+  if (type(data) !== 'array' || !data.length) return [];
+
+  options = options || {};
+  var type = options.type || '==';  // 判断类型
+  var reserve = options.reserve || false; // 反选
+  var deepKey = options.deepKey || '';  // 向下递归
+
+  return data.reduce(function(re, item) {
+    var val = key ? item[key] : item, result = [], deep = [];
+
+    if (deepKey) {
+      var child = type(item) === 'array' ? item : item[deepKey];
+      deep = filterData(child, value, key, options);
+    }
+
+    if (type(val) === 'array' || type(val) === 'object') {
+      inner = false;
+    } else {
+      inner = eval(val + judgeType + value);
+    }
+
+    var inner = eval(val + type + value);
+    if (reserve) inner = !inner;
+    if (inner) result = [item];
+
+    return re.concat(result, deep);
   }, []);
 }
 ```
