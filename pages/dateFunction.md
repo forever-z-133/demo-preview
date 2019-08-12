@@ -2,9 +2,9 @@
 
 ## * 日期转为字符串
 ```js
-function dateToString(date, format, addZero) {
+function dateToString(date, format, noZero) {
   format = format || 'yyyy-MM-dd';
-  addZero = addZero || true;
+  noZero = noZero || false;
   var d = new Date(date);
   var result = format;
   var _config = {
@@ -13,7 +13,6 @@ function dateToString(date, format, addZero) {
     'h+': d.getHours(), // 小时
     'm+': d.getMinutes(), // 分
     's+': d.getSeconds(), // 秒
-    'q+': 1 + d.getMonth() / 3 >> 0, //季度
   };
 
   if (/(y+)/.test(result)) { // 年
@@ -22,11 +21,10 @@ function dateToString(date, format, addZero) {
     result = result.replace(RegExp.$1, value);
   }
   for (var reg in _config) {
-    if (new RegExp("(" + reg + ")").test(result)) {
-      var value = _config[reg] + '';
-      value = addZero && value.length < 2 ? '0' + value : value;
-      result = result.replace(RegExp.$1, value);
-    }
+    if (!(new RegExp("(" + reg + ")").test(result))) continue;
+    var value = _config[reg] + '';
+    value = noZero ? value : (value.length < 2 ? '0' + value : value);
+    result = result.replace(RegExp.$1, value);
   }
 
   return result;
@@ -40,7 +38,7 @@ function addDate(date, time, type) {
   type = type || 'date';
   var d = new Date(date);
   var _config = {
-    'year': 'FullYear', 'month': 'Month', 'date': 'Date', 'day': 'Date'
+    'year': 'FullYear', 'month': 'Month', 'date': 'Date', 'day': 'Date',
     'hour': 'Hours', 'minute': 'Minutes', 'second': 'Seconds'
   }
   var _type = _config[type];
