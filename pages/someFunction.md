@@ -24,9 +24,9 @@
 * [imageToBase64](#-图片链接转-base64)（图片链接转 base64）
 * [base64ToFile](#-base64-转-File-对象)（base64 转 File 对象）
 * [fileToBase64](#-File-对象转-base64)（File 对象转 base64）
-* [getElementData](#-获取表单数据)（获取表单数据 `$`）
-* [fillElmentWithData](#-用数据填充表单)（用数据填充表单 `$`）
-* [clearElmentAndData](#-清空表单)（清空表单 `$`）
+* [getElementData](#-获取表单数据-)（获取表单数据 `$`）
+* [fillElmentWithData](#-用数据填充表单-)（用数据填充表单 `$`）
+* [clearElmentAndData](#-清空表单-)（清空表单 `$`）
 
 ## * 判断数据类型
 ```js

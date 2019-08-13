@@ -2,6 +2,61 @@
 
 需要 jQuery 插件的会在标题后加上 `$` 字样。
 
+* [numberToMoney](#-折算成金额)（折算成金额）
+* [htmlToString](#-html-转义)（html 转义）
+* [stringToHtml](#-html-字符串反转义)（html 字符串反转义）
+* [debounce](#-去抖)（去抖）
+* [throttle](#-节流)（节流）
+* [download](#-下载)（下载）
+* [forEachAsync](#-异步循环)（异步循环）
+* [InterceptManage](#-次数拦截器)（次数拦截器）
+* [Animation](#-动画类)（动画类）
+* [divideDataForScroll](#-滚动加载数据)（滚动加载数据）
+* [createQrCode](#-生成二维码-)（生成二维码 `$`）
+
+## * 折算成金额
+```js
+// numberToMoney(12345.6789);  // 12,345.6789
+function numberToMoney(num) {
+  if (!num) return '0.00';
+  var numStr = [num].toString().replace(/\$|\,/g, '');
+  if (isNaN(parseFloat(numStr))) numStr = "0";
+  return numStr
+    .split('.') // 小数点前的加逗号，小数点后的不管
+    .map(function (s, i) {
+      return i ? s : s.replace(/\B(?=(\d{3})+\b)/g, ',');
+    })
+    .join('.');
+}
+```
+
+## * html 转义
+```js
+// htmlToString('<p>x</p>'); // &lt;p&gt;x&lt;/p&gt;
+function htmlToString(html) {
+  if (!html) return '';
+  var ele = document.createElement('span');
+  ele.appendChild( document.createTextNode( html ) );
+  var result = ele.innerHTML;
+  ele = null;
+  return result;
+}
+```
+
+## * html 字符串反转义
+```js
+// htmlToString('&lt;p&gt;x&lt;/p&gt;'); // <p>x</p>
+// htmlToString('<p>x</p>'); // x 注意此方法对次运行可能不是预期结果
+function stringToHtml (str) {
+  if (!str) return '';
+  var ele = document.createElement('span');
+  ele.innerHTML = str;
+  var result = ele.innerText || ele.textContent;
+  ele = null;
+  return result;
+}
+```
+
 ## * 去抖
 ```js
 // 不断操作无效，只有停止操作 delta 秒后才触发
@@ -37,22 +92,6 @@ function throttle(fn, delta, context) {
 }
 ```
 
-## * 折算成金额
-```js
-// numberToMoney(12345.6789);  // 12,345.6789
-function numberToMoney(num) {
-  if (!num) return '0.00';
-  var numStr = [num].toString().replace(/\$|\,/g, '');
-  if (isNaN(parseFloat(numStr))) numStr = "0";
-  return numStr
-    .split('.') // 小数点前的加逗号，小数点后的不管
-    .map(function (s, i) {
-      return i ? s : s.replace(/\B(?=(\d{3})+\b)/g, ',');
-    })
-    .join('.');
-}
-```
-
 ## * 下载
 ```js
 // download('base64', 'xx.jpg', 'image/jpeg')
@@ -71,6 +110,174 @@ function download() {
 
   function scriptReady() {
     download.apply(this, args);
+  }
+}
+```
+
+## * 异步循环
+```js
+/**
+ * forEachAsync([data], {
+ *   number: 5,  // 每次同时发起 5 个请求
+ *   customAjax: function(item, next) { // 自定义请求，next 表示运行下一个
+ *     var img = new Image(); img.onload = next; img.src = item.url;
+ *   },
+ *   api: 'http://', // 没有 customAjax 则走接口
+ *   ajaxMethod: 'ajax',  // 默认使用 Util.ajax，还可传入 get post
+ *   params: function(item){ return { x: item.x } }, // 自定义接口入参，不写则默认 item
+ *   afterAjax: function(response, item) {}, // 每个请求完成的回调
+ *   callback: function(result) {},  // 全部跑完的回调，result 现暂是无序的，以后可能会改吧
+ * });
+ */
+function forEachAsync(data, options) {
+  options = options || {};
+
+  var timesConfig = options.number || 5; // 每次请求 5 条
+  timesConfig = Math.min(timesConfig, 8); // 每次不得同时发送太多
+
+  // 每次几个数据，都走完则回调
+  function _total_ajax(data, next) {
+    var total = data.length,
+      result = [];
+    for (var i = 0; i < total; i++) {
+      var item = data[i];
+      _ajax(item, (function (i) {
+        return function (res) {
+          result[i] = res;
+          if (--total > 0) return;
+          next && next(result);
+        };
+      })(i));
+    }
+  }
+
+  // 每次一个数据，走完则回调
+  function _ajax(item, next) {
+    if (options.customAjax) {
+      return options.customAjax(item, _next);
+    }
+    var method = options.ajaxMethod;
+    var ajaxMethod = method === 'ajax' ? Util.ajax : (method ? $[method] : $.post);
+    var api = options.api;
+    var params = options.params ? options.params(item) : item;
+    ajaxMethod(api, params, function (res) {
+      if (res.resultCode == 0) {
+        _next && _next(res);
+      }
+    });
+
+    function _next(res) {
+      options.afterAjax && options.afterAjax(res, item);
+      next && next(res, item);
+    }
+  }
+
+  // 循环数据，每 5 条一波走完再下一波
+  (function loop(data, result) {
+    var thisData = data.splice(0, timesConfig); // 本次请求的一波数据
+    if (thisData.length < 1) {
+      options.callback && options.callback(result);
+      return; // 走完了
+    }
+    _total_ajax(thisData, function (res) {
+      result = result.concat(res);
+      loop(data, result);
+    });
+  })(data, []);
+}
+```
+
+## * 次数拦截器
+```js
+// var im = new Util.InterceptManage();
+// im.set('listOk', 2, () => console.log('ok'));
+// if (!im.ok('listOk')) return;
+// if (!im.ok('listOk')) return; // 两次跑完后才走 finish
+function InterceptManage() {
+  var temp = {};
+  return {
+    data: temp,
+    set: function (key, times, finish) {
+      temp[key] = {
+        times: times,
+        finish: finish
+      };
+      return temp[key];
+    },
+    ok: function (key) {
+      var item = temp[key];
+      if (!item) return false;
+      if (--item.times < 1) {
+        item.finish && item.finish();
+        return true;
+      } else return false;
+    },
+    remove: function (key) {
+      delete temp[key];
+    }
+  }
+}
+```
+
+## * 动画类
+```js
+function Animation() {
+  var animTimer = null;
+
+  function start(start, to, duration, callback) {
+    var time = Date.now();
+    stop();
+    (function run() {
+      var per = Math.min(1, (Date.now() - time) / duration);
+      if (per >= 1) return callback && callback(to, 1);
+      var now = start + (to - start) * per;
+      callback && callback(now, per);
+      animTimer = window.requestAnimationFrame(run);
+    })();
+  }
+
+  function stop() {
+    animTimer && window.cancelAnimationFrame(animTimer);
+  }
+  return {
+    start: start,
+    stop: stop
+  }
+}
+```
+
+## * 滚动加载数据
+```js
+function divideDataForScroll($scroller, data, callback, options) {
+  options = options || {};
+  var size = options.size || 20;
+  var winH = $scroller.height();
+  var threshold = options.threshold || 50;
+
+  $scroller.removeEventListener('scroll', _scroll);
+  $scroller.addEventListener('scroll', _scroll);
+
+  var page = 1;
+  _go();
+
+  function _scroll() {
+    var elemH = $scroller.scrollHeight;
+    var sTop = $scroller.scrollTop;
+    if (sTop + winH + threshold > elemH) _go();
+  }
+
+  function _go() {
+    var nowSize = page * size;
+    var nowData = data.slice(0, nowSize);
+
+    // 数据全部加载完毕
+    if (data.slice(nowSize - size, nowSize).length < 1) {
+      options.finish && options.finish(data, page, size); // 全部完成
+      return $scroller.removeEventListener('scroll', _scroll);
+    }
+
+    // 每页的回调
+    callback && callback(nowData, page, size);
   }
 }
 ```
@@ -153,201 +360,6 @@ function createQrCode(text, callback, options) {
       return false;
     }
     callback && callback($img);
-  }
-}
-```
-
-## * html 转义
-```js
-// htmlToString('<p>x</p>'); // &lt;p&gt;x&lt;/p&gt;
-function htmlToString(html) {
-  if (!html) return '';
-  var ele = document.createElement('span');
-  ele.appendChild( document.createTextNode( html ) );
-  var result = ele.innerHTML;
-  ele = null;
-  return result;
-}
-```
-
-## * html 字符串反转义
-```js
-// htmlToString('&lt;p&gt;x&lt;/p&gt;'); // <p>x</p>
-// htmlToString('<p>x</p>'); // x 注意此方法对次运行可能不是预期结果
-function stringToHtml (str) {
-  if (!str) return '';
-  var ele = document.createElement('span');
-  ele.innerHTML = str;
-  var result = ele.innerText || ele.textContent;
-  ele = null;
-  return result;
-}
-```
-
-## * 次数拦截器
-```js
-// var im = new Util.InterceptManage();
-// im.set('listOk', 2, () => console.log('ok'));
-// if (!im.ok('listOk')) return;
-// if (!im.ok('listOk')) return; // 两次跑完后才走 finish
-function InterceptManage() {
-  var temp = {};
-  return {
-    data: temp,
-    set: function (key, times, finish) {
-      temp[key] = {
-        times: times,
-        finish: finish
-      };
-      return temp[key];
-    },
-    ok: function (key) {
-      var item = temp[key];
-      if (!item) return false;
-      if (--item.times < 1) {
-        item.finish && item.finish();
-        return true;
-      } else return false;
-    },
-    remove: function (key) {
-      delete temp[key];
-    }
-  }
-}
-```
-
-## * 动画类
-```js
-function Animation() {
-  var animTimer = null;
-
-  function start(start, to, duration, callback) {
-    var time = Date.now();
-    stop();
-    (function run() {
-      var per = Math.min(1, (Date.now() - time) / duration);
-      if (per >= 1) return callback && callback(to, 1);
-      var now = start + (to - start) * per;
-      callback && callback(now, per);
-      animTimer = window.requestAnimationFrame(run);
-    })();
-  }
-
-  function stop() {
-    animTimer && window.cancelAnimationFrame(animTimer);
-  }
-  return {
-    start: start,
-    stop: stop
-  }
-}
-```
-
-## * 异步跑批
-```js
-/**
- * forEachAsync([data], {
- *   number: 5,  // 每次同时发起 5 个请求
- *   customAjax: function(item, next) { // 自定义请求，next 表示运行下一个
- *     var img = new Image(); img.onload = next; img.src = item.url;
- *   },
- *   api: 'http://', // 没有 customAjax 则走接口
- *   ajaxMethod: 'ajax',  // 默认使用 Util.ajax，还可传入 get post
- *   params: function(item){ return { x: item.x } }, // 自定义接口入参，不写则默认 item
- *   afterAjax: function(response, item) {}, // 每个请求完成的回调
- *   callback: function(result) {},  // 全部跑完的回调，result 现暂是无序的，以后可能会改吧
- * });
- */
-function forEachAsync(data, options) {
-  options = options || {};
-
-  var timesConfig = options.number || 5; // 每次请求 5 条
-  timesConfig = Math.min(timesConfig, 8); // 每次不得同时发送太多
-
-  // 每次几个数据，都走完则回调
-  function _total_ajax(data, next) {
-    var total = data.length,
-      result = [];
-    for (var i = 0; i < total; i++) {
-      var item = data[i];
-      _ajax(item, (function (i) {
-        return function (res) {
-          result[i] = res;
-          if (--total > 0) return;
-          next && next(result);
-        };
-      })(i));
-    }
-  }
-
-  // 每次一个数据，走完则回调
-  function _ajax(item, next) {
-    if (options.customAjax) {
-      return options.customAjax(item, _next);
-    }
-    var method = options.ajaxMethod;
-    var ajaxMethod = method === 'ajax' ? Util.ajax : (method ? $[method] : $.post);
-    var api = options.api;
-    var params = options.params ? options.params(item) : item;
-    ajaxMethod(api, params, function (res) {
-      if (res.resultCode == 0) {
-        _next && _next(res);
-      }
-    });
-
-    function _next(res) {
-      options.afterAjax && options.afterAjax(res, item);
-      next && next(res, item);
-    }
-  }
-
-  // 循环数据，每 5 条一波走完再下一波
-  (function loop(data, result) {
-    var thisData = data.splice(0, timesConfig); // 本次请求的一波数据
-    if (thisData.length < 1) {
-      options.callback && options.callback(result);
-      return; // 走完了
-    }
-    _total_ajax(thisData, function (res) {
-      result = result.concat(res);
-      loop(data, result);
-    });
-  })(data, []);
-}
-```
-
-## * 滚动加载数据
-```js
-function divideDataForScroll($scroller, data, callback, options) {
-  options = options || {};
-  var size = options.size || 20;
-  var winH = $scroller.height();
-  var threshold = options.threshold || 50;
-
-  $scroller.removeEventListener('scroll', _scroll);
-  $scroller.addEventListener('scroll', _scroll);
-
-  var page = 1;
-  _go();
-
-  function _scroll() {
-    var elemH = $scroller.scrollHeight;
-    var sTop = $scroller.scrollTop;
-    if (sTop + winH + threshold > elemH) _go();
-  }
-
-  function _go() {
-    var nowSize = page * size;
-    var nowData = data.slice(0, nowSize);
-
-    // 数据全部加载完毕
-    if (data.slice(nowSize - size, nowSize).length < 1) {
-      options.finish && options.finish(data, page, size); // 全部完成
-      return $scroller.removeEventListener('scroll', _scroll);
-    }
-
-    // 每页的回调
-    callback && callback(nowData, page, size);
   }
 }
 ```

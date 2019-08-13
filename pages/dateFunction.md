@@ -1,4 +1,11 @@
-# 时间相关的公共方法
+# 日期相关的公共方法
+
+* [dateToString](#-日期转为字符串)（日期转为字符串）
+* [addDate](#-日期加减)（日期加减）
+* [getSimpleDate](#-返回初始日期)（返回初始日期）
+* [getDayNumberInThisMonth](#-本月多少天)（本月多少天）
+* [getFirstDate](#-获取首日)（获取首日）
+* [getArrayFromTwoDate](#-两日期间所有日期的数组)（两日期间所有日期的数组）
 
 ## * 日期转为字符串
 ```js
@@ -31,7 +38,7 @@ function dateToString(date, format, noZero) {
 }
 ```
 
-## * 时间加减
+## * 日期加减
 ```js
 // addDate(new Date(2019,5,19,10,40,0), 1); // Thu Jun 20 2019 10:40:00
 function addDate(date, time, dateType) {
@@ -53,7 +60,7 @@ function addDate(date, time, dateType) {
 }
 ```
 
-## * 清除不需要的时间
+## * 返回初始日期
 ```js
 // 有时，时分秒会影响计算结果，故有此方法
 // 也可用作获取本年首日，本月首日，本天初始的功能
@@ -82,7 +89,7 @@ function getSimpleDate(date, dateType) {
 }
 ```
 
-## * 本月有多少天
+## * 本月多少天
 ```js
 function getDayNumberInThisMonth(date, month, year) {
   month = (month || date.getMonth()) % 11;
@@ -94,7 +101,7 @@ function getDayNumberInThisMonth(date, month, year) {
 }
 ```
 
-## * 获取某阶段的首日
+## * 获取首日
 ```js
 // 如，每周首日，每月首日
 function getFirstDate(date, dateType, offset) {
@@ -110,7 +117,7 @@ function getFirstDate(date, dateType, offset) {
 }
 ```
 
-## * 返回两日期间所有日期的数组
+## * 两日期间所有日期的数组
 ```js
 // 前开后闭区间，注意时分秒会影响计算结果
 // getArrayFromTwoDate(new Date(2019,5,19,11), new Date(2019,5,21,10)) // [20,21]
