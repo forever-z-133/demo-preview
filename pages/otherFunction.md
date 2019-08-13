@@ -3,6 +3,7 @@
 需要 jQuery 插件的会在标题后加上 `$` 字样。
 
 * [numberToMoney](#-折算成金额)（折算成金额）
+* [returnChineseNumber](#-转中文数字)（转中文数字）
 * [htmlToString](#-html-转义)（html 转义）
 * [stringToHtml](#-html-字符串反转义)（html 字符串反转义）
 * [debounce](#-去抖)（去抖）
@@ -27,6 +28,44 @@ function numberToMoney(num) {
       return i ? s : s.replace(/\B(?=(\d{3})+\b)/g, ',');
     })
     .join('.');
+}
+```
+
+## * 转中文数字
+```js
+// 1001 => 一千零一
+function returnChineseNumber(num, chineseType) {
+  if (!num) return '';
+
+  var numArr = [num].toString().split('');
+  var _numConfig = '零一二三四五六七八九'.split('');
+  var _unitConfig = ' 十百千'.split('');
+  var _sizeConfig = ' 万亿兆'.split('');
+  if (chineseType) {
+    _numConfig = '零壹贰叁肆伍陆柒捌玖'.split('');
+    _unitConfig = ' 拾佰仟'.split('');
+    // _sizeConfig = ' 萬億兆'.split('');
+  }
+
+  var result = '';
+  for (var i = 0, len = numArr.length; i < len; i++) {
+    var n = Number(numArr[len - i - 1]);
+    var cn = _numConfig[n];
+    var unit = i % 4 !== 0 ? _unitConfig[i % 4] : '';
+    var size = i % 4 === 0 && i !== 0 ? _sizeConfig[i / 4] : '';
+
+    // 现在将返回 1001 => 一千零百零十一，不符合情况，则进行以下处理
+    if (cn === '零') {
+      unit = '';
+      if (result === '' || result.slice(0, 1) === '零') {
+        cn = '';
+      }
+    }
+
+    result = cn + unit + size + result;
+  }
+
+  return result;
 }
 ```
 
