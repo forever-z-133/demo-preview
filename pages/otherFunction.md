@@ -7,10 +7,10 @@
 // 不断操作无效，只有停止操作 delta 秒后才触发
 function debounce(fn, delta, context) {
   var timeoutID = null;
-  return function() {
+  return function () {
     var args = arguments;
     clearTimeout(timeoutID);
-    timeoutID = setTimeout(function() {
+    timeoutID = setTimeout(function () {
       fn.apply(context, args);
     }, delta);
     return timeoutID;
@@ -23,17 +23,33 @@ function debounce(fn, delta, context) {
 // 每隔 delta 秒时触发
 function throttle(fn, delta, context) {
   var safe = true;
-  return function() {
+  return function () {
     if (!safe) return;
 
     var args = arguments;
     fn.call(context, args);
 
     safe = false;
-    setTimeout(function() {
+    setTimeout(function () {
       safe = true;
     }, delta);
   };
+}
+```
+
+## * 折算成金额
+```js
+// numberToMoney(12345.6789);  // 12,345.6789
+function numberToMoney(num) {
+  if (!num) return '0.00';
+  var numStr = [num].toString().replace(/\$|\,/g, '');
+  if (isNaN(parseFloat(numStr))) numStr = "0";
+  return numStr
+    .split('.') // 小数点前的加逗号，小数点后的不管
+    .map(function (s, i) {
+      return i ? s : s.replace(/\B(?=(\d{3})+\b)/g, ',');
+    })
+    .join('.');
 }
 ```
 
@@ -179,7 +195,10 @@ function InterceptManage() {
   return {
     data: temp,
     set: function (key, times, finish) {
-      temp[key] = { times: times, finish: finish };
+      temp[key] = {
+        times: times,
+        finish: finish
+      };
       return temp[key];
     },
     ok: function (key) {
@@ -201,6 +220,7 @@ function InterceptManage() {
 ```js
 function Animation() {
   var animTimer = null;
+
   function start(start, to, duration, callback) {
     var time = Date.now();
     stop();
@@ -212,10 +232,14 @@ function Animation() {
       animTimer = window.requestAnimationFrame(run);
     })();
   }
+
   function stop() {
     animTimer && window.cancelAnimationFrame(animTimer);
   }
-  return { start: start, stop: stop }
+  return {
+    start: start,
+    stop: stop
+  }
 }
 ```
 
@@ -242,11 +266,12 @@ function forEachAsync(data, options) {
 
   // 每次几个数据，都走完则回调
   function _total_ajax(data, next) {
-    var total = data.length, result = [];
-    for (var i=0; i<total; i++) {
+    var total = data.length,
+      result = [];
+    for (var i = 0; i < total; i++) {
       var item = data[i];
-      _ajax(item, (function(i) {
-        return function(res) {
+      _ajax(item, (function (i) {
+        return function (res) {
           result[i] = res;
           if (--total > 0) return;
           next && next(result);
@@ -264,11 +289,12 @@ function forEachAsync(data, options) {
     var ajaxMethod = method === 'ajax' ? Util.ajax : (method ? $[method] : $.post);
     var api = options.api;
     var params = options.params ? options.params(item) : item;
-    ajaxMethod(api, params, function(res){
-      if(res.resultCode == 0){
+    ajaxMethod(api, params, function (res) {
+      if (res.resultCode == 0) {
         _next && _next(res);
       }
     });
+
     function _next(res) {
       options.afterAjax && options.afterAjax(res, item);
       next && next(res, item);
@@ -280,12 +306,48 @@ function forEachAsync(data, options) {
     var thisData = data.splice(0, timesConfig); // 本次请求的一波数据
     if (thisData.length < 1) {
       options.callback && options.callback(result);
-      return;  // 走完了
+      return; // 走完了
     }
-    _total_ajax(thisData, function(res) {
+    _total_ajax(thisData, function (res) {
       result = result.concat(res);
       loop(data, result);
     });
   })(data, []);
+}
+```
+
+## * 滚动加载数据
+```js
+function divideDataForScroll($scroller, data, callback, options) {
+  options = options || {};
+  var size = options.size || 20;
+  var winH = $scroller.height();
+  var threshold = options.threshold || 50;
+
+  $scroller.removeEventListener('scroll', _scroll);
+  $scroller.addEventListener('scroll', _scroll);
+
+  var page = 1;
+  _go();
+
+  function _scroll() {
+    var elemH = $scroller.scrollHeight;
+    var sTop = $scroller.scrollTop;
+    if (sTop + winH + threshold > elemH) _go();
+  }
+
+  function _go() {
+    var nowSize = page * size;
+    var nowData = data.slice(0, nowSize);
+
+    // 数据全部加载完毕
+    if (data.slice(nowSize - size, nowSize).length < 1) {
+      options.finish && options.finish(data, page, size); // 全部完成
+      return $scroller.removeEventListener('scroll', _scroll);
+    }
+
+    // 每页的回调
+    callback && callback(nowData, page, size);
+  }
 }
 ```

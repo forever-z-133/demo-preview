@@ -23,7 +23,7 @@ function dateToString(date, format, noZero) {
   for (var reg in _config) {
     if (!(new RegExp("(" + reg + ")").test(result))) continue;
     var value = _config[reg] + '';
-    value = noZero ? value : (value.length < 2 ? '0' + value : value);
+    value = noZero ? value : ('00' + value).slice(-value.length);
     result = result.replace(RegExp.$1, value);
   }
 
@@ -34,14 +34,19 @@ function dateToString(date, format, noZero) {
 ## * 时间加减
 ```js
 // addDate(new Date(2019,5,19,10,40,0), 1); // Thu Jun 20 2019 10:40:00
-function addDate(date, time, type) {
-  type = type || 'date';
+function addDate(date, time, dateType) {
+  dateType = dateType || 'date';
   var d = new Date(date);
   var _config = {
-    'year': 'FullYear', 'month': 'Month', 'date': 'Date', 'day': 'Date',
-    'hour': 'Hours', 'minute': 'Minutes', 'second': 'Seconds'
+    'year': 'FullYear',
+    'month': 'Month',
+    'date': 'Date',
+    'day': 'Date',
+    'hour': 'Hours',
+    'minute': 'Minutes',
+    'second': 'Seconds'
   }
-  var _type = _config[type];
+  var _type = _config[dateType];
   var setFunc = date['set' + _type].bind(d);
   var getFunc = date['get' + _type].bind(d);
   return new Date(setFunc(getFunc() + time));
@@ -52,23 +57,26 @@ function addDate(date, time, type) {
 ```js
 // 有时，时分秒会影响计算结果，故有此方法
 // 也可用作获取本年首日，本月首日，本天初始的功能
-function getSimpleDate(date, type) {
+function getSimpleDate(date, dateType) {
   var d = new Date(date);
-  type = type || 'date';
+  dateType = dateType || 'date';
   var _config = {
-    'year': '1000000', 'month': '1100000', 'date': '1110000', 'day': '1110000',
-    'hour': '1111000', 'minute': '1111100', 'second': '1111110'
+    'year': '1000000',
+    'month': '1100000',
+    'date': '1110000',
+    'day': '1110000',
+    'hour': '1111000',
+    'minute': '1111100',
+    'second': '1111110'
   }
-  _config[type].split('').forEach(function(item, index) {
+  _config[dateType].split('').forEach(function (item, index) {
     if (item === '1') return;
-    switch(index) {
-      case 1: d.setMonth(0); break;
-      case 2: d.setDate(1); break;
-      case 3: d.setHours(0); break;
-      case 4: d.setMinutes(0); break;
-      case 5: d.setSeconds(0); break;
-      case 6: d.setMilliseconds(0); break;
-    }
+    index === 1 && d.setMonth(0);
+    index === 2 && d.setDate(1);
+    index === 3 && d.setHours(0);
+    index === 4 && d.setMinutes(0);
+    index === 5 && d.setSeconds(0);
+    index === 6 && d.setMilliseconds(0);
   });
   return new Date(d);
 }
@@ -89,12 +97,12 @@ function getDayNumberInThisMonth(date, month, year) {
 ## * 获取某阶段的首日
 ```js
 // 如，每周首日，每月首日
-function getFirstDate(date, type, offset) {
+function getFirstDate(date, dateType, offset) {
   offset = offset || 0;
-  if (type !== 'week') {
-    var d = getSimpleDate(date, type);
+  if (dateType !== 'week') {
+    var d = getSimpleDate(date, dateType);
     return addDate(d, offset, 'date');
-  } else {  // 注，每周首日为周一，可用 offset 调节
+  } else { // 注，每周首日为周一，可用 offset 调节
     var d = new Date(date);
     var over = -1 * d.getDay() + 1 + offset;
     return addDate(d, over, 'date');
@@ -109,10 +117,8 @@ function getFirstDate(date, type, offset) {
 function getArrayFromTwoDate(a, b) {
   var result = [];
   var daySecond = 24 * 60 * 60 * 1000;
-
-  var start, target;
-  if (a < b) { start = a; target = b; }
-  else { start = b; target = a; }
+  var start = a < b ? a : b;
+  var target = a < b ? b : a;
 
   while (start < target) {
     start = new Date(+start + daySecond);

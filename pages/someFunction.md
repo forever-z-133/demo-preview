@@ -4,7 +4,7 @@
 
 ## * 获取数据类型
 ```js
-function type(obj) {
+function typeOf(obj) {
   var typeStr = Object.prototype.toString.call(obj).split(" ")[1];
   return typeStr.substr(0, typeStr.length - 1).toLowerCase();
 }
@@ -31,7 +31,8 @@ function addZero(num, len) {
 ```js
 function random(min, max) {
   if (typeof max !== 'number') {
-    min = 0; max = min;
+    min = 0;
+    max = min;
   }
   min = min || 0, max = max || 1;
   return min + Math.random() * max - min;
@@ -41,11 +42,16 @@ function random(min, max) {
 ## * 数组或数据去重
 ```js
 function unique(arr, key) {
-  var result = [], temp = {};
+  var result = [],
+    temp = {};
   for (var i in arr) {
     if (!arr.hasOwnProperty(i)) continue;
-    var item = arr[i], value = key ? item[key] : item;
-    if (!(value in temp)) { temp[value] = true; result.push(item) }
+    var item = arr[i],
+      value = key ? item[key] : item;
+    if (!(value in temp)) {
+      temp[value] = true;
+      result.push(item)
+    }
   }
   return result;
 }
@@ -55,18 +61,19 @@ function unique(arr, key) {
 ```js
 // getArrayFromData([{id:1,x:[{id:2}]}], 'id', { deepKey: 'x' });  // [1,2]
 function getArrayFromData(data, key, options) {
-  if (type(data) !== 'array' || !data.length) return [];
+  if (typeOf(data) !== 'array' || !data.length) return [];
   if (!key) throw new Error('缺少必要的入参 key');
 
   options = options || {};
   var noEmpty = options.noEmpty || false; // 排除值为空的
   var deepKey = options.deepKey || ''; // 按某 key 向下递归
 
-  return data.reduce(function(re, item) {
-    var value = item[key], deep = [];
+  return data.reduce(function (re, item) {
+    var value = item[key],
+      deep = [];
     if (noEmpty && value == undefined) return re;
     if (deepKey) {
-      var child = type(item) === 'array' ? item : item[deepKey];
+      var child = typeOf(item) === 'array' ? item : item[deepKey];
       deep = getArrayFromData(child, key, options);
     }
     return re.concat([value], deep);
@@ -81,11 +88,14 @@ function getArrayFromData(data, key, options) {
 // 加 true 表示相同则删除，适用于 checkbox 反选
 // pushToNoSameArray([1, 2], 2, null, true);  // [1]
 // pushToNoSameArray([{a:1}, {a:2}], {a:2}, 'a', true);  // [{a:1}]
-function pushToNoSameArray(arr, newItem, key, remove) {
-  if (type(arr) !== 'array') return [];
+function pushToNoSameArray(arr, newItem, key, options) {
+  if (typeOf(arr) !== 'array') return [];
   if (arr.length < 1) return [newItem];
 
-  return arr.reduce(function(re, item) {
+  options = options || {};
+  var remove = options.remove || false;
+
+  return arr.reduce(function (re, item) {
     var inArray = key ? (newItem[key] === item[key]) : (newItem === item);
     return inArray && remove ? re : re.concat([item]);
   }, []);
@@ -96,48 +106,45 @@ function pushToNoSameArray(arr, newItem, key, remove) {
 ```js
 // filterData([{id:1},{id:5}], 2, 'id', { type: '>=' }); // [{id:5}]
 function filterData(data, value, key, options) {
-  if (type(data) !== 'array' || !data.length) return [];
+  if (typeOf(data) !== 'array' || !data.length) return [];
 
   options = options || {};
-  var type = options.type || '==';  // 判断类型
+  var judgeType = options.type || '=='; // 判断类型
+  var customJudgeFunc = options.custom || undefined; // 自定义判断
   var reserve = options.reserve || false; // 反选
-  var deepKey = options.deepKey || '';  // 向下递归
+  var deepKey = options.deepKey || ''; // 向下递归
 
-  return data.reduce(function(re, item) {
-    var val = key ? item[key] : item, result = [], deep = [];
+  if (typeOf(key) === 'function') {
+    customJudgeFunc = key;
+    key = undefined;
+  }
 
-    if (deepKey) {
-      var child = type(item) === 'array' ? item : item[deepKey];
-      deep = filterData(child, value, key, options);
-    }
+  return data.reduce(function (re, item) {
+    var val = key ? item[key] : item;
+    var inner = false;
+    var result = [],
+      deep = [];
 
-    if (type(val) === 'array' || type(val) === 'object') {
-      inner = false;
+    // 判断值是否对应
+    if (typeOf(customJudgeFunc) === 'function') {
+      inner = customJudgeFunc(item, value);
+    } else if (typeOf(val) === 'array' || typeOf(val) === 'object') {
+      inner = false; // eval([1,2] = 2) 会返回 true
     } else {
       inner = eval(val + judgeType + value);
     }
 
-    var inner = eval(val + type + value);
     if (reserve) inner = !inner;
     if (inner) result = [item];
 
+    // 向下递归
+    if (deepKey) {
+      var child = typeOf(item) === 'array' ? item : item[deepKey];
+      deep = filterData(child, value, key, options);
+    }
+
     return re.concat(result, deep);
   }, []);
-}
-```
-
-## * 折算成金额
-```js
-// numberToMoney(12345.6789);  // 12,345.6789
-function numberToMoney(num) {
-  if (!num) return '0.00';
-  num = num.toString().replace(/\$|\,/g, '');
-  num = parseFloat(num);
-  if (isNaN(num)) num = "0";
-  return [num].toString()
-    .split('.')  // 小数点前的加逗号，小数点后的不管
-    .map(function(s,i) { return i ? s : s.replace(/\B(?=(\d{3})+\b)/g, ','); })
-    .join('.');
 }
 ```
 
@@ -148,7 +155,7 @@ function returnObject(obj) {
   if (Object.keys) {
     if (Object.keys(obj).length) return obj
   } else {
-    for (var i in obj) {
+    for (var key in obj) {
       if (!obj.hasOwnProperty(key)) continue;
       return obj;
     }
@@ -163,7 +170,7 @@ function returnObject(obj) {
 // returnNumber('0', '', 1); // 0
 function returnNumber() {
   var args = [].slice.call(arguments);
-  for (var i=0; i<args.length; i++) {
+  for (var i = 0; i < args.length; i++) {
     var item = args[i];
     var _item = parseFloat(item);
     if (!isNaN(_item)) return _item;
@@ -204,7 +211,7 @@ function stringToObject(str, divide) {
     key = decodeURIComponent(key);
     value = decodeURIComponent(value);
     if (!key) return re;
-    if (['null', 'undefined'].some(function(x) { return x === value })) value = undefined;
+    if (['null', 'undefined'].indexOf(value) > -1) value = undefined;
     if (value === 'true') value = true;
     if (value === 'false') value = false;
     re[key] = value;
@@ -222,7 +229,7 @@ function addParamsToUrl(url, params) {
     return url;
   } else if (typeof params === 'string') {
     return url + concat + params;
-  } else if (type(params) === 'object') {
+  } else if (typeOf(params) === 'object') {
     return url + concat + objectToString(params);
   } else {
     throw new Error('入参有误');
@@ -232,7 +239,7 @@ function addParamsToUrl(url, params) {
 
 ## * 获取链接中的数据
 ```js
-function getDataFromUrl(key, url) {
+function getDataFromUrl(name, url) {
   var obj = stringToObject((url || location.href).split('?')[1], /[#?&]/);
   return name ? obj[name] : obj;
 }
@@ -245,7 +252,7 @@ function objectEqual(a, b) {
 
   var aProps = Object.getOwnPropertyNames(a);
   var bProps = Object.getOwnPropertyNames(b);
-  
+
   if (aProps.length != bProps.length) return false;
 
   for (var i = 0; i < aProps.length; i++) {
@@ -263,30 +270,31 @@ function objectEqual(a, b) {
 function count(type, options) {
   var nums = [].slice.call(arguments, 2);
   var _startConfig = { '+': 0, '-': 0, '*': 1, '/': 1 };
-  if (!(type in _startConfig)) return new Error('首位入参有误');
+  if (!(type in _startConfig)) throw new Error('首位入参有误');
 
   // 可能往后会加入些配置，但如果不是对象则不是配置
-  if (type(options) !== 'object') {
+  if (typeOf(options) !== 'object') {
     nums.splice(0, 0, options);
   }
 
   // 小数点后面最长字符长度，比如 0.1 和 0.234 则返回 3
-  var maxDotLength = nums.reduce(function(max, num) {
+  var maxDotLength = nums.reduce(function (max, num) {
     return Math.max(max, ([num].toString().split('.')[1] || '').length);
   }, 0);
 
   // 改造成整数，并计算出结果，比如 0.1 + 0.2 改为 1+2
   var startNum = _startConfig[type];
   var pow = Math.pow(10, maxDotLength);
-  var result = nums.reduce(function(re, num, index) {
+  var result = nums.reduce(function (re, num, index) {
     num = Number(num) * pow;
     if (index === 0 && ['-', '/'].indexOf(type) > -1) return num;
+    // 注：% 求余运算也有双精度误差问题，但不适用本函数
     switch (type) {
       case '-': return re - num;
       case '*': return re * num;
       case '/': return re / num;
-      // 注：% 求余运算也有双精度误差问题，但不适用本函数
-      case '+': default: return re + num;
+      case '+':
+      default: return re + num;
     }
   }, startNum);
 
@@ -333,7 +341,7 @@ function base64ToFile(base64, imgName, callback, options) {
 
 ## * File 对象转 base64
 ```js
-function fileObjectTobase64(file, callback) {
+function fileToBase64(file, callback) {
   var reader = new FileReader();
   reader.onload = function (e) {
     var base64 = e.target.result;
@@ -345,7 +353,7 @@ function fileObjectTobase64(file, callback) {
 
 ## * 获取表单数据 `$`
 ```js
-function tranDivToJson($range, tagName) {
+function getElementData($range, tagName) {
   tagName = tagName || 'name';
   var result = {};
   $range.find('[' + tagName + ']').each(function () {
@@ -363,8 +371,8 @@ function tranDivToJson($range, tagName) {
     }
   });
   for (var key in result) { // 多选生成的数组改为逗号字符串
-    if (type(result[key]) === 'array') {
-      result[key] = result[key].filter(function (item) { return !!item; }).toString();
+    if (Array.isArray(result[key])) {
+      result[key] = result[key].join(',').replace(/^,+|,+$|,{2}/g, '');
     }
   }
   return result;
@@ -373,7 +381,7 @@ function tranDivToJson($range, tagName) {
 
 ## * 用数据填充表单 `$`
 ```js
-function fillElmentValueByTag($range, data, tagName, options) {
+function fillElmentWithData($range, data, tagName, options) {
   options = options || {};
   $range = $range ? $range : $(document);
   $range.find('[' + tagName + ']').each(function () {
@@ -392,7 +400,7 @@ function fillElmentValueByTag($range, data, tagName, options) {
     } else if ($(this).is('img')) {
       value ? $this.attr('src', value) : $this.removeAttr('src');
     } else if ($this.is('select[multiple]') && typeof value === 'string') {
-      $this.val(value.split(','));
+      $this.val(value.split(','))
     } else if ($this.is(':input, select, textarea')) {
       $this.val(value);
     } else {
@@ -404,14 +412,14 @@ function fillElmentValueByTag($range, data, tagName, options) {
 
 ## * 清空表单 `$`
 ```js
-function clearElmentValueByTag($range, tagName) {
+function clearElmentAndData($range, tagName) {
   $range = $range ? $range : $(document);
   $range.find('[' + tagName + ']').each(function (i, elment) {
     var $this = $(this);
     if ($this.is(':radio, :checkbox')) {
       $this.prop('checked', false);
     } else if ($this.is(':input,select,textarea')) {
-      $this.val("");
+      $this.val('');
     } else if ($this.is('img')) {
       $this.removeAttr('src');
     } else {
