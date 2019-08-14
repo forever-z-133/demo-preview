@@ -14,6 +14,7 @@
 * [Animation](#-动画类)（动画类）
 * [divideDataForScroll](#-滚动加载数据)（滚动加载数据）
 * [createQrCode](#-生成二维码-)（生成二维码 `$`）
+* [copyText](#-复制文本)（复制文本）
 
 ## * 折算成金额
 ```js
@@ -396,5 +397,18 @@ function createQrCode(text, callback, options) {
     }
     callback && callback($img);
   }
+}
+```
+
+## * 复制文本
+```js
+function copyText(text) {
+  var $input = document.createElement('textarea');
+  document.body.appendChild($input);
+  $input.value = text;
+  $input.select();
+  document.execCommand("Copy");
+  document.body.removeChild($input);
+  $input = null;
 }
 ```
