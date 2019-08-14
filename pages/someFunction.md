@@ -15,6 +15,7 @@
 * [filterData](#-筛选数据)（筛选数据）
 * [dataToArray](#-从数据中获取数组)（从数据中获取数组）
 * [arrayToData](#-数组转数据)（数组转数据）
+* [dataToObject](#-数据转对象)（数据转对象）
 * [objectToData](#-对象转数据)（对象转数据）
 * [objectToString](#-对象转字符串)（对象转字符串）
 * [stringToObject](#-字符串转对象)（字符串转对象）
@@ -290,6 +291,21 @@ function arrayToData(arr, format, options) {
     }
     return re.concat([temp]);
   }, []);
+}
+```
+
+## * 数据转对象
+```js
+// dataToObject([{id:1,x:'a'}, {id:2,x:'b'}], 'id', 'x'); // {1:'a',2:'b'}
+function dataToObject(data, keyName, valueName, options) {
+  if (typeOf(data) !== 'array' || !data.length) return [];
+  options = options || {};
+  return data.reduce(function(re, item, index) {
+    var key = keyName ? item[keyName] : index;
+    var value = valueName ? item[valueName] : item;
+    re[key] = value;
+    return re;
+  }, {});
 }
 ```
 

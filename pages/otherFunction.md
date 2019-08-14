@@ -55,12 +55,8 @@ function returnChineseNumber(num, chineseType) {
     var size = i % 4 === 0 && i !== 0 ? _sizeConfig[i / 4] : '';
 
     // 现在将返回 1001 => 一千零百零十一，不符合情况，则进行以下处理
-    if (cn === '零') {
-      unit = '';
-      if (result === '' || result.slice(0, 1) === '零') {
-        cn = '';
-      }
-    }
+    if (cn === '零') unit = '';
+    if (cn === '零' && (result === '' || result.slice(0, 1) === '零')) cn = '';
 
     result = cn + unit + size + result;
   }

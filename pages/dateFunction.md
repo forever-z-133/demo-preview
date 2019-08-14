@@ -6,6 +6,7 @@
 * [getDayNumberInThisMonth](#-本月多少天)（本月多少天）
 * [getFirstDate](#-获取首日)（获取首日）
 * [getArrayFromTwoDate](#-两日期间所有日期的数组)（两日期间所有日期的数组）
+* [getPastDateString](#-返回已过去时间)（返回已过去时间）
 
 ## * 日期转为字符串
 ```js
@@ -133,5 +134,30 @@ function getArrayFromTwoDate(a, b) {
   }
 
   return result;
+}
+```
+
+## * 返回已过去时间
+```js
+// getPastDateString(new Date()); // '刚刚'
+function getPastDateString(date, options) {
+  options = options || {};
+  var time = +new Date(date);
+  var now = +new Date();
+  var diff = (now - time) / 1000;
+
+  if (diff < 0) return '';  // 未知时间
+
+  if (diff < 60) {
+    return '刚刚'
+  } else if (diff < 60*60) {
+    return (diff/60>>0) + '分钟前';
+  } else if (diff < 24*60*60) {
+    return (diff/3600>>0) + '小时前';
+  } else if (diff < 2*24*60*60) {
+    return '一天前';
+  } else {
+    return dateToString(time, 'yyyy-MM-dd');
+  }
 }
 ```
