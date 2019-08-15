@@ -19,6 +19,7 @@
 * [copyText](#-复制文本)（复制文本）
 * [useCache](#-使用函数结果缓存)（使用函数结果缓存）
 * [PhoneShake](#-手机摇一摇)（手机摇一摇）
+* [forceReflow](#-强制重排)（强制重排）
 
 ## * 折算成金额
 ```js
@@ -495,5 +496,22 @@ function PhoneShake(func, options) {
     stop: stop,
     callback: callback
   }
+}
+```
+
+## * 强制重排
+```js
+function forceReflow() {
+  var tempDivID = "reflowDivBlock";
+  var tempDiv = document.getElementById(tempDivID);
+  if (!tempDiv) {
+    tempDiv = document.createElement("div");
+    tempDiv.id = tempDivID;
+    document.body.appendChild(tempDiv);
+  }
+  var parentNode = tempDiv.parentNode;
+  var nextSibling = tempDiv.nextSibling;
+  parentNode.removeChild(tempDiv);
+  parentNode.insertBefore(tempDiv, nextSibling);
 }
 ```
