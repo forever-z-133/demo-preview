@@ -1,6 +1,8 @@
 # 日期相关的公共方法
 
 * [dateToString](#-日期转为字符串)（日期转为字符串）
+* [stringToDate](#-字符串转日期)（字符串转日期）
+* [dateToObject](#-日期转简单对象)（日期转简单对象）
 * [addDate](#-日期加减)（日期加减）
 * [getSimpleDate](#-返回初始日期)（返回初始日期）
 * [getDayNumberInThisMonth](#-本月多少天)（本月多少天）
@@ -39,10 +41,21 @@ function dateToString(date, format) {
 }
 ```
 
-## * 日期字符串转日期
+## * 字符串转日期
 ```js
 function stringToDate(str, format) {
-
+  format = format || 'yyyy-MM-dd';
+  var args = [null, /y+/, /M+/, /d+/, /h+/, /m+/, /s+/];
+  args = args.reduce(function(re, reg, index) {
+    if (!reg) return re.concat([null]);
+    var match = format.match(reg);
+    var defaultValue = index === 3 ? 1 : 0;
+    if (!match) return re.concat([defaultValue]);
+    var key = match[0], index = match.index;
+    var num = Number(str.slice(index, index + key.length));
+    return re.concat([num]);
+  }, []);
+  return new (Date.bind.apply(Date, args));
 }
 ```
 
