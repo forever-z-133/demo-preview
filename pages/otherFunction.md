@@ -18,6 +18,7 @@
 * [createQrCode](#-生成二维码-)（生成二维码 `$`）
 * [copyText](#-复制文本)（复制文本）
 * [useCache](#-使用函数结果缓存)（使用函数结果缓存）
+* [PhoneShake](#-手机摇一摇)（手机摇一摇）
 
 ## * 折算成金额
 ```js
@@ -440,6 +441,59 @@ function useCache(fn) {
     var key = arguments.length + Array.prototype.join.call(arguments, ",");
     if (key in cache) return cache[key];
     else return cache[key] = fn.apply(this, arguments);
+  }
+}
+```
+
+## 手机摇一摇
+```js
+function PhoneShake(func, options) {
+  if (typeOf(func) === 'object') {
+    options = func; func = undefined;
+  }
+
+  options = options || {};
+  var SHAKE_THRESHOLD = options.threshold || 300;
+  var last_update = 0;
+  var x, y, z, last_x, last_y, last_z;
+  var shakecount = 0;
+
+  function deviceMotionHandler(e) {
+    var acceleration = e.accelerationIncludingGravity;
+    var curTime = new Date().getTime();
+    if ((curTime - last_update) > 300) {
+      var diffTime = curTime - last_update;
+      last_update = curTime;
+      x = acceleration.x, y = acceleration.y, z = acceleration.z;
+      var speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
+      if (speed > SHAKE_THRESHOLD) {
+        if (func) func(++shakecount);
+      }
+      last_x = x, last_y = y, last_z = z;
+    }
+  }
+
+  function start() {
+    if (!window.DeviceMotionEvent) return alert("很抱歉，您的手机设备不支持摇一摇！");
+    shakecount = 0;
+    window.removeEventListener('devicemotion', deviceMotionHandler, false);
+    window.addEventListener('devicemotion', deviceMotionHandler, false);
+    return this;
+  }
+
+  function stop() {
+    window.removeEventListener('devicemotion', deviceMotionHandler, false);
+    return this;
+  }
+
+  function callback(newFunc) {
+    if (newFunc) func = newFunc;
+    return this;
+  }
+  return {
+    start: start,
+    stop: stop,
+    callback: callback
   }
 }
 ```
