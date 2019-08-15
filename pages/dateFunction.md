@@ -11,9 +11,8 @@
 
 ## * 日期转为字符串
 ```js
-function dateToString(date, format, noZero) {
+function dateToString(date, format) {
   format = format || 'yyyy-MM-dd';
-  noZero = noZero || false;
   var d = new Date(date);
   var result = format;
   var _config = {
@@ -26,13 +25,13 @@ function dateToString(date, format, noZero) {
 
   if (/(y+)/.test(result)) { // 年
     var value = d.getFullYear() + '';
-    value = value.slice(-RegExp.$1.length);
+    value = value.slice(-RegExp.$1.length); // 非常不推荐只显示两位的年数
     result = result.replace(RegExp.$1, value);
   }
   for (var reg in _config) {
     if (!(new RegExp("(" + reg + ")").test(result))) continue;
     var value = _config[reg] + '';
-    value = noZero ? value : ('00' + value).slice(-value.length);
+    value = RegExp.$1.length < 2 ? value : ('00' + value).slice(-value.length);
     result = result.replace(RegExp.$1, value);
   }
 
@@ -40,10 +39,35 @@ function dateToString(date, format, noZero) {
 }
 ```
 
+## * 日期字符串转日期
+```js
+function stringToDate(str, format) {
+
+}
+```
+
+## * 日期转简单对象
+```js
+// 实为生活理解上的日期，不推荐用此数据去计算
+function dateToObject(date) {
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1, // 一月为 1
+    date: date.getDate(),
+    hour: date.getHours(),
+    minute: date.getMinutes(),
+    second: date.getSeconds(),
+    day: (date.getDay() + 7) % 7, // 周一为 1，周日为 7
+    quarter: 1 + date.getMonth() / 3 >> 0, // 季度
+    week: 2 + (date.getDate() - date.getDay()) / 7 >> 0,  // 本月第几周
+  }
+}
+```
+
 ## * 日期加减
 ```js
 // addDate(new Date(2019,5,19,10,40,0), 1); // Thu Jun 20 2019 10:40:00
-function addDate(date, time, dateType) {
+function addDate(date, offset, dateType) {
   dateType = dateType || 'date';
   var d = new Date(date);
   var _config = {
@@ -58,7 +82,7 @@ function addDate(date, time, dateType) {
   var _type = _config[dateType];
   var setFunc = date['set' + _type].bind(d);
   var getFunc = date['get' + _type].bind(d);
-  return new Date(setFunc(getFunc() + time));
+  return new Date(setFunc(getFunc() + offset));
 }
 ```
 
@@ -140,6 +164,7 @@ function getArrayFromTwoDate(a, b) {
 
 ## * 返回已过去时间
 ```js
+// 此方法并不标准，需按业务情景进行调整
 // getPastDateString(new Date()); // '刚刚'
 function getPastDateString(date, options) {
   options = options || {};
