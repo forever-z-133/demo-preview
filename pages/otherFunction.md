@@ -447,7 +447,7 @@ function useCache(fn) {
 }
 ```
 
-## 手机摇一摇
+## * 手机摇一摇
 ```js
 function PhoneShake(func, options) {
   if (typeOf(func) === 'object') {

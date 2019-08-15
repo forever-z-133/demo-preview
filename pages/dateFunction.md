@@ -7,6 +7,7 @@
 * [getFirstDate](#-获取首日)（获取首日）
 * [getArrayFromTwoDate](#-两日期间所有日期的数组)（两日期间所有日期的数组）
 * [getPastDateString](#-返回已过去时间)（返回已过去时间）
+* [getWeekName](#-获取星期几)（获取星期几）
 
 ## * 日期转为字符串
 ```js
@@ -159,5 +160,24 @@ function getPastDateString(date, options) {
   } else {
     return dateToString(time, 'yyyy-MM-dd');
   }
+}
+```
+
+## * 获取星期几
+```js
+// getWeekName(0, null, 1);  offset 可让 0 为周一
+function getWeekName(date, strType, offset) {
+  var _config = '日,一,二,三,四,五,六'.split(',');
+  if (strType === 1) _config = '周日,周一,周二,周三,周四,周五,周六'.split(',');
+  if (strType === 2) _config = '星期日,星期一,星期二,星期三,星期四,星期五,星期六'.split(',');
+  if (strType === 3) _config = 'Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday'.split(',');
+  if (strType === 4) _config = 'Sun,Mon,Tue,Wed,Thu,Fri,Sat'.split(',');
+  if (typeOf(strType) === 'array') _config = strType;
+
+  offset = offset || 0;
+  var day = typeOf(date) === 'date' ? date.getDay() : date;
+  day = (day + offset) % 6;
+
+  return _config[day];
 }
 ```
