@@ -45,16 +45,16 @@ function dateToString(date, format) {
 ```js
 function stringToDate(str, format) {
   format = format || 'yyyy-MM-dd';
-  var args = [null, /y+/, /M+/, /d+/, /h+/, /m+/, /s+/];
+  var args = [ /y+/, /M+/, /d+/, /h+/, /m+/, /s+/];
   args = args.reduce(function(re, reg, index) {
-    if (!reg) return re.concat([null]);
     var match = format.match(reg);
-    var defaultValue = index === 3 ? 1 : 0;
+    var defaultValue = index === 2 ? 1 : 0;
     if (!match) return re.concat([defaultValue]);
     var key = match[0], index = match.index;
-    var num = Number(str.slice(index, index + key.length));
+    var num = Number(str.slice(index).match(/\d+/));
     return re.concat([num]);
   }, []);
+  args.unshift(null);
   return new (Date.bind.apply(Date, args));
 }
 ```
