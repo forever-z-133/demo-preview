@@ -7,6 +7,7 @@
 * [addZero](#-自动补零)（自动补零）
 * [random](#-随机数)（随机数）
 * [returnObject](#-返回非空对象)（返回非空对象）
+* [returnArray](#-返回可用数组)（返回可用数组）
 * [returnNumber](#-返回可用数字)（返回可用数字）
 * [toFixed](#-小数的取整)（小数的取整）
 * [count](#-数字计算)（数字计算）
@@ -85,6 +86,20 @@ function returnObject(obj) {
     }
   }
   return null;
+}
+```
+
+## * 返回数组
+```js
+function returnArray(obj) {
+  if (!obj) return [];
+  if (typeof obj === 'string') {
+    return obj.split(',');
+  } else if (typeOf(obj) === 'array') {
+    return obj;
+  } else {
+    throw new Error('入参有误');
+  }
 }
 ```
 

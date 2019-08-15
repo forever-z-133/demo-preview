@@ -45,17 +45,17 @@ function dateToString(date, format) {
 ```js
 function stringToDate(str, format) {
   format = format || 'yyyy-MM-dd';
-  var args = [ /y+/, /M+/, /d+/, /h+/, /m+/, /s+/];
-  args = args.reduce(function(re, reg, index) {
+  var args = [/y+/, /M+/, /d+/, /h+/, /m+/, /s+/];
+  args = args.reduce(function (re, reg, index) {
     var match = format.match(reg);
     var defaultValue = index === 2 ? 1 : 0;
     if (!match) return re.concat([defaultValue]);
-    var key = match[0], index = match.index;
+    var index = match.index;
     var num = Number(str.slice(index).match(/\d+/));
     return re.concat([num]);
   }, []);
   args.unshift(null);
-  return new (Date.bind.apply(Date, args));
+  return new(Date.bind.apply(Date, args));
 }
 ```
 
@@ -72,7 +72,7 @@ function dateToObject(date) {
     second: date.getSeconds(),
     day: (date.getDay() + 7) % 7, // 周一为 1，周日为 7
     quarter: 1 + date.getMonth() / 3 >> 0, // 季度
-    week: 2 + (date.getDate() - date.getDay()) / 7 >> 0,  // 本月第几周
+    week: 2 + (date.getDate() - date.getDay()) / 7 >> 0, // 本月第几周
   }
 }
 ```
