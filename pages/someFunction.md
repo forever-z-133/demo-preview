@@ -22,6 +22,7 @@
 * [addDataToUrl](#-给链接添加参数)（给链接添加参数）
 * [getDataFromUrl](#-获取链接中的数据)（获取链接中的数据）
 * [objectEqual](#-对象是否相等)（对象是否相等）
+* [getObjectValue](#-获取对象的值)（获取对象的值）
 * [imageToBase64](#-图片链接转-base64)（图片链接转 base64）
 * [base64ToFile](#-base64-转-File-对象)（base64 转 File 对象）
 * [fileToBase64](#-File-对象转-base64)（File 对象转 base64）
@@ -430,6 +431,19 @@ function objectEqual(a, b) {
     if (a[key] !== b[key]) return false;
   }
   return true;
+}
+```
+
+## * 获取对象的值
+```js
+// getObjectValue({a:{b:1}}, 'a.b');  // 1
+// getObjectValue({a:{b:1}}, 'a.c.d');  // undefined
+function getObjectValue(obj, keyStr) {
+  if (!keyStr) throw new Error('入参有误');
+  var keys = keyStr.split('.');
+  return keys.reduce(function(re, key) {
+    return (re || {})[key];
+  }, obj);
 }
 ```
 
