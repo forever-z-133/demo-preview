@@ -20,6 +20,7 @@
 * [useCache](#-使用函数结果缓存)（使用函数结果缓存）
 * [PhoneShake](#-手机摇一摇)（手机摇一摇）
 * [forceReflow](#-强制重排)（强制重排）
+* [toHashCode](#-转为-Hash-数字)（转为 Hash 数字）
 
 ## * 折算成金额
 ```js
@@ -513,5 +514,19 @@ function forceReflow() {
   var nextSibling = tempDiv.nextSibling;
   parentNode.removeChild(tempDiv);
   parentNode.insertBefore(tempDiv, nextSibling);
+}
+```
+
+## * 转为 Hash 数字
+```js
+function toHashCode(str){
+  var hash = 0;
+  if (str.length == 0) return hash;
+  for (i = 0; i < str.length; i++) {
+    char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return hash;
 }
 ```
