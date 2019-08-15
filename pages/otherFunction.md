@@ -6,6 +6,7 @@
 * [returnChineseNumber](#-转中文数字)（转中文数字）
 * [toAngle](#-弧度转角度)（弧度转角度）
 * [toRadian](#-角度转弧度)（角度转弧度）
+* [toFirstUpperCase](#-首字母大写)（首字母大写）
 * [htmlToString](#-html-转义)（html 转义）
 * [stringToHtml](#-html-字符串反转义)（html 字符串反转义）
 * [debounce](#-去抖)（去抖）
@@ -83,6 +84,13 @@ function toAngle(radian) {
 ```js
 function toRadian(angle) {
   return angle / 180 * Math.PI;
+}
+```
+
+## * 首字母大写
+```js
+function toFirstUpperCase(str) {
+  return str.slice(0, 1).toUpperCase() + str.toLowerCase().slice(1);
 }
 ```
 
