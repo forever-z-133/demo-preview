@@ -53,7 +53,9 @@ function isEmpty(obj) {
 ```js
 function addZero(num, len) {
   len = len || 2;
-  return (Array(len).join(0) + num).slice(-len);
+  var numLen = (num + '').length;
+  while (numLen++ < len) { num = '0' + num; }
+  return num;
 }
 ```
 

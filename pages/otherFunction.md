@@ -4,6 +4,8 @@
 
 * [numberToMoney](#-折算成金额)（折算成金额）
 * [returnChineseNumber](#-转中文数字)（转中文数字）
+* [toAngle](#-弧度转角度)（弧度转角度）
+* [toRadian](#-角度转弧度)（角度转弧度）
 * [htmlToString](#-html-转义)（html 转义）
 * [stringToHtml](#-html-字符串反转义)（html 字符串反转义）
 * [debounce](#-去抖)（去抖）
@@ -15,6 +17,7 @@
 * [divideDataForScroll](#-滚动加载数据)（滚动加载数据）
 * [createQrCode](#-生成二维码-)（生成二维码 `$`）
 * [copyText](#-复制文本)（复制文本）
+* [useCache](#-使用函数结果缓存)（使用函数结果缓存）
 
 ## * 折算成金额
 ```js
@@ -63,6 +66,20 @@ function returnChineseNumber(num, chineseType) {
   }
 
   return result;
+}
+```
+
+## * 弧度转角度
+```js
+function toAngle(radian) {
+  return radian / Math.PI * 180;
+}
+```
+
+## * 角度转弧度
+```js
+function toRadian(angle) {
+  return angle / 180 * Math.PI;
 }
 ```
 
@@ -410,5 +427,19 @@ function copyText(text) {
   document.execCommand("Copy");
   document.body.removeChild($input);
   $input = null;
+}
+```
+
+## * 使用函数结果缓存
+```js
+// add = userCache((a,b) => a+b);
+// add(1,2); add(1,2); // 第二次会直接取缓存
+function useCache(fn) {
+  var cache = {};
+  return function(){
+    var key = arguments.length + Array.prototype.join.call(arguments, ",");
+    if (key in cache) return cache[key];
+    else return cache[key] = fn.apply(this, arguments);
+  }
 }
 ```
