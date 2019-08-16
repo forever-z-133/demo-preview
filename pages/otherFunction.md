@@ -22,6 +22,7 @@
 * [PhoneShake](#-手机摇一摇)（手机摇一摇）
 * [forceReflow](#-强制重排)（强制重排）
 * [toHashCode](#-转为-Hash-数字)（转为 Hash 数字）
+* [createCurry](#-函数科里化)（函数科里化）
 
 ## * 折算成金额
 ```js
@@ -536,5 +537,23 @@ function toHashCode(str){
     hash = hash & hash;
   }
   return hash;
+}
+```
+
+## * 函数科里化
+```js
+// 此为科里化中的一种流派，其他的待整理
+// var add = createCurry((...args) => args.reduce((re,x) => re+x, 0));
+// add(1,2)(3)(4); // 10
+function createCurry(fn){
+  var _args = [];
+  var _temp = function() {
+    _args = _args.concat([].slice.call(arguments));
+    return _temp;
+  }
+  _temp.toString = _temp.valueOf =function(){
+    return fn.apply(fn, _args);
+  }
+  return _temp;
 }
 ```
