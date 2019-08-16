@@ -25,6 +25,19 @@
 ```
 
 ### 四、display: table;
+或者 `display: flex`，不过也可能破坏原预期效果
 ```css
 .wrap { display: table; }
+```
+
+### 五、float: left
+同上，也可能破坏原预期效果
+```css
+.wrap { float: left; }
+```
+
+### 其他、margin-left
+不推荐，因为有的浏览器并没有间隙，这样写非常不兼容
+```css
+.wrap > :not(:first-child) { margin-left: -.3em }
 ```
