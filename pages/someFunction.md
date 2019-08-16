@@ -14,6 +14,7 @@
 * [unique](#-数组或数据去重)（数组或数据去重）
 * [pushToUniqueArray](#-添加到去重数组)（添加到去重数组）
 * [filterData](#-筛选数据)（筛选数据）
+* [deepClone](#-深拷贝)（深拷贝）
 * [dataToArray](#-从数据中获取数组)（从数据中获取数组）
 * [arrayToData](#-数组转数据)（数组转数据）
 * [dataToObject](#-数据转对象)（数据转对象）
@@ -250,6 +251,29 @@ function filterData(data, value, key, options) {
 
     return re.concat(result);
   }, []);
+}
+```
+
+## * 深拷贝
+```js
+function deepClone(rawObj) {
+  if (!(rawObj instanceof Object)) return rawObj;
+  var objectClone;
+  var Constructor = rawObj.constructor;
+  switch (Constructor) {
+    case RegExp:
+    case Error:
+    case Date:
+      objectClone = new Constructor(rawObj); break;
+    case Function: 
+      objectClone = rawObj; break;
+    default:
+      objectClone = new Constructor();
+  }
+  for (var prop in rawObj) {
+    objectClone[prop] = deepClone(rawObj[prop]);
+  }
+  return objectClone;
 }
 ```
 
