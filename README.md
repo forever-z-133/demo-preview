@@ -18,6 +18,7 @@
 * [三种子级均匀留隙的实现](https://foreverz133.github.io/demo-preview/#/./pages/child-align-justify.md)
 * [四种 1px 毛细线样式](https://foreverz133.github.io/demo-preview/#/./pages/1px-border.md)
 * [inline-block 的空隙问题](https://foreverz133.github.io/demo-preview/#/./pages/inline-block-spacing.md)
+* [左右布局与左中右布局](https://foreverz133.github.io/demo-preview/#/./pages/left-right-layout.md)
 
 > #### 效果实现
 

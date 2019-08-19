@@ -92,7 +92,7 @@ function toRadian(angle) {
 ## * 首字母大写
 ```js
 function toFirstUpperCase(str) {
-  return str.slice(0, 1).toUpperCase() + str.toLowerCase().slice(1);
+  return str.slice(0, 1).toUpperCase() + str.slice(1).toLowerCase();
 }
 ```
 
@@ -544,7 +544,8 @@ function toHashCode(str){
 ## * 函数科里化
 ```js
 // 此为科里化中的一种流派，其他的待整理
-// var add = createCurry((...args) => args.reduce((re,x) => re+x, 0));
+// var add = (...args) => args.reduce((re,x) => re+x, 0);
+// add = createCurry(add);
 // add(1,2)(3)(4); // 10
 function createCurry(fn){
   var _args = [];
