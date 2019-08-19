@@ -18,6 +18,7 @@ function dateToString(date, format) {
   var d = new Date(date);
   var result = format;
   var _config = {
+    'y+': d.getFullYear(),
     'M+': d.getMonth() + 1, // 月
     'd+': d.getDate(), // 日
     'h+': d.getHours(), // 小时
@@ -25,16 +26,12 @@ function dateToString(date, format) {
     's+': d.getSeconds(), // 秒
   };
 
-  if (/(y+)/.test(result)) { // 年
-    var value = d.getFullYear() + '';
-    value = value.slice(-RegExp.$1.length); // 非常不推荐只显示两位的年数
-    result = result.replace(RegExp.$1, value);
-  }
   for (var reg in _config) {
-    if (!(new RegExp("(" + reg + ")").test(result))) continue;
-    var value = _config[reg] + '';
-    value = RegExp.$1.length < 2 ? value : ('00' + value).slice(-value.length);
-    result = result.replace(RegExp.$1, value);
+    if (!(new RegExp('(' + reg + ')').test(result))) continue;
+    var match = RegExp.$1;
+    var num = _config[reg] + '';
+    while (num.length < match.length) { num = '0' + num }
+    result = result.replace(match, num);
   }
 
   return result;
@@ -48,7 +45,7 @@ function stringToDate(str, format) {
   var args = [/y+/, /M+/, /d+/, /h+/, /m+/, /s+/];
   args = args.reduce(function (re, reg, index) {
     var match = format.match(reg);
-    var defaultValue = index === 2 ? 1 : 0;
+    var defaultValue = [1970, 0, 1, 0, 0, 0][index];
     if (!match) return re.concat([defaultValue]);
     var index = match.index;
     var num = Number(str.slice(index).match(/\d+/));

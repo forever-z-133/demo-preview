@@ -58,7 +58,7 @@ function addZero(num, len) {
   len = len || 2;
   var numLen = (num + '').length;
   while (numLen++ < len) { num = '0' + num; }
-  return num;
+  return num + '';
 }
 ```
 

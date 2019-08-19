@@ -288,7 +288,7 @@ function InterceptManage() {
 ## * 动画类
 ```js
 function Animation() {
-  var animTimer = null;
+  var animTimer = 0;
 
   function start(start, to, duration, callback) {
     var time = Date.now();
@@ -298,12 +298,12 @@ function Animation() {
       if (per >= 1) return callback && callback(to, 1);
       var now = start + (to - start) * per;
       callback && callback(now, per);
-      animTimer = window.requestAnimationFrame(run);
+      animTimer = requestAnimationFrame(run);
     })();
   }
 
   function stop() {
-    animTimer && window.cancelAnimationFrame(animTimer);
+    cancelAnimationFrame(animTimer);
   }
   return {
     start: start,
