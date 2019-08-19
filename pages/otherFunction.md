@@ -23,6 +23,7 @@
 * [forceReflow](#-强制重排)（强制重排）
 * [toHashCode](#-转为-Hash-数字)（转为 Hash 数字）
 * [createCurry](#-函数科里化)（函数科里化）
+* [Singleton](#-单例模式)（单例模式）
 
 ## * 折算成金额
 ```js
@@ -555,5 +556,19 @@ function createCurry(fn){
     return fn.apply(fn, _args);
   }
   return _temp;
+}
+```
+
+## * 单例模式
+```js
+// A = Singleton(A); var a = new A(x); var b = new A(y);
+function Singleton(func) {
+  var result;
+  return function () {
+    if (result) return result;
+    var args = [].slice.call(arguments);
+    result = new (func.bind.apply(func, [null].concat(args)));
+    return result;
+  }
 }
 ```
