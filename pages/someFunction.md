@@ -322,6 +322,8 @@ function arrayToData(arr, format, options) {
       // 将 format 模板中的数据替换掉
       for (var i in format) {
         var val = format[i];
+        i = i.replace('$index', index);
+        i = i.replace('$item', item);
         if (typeof val === 'string') {
           val = val.replace('$index', index);
           val = val.replace('$item', item);
@@ -363,20 +365,23 @@ function objectToData(obj, format, options) {
 
   if (typeof format === 'function') customFunc = format;
 
-  for (var key in obj) {
+  for (var index in obj) {
     var temp = {};
+    var item = obj[index];
     if (customFunc) {
       // 自定义处理每一项，需返回对象
-      temp = customFunc(obj[key], key);
+      temp = customFunc(item, index);
     } else {
       // 将 format 模板中的数据替换掉
       for (var i in format) {
         var val = format[i];
+        i = i.replace('$key', index);
+        i = i.replace('$item', item);
         if (typeof val === 'string') {
-          val = val.replace('$key', key);
-          val = val.replace('$item', obj[key]);
+          val = val.replace('$key', index);
+          val = val.replace('$item', item);
         } else if (typeof val === 'function') {
-          val = val(obj[key], key);
+          val = val(item, index);
         }
         temp[i] = val;
       }
