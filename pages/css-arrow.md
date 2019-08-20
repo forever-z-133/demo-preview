@@ -3,6 +3,8 @@
 可能需要考虑的事情：
 * 是否要加阴影
 * 是否要圆角
+* 是否方便改颜色
+* 尖角是 60° 还是 45°
 
 <iframe height="265" style="width: 100%;" scrolling="no" title="CSS 三角" src="//codepen.io/foreverZ133/embed/WNewBLd/?height=265&theme-id=0&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/foreverZ133/pen/WNewBLd/'>CSS 三角</a> by 张永恒
