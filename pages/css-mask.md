@@ -129,7 +129,7 @@ ctx.drawImage(_canvas, x, y, width, height);
 </iframe>
 
 ### 其他、shape-outside（css）
-
+多半搭配 CSS 的 `clip-path`，使剪切后的元素的点击范围与元素形态也变得与形状一致。
 
 ### 扩展阅读
 https://github.com/foreverZ133/blogs/issues/21  

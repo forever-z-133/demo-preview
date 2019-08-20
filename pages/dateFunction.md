@@ -10,6 +10,7 @@
 * [getArrayFromTwoDate](#-两日期间所有日期的数组)（两日期间所有日期的数组）
 * [getPastDateString](#-返回已过去时间)（返回已过去时间）
 * [getWeekName](#-获取星期几)（获取星期几）
+* [TimeCount](#-倒计时)（倒计时）
 
 ## * 日期转为字符串
 ```js
@@ -214,5 +215,26 @@ function getWeekName(date, strType, offset) {
   day = (day + offset) % 6;
 
   return _config[day];
+}
+```
+
+## * 倒计时
+```js
+// 暂不支持暂停继续功能
+function TimeCount() {
+  var timer = 0, now;
+  return {
+    start: function(start, delta, func, finish) {
+      func && func(start);
+      timer = setInterval(function() {
+        if (now <= 0) return finish && finish();
+        now = --start;
+        func && func(now);
+      }, delta);
+    },
+    stop: function() {
+      clearInterval(timer);
+    }
+  }
 }
 ```
