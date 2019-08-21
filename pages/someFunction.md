@@ -6,6 +6,7 @@
 * [isEmpty](#-对象是否为空)（对象是否为空）
 * [addZero](#-自动补零)（自动补零）
 * [random](#-随机数)（随机数）
+* [trim](#-字符串去空)（字符串去空）
 * [returnObject](#-返回非空对象)（返回非空对象）
 * [returnArray](#-返回可用数组)（返回可用数组）
 * [returnNumber](#-返回可用数字)（返回可用数字）
@@ -71,6 +72,19 @@ function random(min, max) {
   }
   min = min || 0, max = max || 1;
   return min + Math.random() * max - min;
+}
+```
+
+## * 字符串去空
+```js
+function trim(str, trimType) {
+  trimType = trimType || 'ALL';
+  var _config = { ALL: /^\s+|\s+$/, LEFT: /^\s+/, RIGHT: /\s+$/ };
+  var reg = _config[trimType];
+  return str.replace(reg, '');
+}
+String.prototype.trim = function(trimType) {
+  return trim(this, trimType);
 }
 ```
 
@@ -396,16 +410,17 @@ function objectToData(obj, format, options) {
 ## * 对象转字符串
 ```js
 // {a:1,b:2} 转为 a=1&b=2
-function objectToString(obj, concat) {
-  concat = concat || '&';
+function objectToString(obj, divide, concat) {
+  divide = divide || '&';
+  concat = concat || '=';
   var result = [];
   for (var key in obj) {
     if (!obj.hasOwnProperty(key)) continue;
     var value = obj[key];
     if (value == undefined) value = '';
-    result.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+    result.push(encodeURIComponent(key) + concat + encodeURIComponent(value));
   }
-  result = result.join(concat);
+  result = result.join(divide);
   return result;
 }
 ```
@@ -413,17 +428,16 @@ function objectToString(obj, concat) {
 ## * 字符串转对象
 ```js
 // a=1&b=2 转为 {a:1,b:2}
-function stringToObject(str, divide) {
+function stringToObject(str, divide, concat) {
   if (!str || typeof str !== 'string') return {};
   divide = divide || '&';
+  concat = concat || '=';
   var arr = str.split(divide);
   return arr.reduce(function (re, item) {
     if (!item) return re;
-    var temp = item.split('=');
-    var key = temp.shift();
-    var value = temp.join('=');
-    key = decodeURIComponent(key);
-    value = decodeURIComponent(value);
+    var temp = item.split(concat);
+    var key = temp.shift().trim();
+    var value = temp.join(concat).trim();
     if (!key) return re;
     if (['null', 'undefined'].indexOf(value) > -1) value = undefined;
     if (value === 'true') value = true;
