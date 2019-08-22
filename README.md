@@ -32,3 +32,4 @@
 * [数据处理的公共方法](https://foreverz133.github.io/demo-preview/#/./pages/someFunction.md)
 * [不常用的公共方法](https://foreverz133.github.io/demo-preview/#/./pages/otherFunction.md)
 * [时间相关的公共方法](https://foreverz133.github.io/demo-preview/#/./pages/dateFunction.md)
+* [不常用的判断函数](https://foreverz133.github.io/demo-preview/#/./pages/someRegExp.md)
