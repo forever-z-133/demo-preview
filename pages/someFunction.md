@@ -66,12 +66,13 @@ function addZero(num, len) {
 ## * 随机数
 ```js
 function random(min, max) {
-  if (typeof max !== 'number') {
-    min = 0;
+  max = max || 0;
+  if (min > max) {
+    var temp = max;
     max = min;
+    min = temp;
   }
-  min = min || 0, max = max || 1;
-  return min + Math.random() * max - min;
+  return min + Math.random() * (max - min);
 }
 ```
 
@@ -79,7 +80,7 @@ function random(min, max) {
 ```js
 function trim(str, trimType) {
   trimType = trimType || 'ALL';
-  var _config = { ALL: /^\s+|\s+$/, LEFT: /^\s+/, RIGHT: /\s+$/ };
+  var _config = { ALL: /^\s+|\s+$/g, LEFT: /^\s+/, RIGHT: /\s+$/ };
   var reg = _config[trimType];
   return str.replace(reg, '');
 }
@@ -123,9 +124,8 @@ function returnArray(obj) {
 // returnNumber(NaN, null, 'null', [], ''); // NaN
 // returnNumber('0', '', 1); // 0
 function returnNumber() {
-  var args = [].slice.call(arguments);
-  for (var i = 0; i < args.length; i++) {
-    var item = args[i];
+  for (var i = 0; i < arguments.length; i++) {
+    var item = arguments[i];
     var _item = parseFloat(item);
     if (!isNaN(_item)) return _item;
   }
@@ -140,7 +140,7 @@ function returnNumber() {
 function toFixed(num, decimal, mathType) {
   mathType = mathType || 'round';  // ceil 向上取整， floor 向下取整，round 四舍五入
 
-  if (typeof decimal !== 'number') throw new Error('第二位入参有误');
+  if (isNaN(parseFloat(decimal))) throw new Error('第二位入参有误');
   if (!Math[mathType]) throw new Error('第三位入参有误');
 
   var pow = Math.pow(10, decimal);
@@ -174,7 +174,7 @@ function count(type, options) {
   var result = nums.reduce(function (re, num, index) {
     num = Number(num) * pow;
     if (index === 0 && ['-', '/'].indexOf(type) > -1) return num;
-    // 注：% 求余运算也有双精度误差问题，但不适用本函数
+    // 注：% 求余运算也有双精度误差问题，但不适用于本函数
     switch (type) {
       case '-': return re - num;
       case '*': return re * num;
