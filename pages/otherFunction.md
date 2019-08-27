@@ -24,6 +24,7 @@
 * [toHashCode](#-转为-Hash-数字)（转为 Hash 数字）
 * [createCurry](#-函数科里化)（函数科里化）
 * [Singleton](#-单例模式)（单例模式）
+* [distence](#-两点间距离)（两点间距离）
 
 ## * 折算成金额
 ```js
@@ -197,25 +198,28 @@ function download() {
  */
 function forEachAsync(data, options) {
   options = options || {};
+  var timesConfig = Math.min(options.number || 5, 8); // 最大线程数
 
-  var timesConfig = options.number || 5; // 每次请求 5 条
-  timesConfig = Math.min(timesConfig, 8); // 每次不得同时发送太多
+  var rest = timesConfig; // 剩余线程数
+  var current = 0; // 当前已进行索引（未必已完成）
+  var result = []; // 结果数据
+  (function loop(index) {
+    const item = data[index];
+    if (!item) return;
+    rest--;
+    if (rest < 0) return;
 
-  // 每次几个数据，都走完则回调
-  function _total_ajax(data, next) {
-    var total = data.length,
-      result = [];
-    for (var i = 0; i < total; i++) {
-      var item = data[i];
-      _ajax(item, (function (i) {
-        return function (res) {
-          result[i] = res;
-          if (--total > 0) return;
-          next && next(result);
-        };
-      })(i));
-    }
-  }
+    _ajax(item, function(res) {
+      rest++;
+      result[index] = res || item;
+      if (current > data.length - 1 && rest === timesConfig) return finish(result);
+      setTimeout(function() {
+        loop(++current); // 注意：_ajax 必须异步，不然这个 loop 会先于下面的 loop
+      }, 1);
+    })
+
+    if (rest > 0) loop(++current);
+  })(0);
 
   // 每次一个数据，走完则回调
   function _ajax(item, next) {
@@ -231,25 +235,16 @@ function forEachAsync(data, options) {
         _next && _next(res);
       }
     });
-
     function _next(res) {
       options.afterAjax && options.afterAjax(res, item);
       next && next(res, item);
     }
   }
 
-  // 循环数据，每 5 条一波走完再下一波
-  (function loop(data, result) {
-    var thisData = data.splice(0, timesConfig); // 本次请求的一波数据
-    if (thisData.length < 1) {
-      options.callback && options.callback(result);
-      return; // 走完了
-    }
-    _total_ajax(thisData, function (res) {
-      result = result.concat(res);
-      loop(data, result);
-    });
-  })(data, []);
+  // 全部运行完成
+  function finish(result) {
+    options.finish && options.finish(result);
+  }
 }
 ```
 
@@ -571,5 +566,15 @@ function Singleton(func) {
     result = new (func.bind.apply(func, [null].concat(args)));
     return result;
   }
+}
+```
+
+## * 两点间距离
+```js
+function distence(x1, y1, x2, y2) {
+  if (x2 == undefined && y2 == undefined) {
+    return Math.abs(x1 - y1);
+  }
+  return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 }
 ```
