@@ -25,6 +25,7 @@
 * [createCurry](#-函数科里化)（函数科里化）
 * [Singleton](#-单例模式)（单例模式）
 * [distence](#-两点间距离)（两点间距离）
+* [promisify](#-转-Promise)（转-Promise）
 
 ## * 折算成金额
 ```js
@@ -576,5 +577,22 @@ function distence(x1, y1, x2, y2) {
     return Math.abs(x1 - y1);
   }
   return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+}
+```
+
+## * 转 Promise
+```js
+// const sleep = (delay) => new Promise(resolve => setTimeout(resolve, delay));
+// 可改为以下方式 const sleep = promisify((delay, next) => setTimeout(next, delay));
+function promisify(fn) {
+  return function () {
+    var args = Array.prototype.slice.call(arguments);
+    return new Promise(function (resolve) {
+      args.push(function (result) {
+        resolve(result);
+      });
+      fn.apply(null, args);
+    })
+  }
 }
 ```
