@@ -586,13 +586,12 @@ function distence(x1, y1, x2, y2) {
 // 可改为以下方式 const sleep = promisify((delay, next) => setTimeout(next, delay));
 function promisify(fn) {
   return function () {
-    var args = Array.prototype.slice.call(arguments);
+    var args = arguments;
     return new Promise(function (resolve) {
-      args.push(function (result) {
-        resolve(result);
-      });
+      args[args.length] = resolve;
+      args.length += 1;
       fn.apply(null, args);
-    })
+    });
   }
 }
 ```

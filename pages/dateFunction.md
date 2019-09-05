@@ -161,8 +161,8 @@ function getFirstDate(date, dateType, offset) {
 function getArrayFromTwoDate(a, b) {
   var result = [];
   var daySecond = 24 * 60 * 60 * 1000;
-  var start = a < b ? a : b;
-  var target = a < b ? b : a;
+  var start = Math.min(a, b);
+  var target = Math.max(a, b);
 
   while (start < target) {
     start = new Date(+start + daySecond);
