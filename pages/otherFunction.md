@@ -185,62 +185,33 @@ function download() {
 ## * 异步循环
 ```js
 /**
- * forEachAsync([data], {
+ * forEachAsync([data], function(index, item, next) {
+ *   var img = new Image(); img.onload = next; img.src = item.url;
+ * }, {
  *   number: 5,  // 每次同时发起 5 个请求
- *   customAjax: function(item, next) { // 自定义请求，next 表示运行下一个
- *     var img = new Image(); img.onload = next; img.src = item.url;
- *   },
- *   api: 'http://', // 没有 customAjax 则走接口
- *   ajaxMethod: 'ajax',  // 默认使用 Util.ajax，还可传入 get post
- *   params: function(item){ return { x: item.x } }, // 自定义接口入参，不写则默认 item
- *   afterAjax: function(response, item) {}, // 每个请求完成的回调
- *   callback: function(result) {},  // 全部跑完的回调，result 现暂是无序的，以后可能会改吧
+ *   finish: function(result) {}, // 结果为 next 的入参集合
  * });
  */
-function forEachAsync(data, options) {
+function forEachAsync(data, func, options) {
   options = options || {};
-  var timesConfig = Math.min(options.number || 5, 8); // 最大线程数
+  const timesConfig = Math.min(options.number || 5, 8); // 最大线程数
+  const total = data.length - 1;
+  const result = [];
 
-  var rest = timesConfig; // 剩余线程数
-  var current = 0; // 当前已进行索引（未必已完成）
-  var result = []; // 结果数据
+  let restQueue = timesConfig; // 剩余队列数
+  let started = 0; // 已发起
+  let loaded = 0; // 已完成
   (function loop(index) {
     const item = data[index];
     if (!item) return;
-    rest--;
-    if (rest < 0) return;
-
-    _ajax(item, function(res) {
-      rest++;
-      result[index] = res || item;
-      if (current > data.length - 1 && rest === timesConfig) return finish(result);
-      setTimeout(function() {
-        loop(++current); // 注意：_ajax 必须异步，不然这个 loop 会先于下面的 loop
-      }, 1);
-    })
-
-    if (rest > 0) loop(++current);
-  })(0);
-
-  // 每次一个数据，走完则回调
-  function _ajax(item, next) {
-    if (options.customAjax) {
-      return options.customAjax(item, _next);
-    }
-    var method = options.ajaxMethod;
-    var ajaxMethod = method === 'ajax' ? Util.ajax : (method ? $[method] : $.post);
-    var api = options.api;
-    var params = options.params ? options.params(item) : item;
-    ajaxMethod(api, params, function (res) {
-      if (res.resultCode == 0) {
-        _next && _next(res);
-      }
+    func(index, item, res => {
+      restQueue++;
+      result[index] = res;
+      if (++loaded > total) return finish(result);
+      setTimeout(() => loop(++started), 25);
     });
-    function _next(res) {
-      options.afterAjax && options.afterAjax(res, item);
-      next && next(res, item);
-    }
-  }
+    if (--restQueue > 0) loop(++started);
+  })(0);
 
   // 全部运行完成
   function finish(result) {
