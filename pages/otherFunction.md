@@ -194,21 +194,21 @@ function download() {
  */
 function forEachAsync(data, func, options) {
   options = options || {};
-  const timesConfig = Math.min(options.number || 5, 8); // 最大线程数
-  const total = data.length - 1;
-  const result = [];
+  var timesConfig = Math.min(options.number || 5, 8); // 最大线程数
+  var total = data.length - 1;
+  var result = [];
 
-  let restQueue = timesConfig; // 剩余队列数
-  let started = 0; // 已发起
-  let loaded = 0; // 已完成
+  var restQueue = timesConfig; // 剩余队列数
+  var started = 0; // 已发起
+  var loaded = 0; // 已完成
   (function loop(index) {
     const item = data[index];
     if (!item) return;
-    func(index, item, res => {
+    func(index, item, function(res) {
       restQueue++;
       result[index] = res;
       if (++loaded > total) return finish(result);
-      setTimeout(() => loop(++started), 25);
+      loop(++started);
     });
     if (--restQueue > 0) loop(++started);
   })(0);
