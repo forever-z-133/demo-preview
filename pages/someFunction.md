@@ -65,13 +65,10 @@ function addZero(num, len) {
 
 ## * 随机数
 ```js
-function random(min, max) {
-  max = max || 0;
-  if (min > max) {
-    var temp = max;
-    max = min;
-    min = temp;
-  }
+function random(n1, n2) {
+  n2 = n2 || 0;
+  var min = Math.min(n1, n2);
+  var max = Math.max(n1, n2);
   return min + Math.random() * (max - min);
 }
 ```
