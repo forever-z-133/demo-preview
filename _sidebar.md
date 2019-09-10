@@ -22,5 +22,6 @@
 * [数据处理的公共方法](./pages/someFunction.md)
 * [不常用的公共方法](./pages/otherFunction.md)
 * [时间相关的公共方法](./pages/dateFunction.md)
-* [NodeJS 相关的公共方法](./pages/someRegExp.md)
+* [NodeJS 相关的公共方法](./pages/nodeFunction.md)
 * [各种判断函数](./pages/someRegExp.md)
+* [兼容性的 Polyfill 代码](./pages/polyfillFunction.md)

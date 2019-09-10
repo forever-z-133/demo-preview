@@ -32,5 +32,6 @@
 * [数据处理的公共方法](https://foreverz133.github.io/demo-preview/#/./pages/someFunction.md)
 * [不常用的公共方法](https://foreverz133.github.io/demo-preview/#/./pages/otherFunction.md)
 * [时间相关的公共方法](https://foreverz133.github.io/demo-preview/#/./pages/dateFunction.md)
-* [NodeJS 相关的公共方法](https://foreverz133.github.io/demo-preview/#/./pages/someRegExp.md)
+* [NodeJS 相关的公共方法](https://foreverz133.github.io/demo-preview/#/./pages/nodeFunction.md)
 * [各种判断函数](https://foreverz133.github.io/demo-preview/#/./pages/someRegExp.md)
+* [兼容性的 Polyfill 代码](https://foreverz133.github.io/demo-preview/#/./pages/polyfillFunction.md)
