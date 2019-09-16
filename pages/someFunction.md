@@ -132,10 +132,11 @@ function returnNumber() {
 
 ## * 小数的取整
 ```js
-// 相当于 toFixed 的拓展
+// 相当于 toFixed 的拓展，且返回的是数字类型
 // toFixed(1.69, 1, 'round');  // 1.7
 function toFixed(num, decimal, mathType) {
-  mathType = mathType || 'round';  // ceil 向上取整， floor 向下取整，round 四舍五入
+  decimal = decimal != null ? decimal : 2;
+  mathType = mathType || 'floor';  // ceil 向上取整， floor 向下取整，round 四舍五入
 
   if (isNaN(parseFloat(decimal))) throw new Error('第二位入参有误');
   if (!Math[mathType]) throw new Error('第三位入参有误');
@@ -150,6 +151,7 @@ function toFixed(num, decimal, mathType) {
 ```js
 // 解决，1. 非数字型数字的运算 2. 小数计算的精度问题
 // count('+', 0.1, 0.2);  // 0.3
+// 延展 countPlus('0.1+0.2') 直接输入字符串
 function count(type, options) {
   var nums = [].slice.call(arguments, 2);
   var _startConfig = { '+': 0, '-': 0, '*': 1, '/': 1 };
@@ -186,6 +188,24 @@ function count(type, options) {
   result = result / _divideConfig[type];
 
   return result;
+}
+function countPlus(str) {
+  var countArr = [], match;
+  str = str.replace(/\s/g, '');
+  // 先处理括号内的运算
+  str = str.replace(/\([^\)]*\)/g, function(match) {
+    return countPlus(match.replace(/^\(|\)$/g, ''));
+  });
+  // 先乘除，后加减，用 exec 一个个计算并替换
+  var _numReg = '(-?[0-9]+[\\.\\e]?[0-9]*)';
+  ['/*', '+-'].forEach(function (item) {
+    item = item.replace(/(?<=\B)/g, '\\\\').slice(0, -2);
+    var _reg = new RegExp(_numReg + '([' + item + '])' + _numReg);
+    while (match = _reg.exec(str)) {
+      str = str.replace(match[0], count(match[2], match[1], match[3]))
+    }
+  });
+  return str;
 }
 ```
 
