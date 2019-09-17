@@ -203,14 +203,13 @@ function countPlus(str) {
   var _numReg = '(-?[0-9]+[\\.\\e]?[0-9]*)';
   ['/*', '+-'].forEach(function (item) {
     item = item.replace(/(?<=\B)/g, '\\\\').slice(0, -2);
-    var _reg = new RegExp(_numReg + '([' + item + '])' + _numReg);
-    var match;
+    var match, _reg = new RegExp(_numReg + '([' + item + '])' + _numReg);
     while (match = _reg.exec(result)) {
       result = result.replace(match[0], count(match[2], match[1], match[3]))
     }
   });
 
-  return result;
+  return parseFloat(result);
 }
 ```
 
