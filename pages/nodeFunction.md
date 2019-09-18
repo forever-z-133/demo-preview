@@ -6,7 +6,7 @@
 ## * 清空文件夹
 ```js
 // 包括其下所有文件及文件夹
-function emptyDirSync(path) {
+function emptyDirSync(dir) {
   const files = [];
   try {
     files = fs.readdirSync(dir)
@@ -14,12 +14,12 @@ function emptyDirSync(path) {
     return mkdir.mkdirsSync(dir)
   }
   files.forEach(file => {
-    let curPath = path + "/" + file;
-    if (fs.statSync(curPath).isDirectory()) {
-      emptyDirSync(curPath); // 递归删除文件夹
-      fs.rmdirSync(curPath);
+    let url = dir + "/" + file;
+    if (fs.statSync(url).isDirectory()) {
+      emptyDirSync(url); // 递归删除文件夹
+      fs.rmdirSync(url);
     } else {
-      fs.unlinkSync(curPath); // 删除文件
+      fs.unlinkSync(url); // 删除文件
     }
   });
 }
@@ -27,16 +27,16 @@ function emptyDirSync(path) {
 
 ## * 删除文件夹
 ```js
-function removeDirSync(path) {
-  emptyDirSync(path);
-  fs.rmdirSync(path);
+function removeDirSync(url) {
+  emptyDirSync(url);
+  fs.rmdirSync(url);
 }
 ```
 
 ## * 新建文件夹
 ```js
-function makeDirSync(path) {
-  !fs.existsSync(path) && fs.mkdirSync(path);
+function makeDirSync(dir) {
+  !fs.existsSync(dir) && fs.mkdirSync(dir);
 }
 ```
 
@@ -82,10 +82,27 @@ function copyDirSync() {
 }
 ```
 
-## * 读取 JSON
+## * 读写 JSON
 ```js
-function readJson() {
+function readJson(url) {
+  if (!fs.existsSync(url)) throw new Error('文件不存在');
+  if (!/\.json$/i.test(url)) throw new Error('链接不是 json 文件');
+  let str = fs.readFileSync(url, 'utf8');
+  try {
+    return JSON.parse(str);
+  } catch(e) { throw e; }
 }
-async function readJsonSync() {
+function writeJson(url, data) {
+  if (!/\.json$/i.test(url)) throw new Error('链接不是 json 文件');
+  try {
+    var str = JSON.stringify(data);
+    fs.writeFileSync(url, str);
+  } catch(e) { throw e; }
+}
+```
+
+## * 是否包含某文件
+```js
+function includeFile(dir, fileName, deep) {
 }
 ```

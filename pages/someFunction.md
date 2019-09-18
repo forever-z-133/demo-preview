@@ -171,8 +171,8 @@ function count(type, options) {
   var startNum = _startConfig[type];
   var pow = Math.pow(10, maxDotLength);
   var result = nums.reduce(function (re, num, index) {
-    num = Number(num) * pow;
     if (index === 0 && ['-', '/'].indexOf(type) > -1) return num;
+    num = parseFloat([num].toString().replace('.', ''));
     // 注：% 求余运算也有双精度误差问题，但不适用于本函数
     switch (type) {
       case '-': return re - num;
