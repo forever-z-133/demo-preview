@@ -7,6 +7,7 @@
 * [toAngle](#-弧度转角度)（弧度转角度）
 * [toRadian](#-角度转弧度)（角度转弧度）
 * [toFirstUpperCase](#-首字母大写)（首字母大写）
+* [camelize/hyphenate](#-驼峰或连字符)（驼峰或连字符）
 * [htmlToString](#-html-转义)（html 转义）
 * [stringToHtml](#-html-字符串反转义)（html 字符串反转义）
 * [debounce](#-去抖)（去抖）
@@ -95,6 +96,16 @@ function toRadian(angle) {
 ```js
 function toFirstUpperCase(str) {
   return str.slice(0, 1).toUpperCase() + str.slice(1).toLowerCase();
+}
+```
+
+## * 驼峰或连字符
+```js
+function hyphenate(str) {
+  return str.replace(/\B([A-Z])/g, '-$1').toLowerCase();
+}
+function camelize(str) {
+  return str.toLowerCase().replace(/-(\w)/g, (_, s) => s ? s.toUpperCase() : '')
 }
 ```
 

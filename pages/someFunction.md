@@ -26,6 +26,7 @@
 * [getDataFromUrl](#-获取链接中的数据)（获取链接中的数据）
 * [objectEqual](#-对象是否相等)（对象是否相等）
 * [getObjectValue](#-获取对象的值)（获取对象的值）
+* [toString](#-安全转字符串)（安全转字符串）
 * [imageToBase64](#-图片链接转-base64)（图片链接转 base64）
 * [base64ToFile](#-base64-转-File-对象)（base64 转 File 对象）
 * [fileToBase64](#-File-对象转-base64)（File 对象转 base64）
@@ -540,6 +541,14 @@ function imageToBase64(src, callback) {
     callback && callback(base64, canvas);
   };
   img.src = src;
+}
+```
+
+## * 安全转字符串
+```js
+function toString(obj) {
+  if (obj == null || isNaN(obj)) return '';
+  return typeof obj === 'object' ? JSON.stringify(obj) : String(obj);
 }
 ```
 
