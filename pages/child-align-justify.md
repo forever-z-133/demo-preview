@@ -43,6 +43,21 @@
 
 类似文字的做法，可看 [案例](./pages/text-align-justify)
 
+### 其他：float
+需注意元素顺序，且不适用于更多元素
+```scss
+.wrap {
+  overflow: hidden;
+  & > .left { float: left; }
+  & > .right { float: right; }
+  & > .middle { overflow: hidden; margin: 0 auto; }
+}
+```
+<iframe height="265" style="width: 100%;" scrolling="no" title="子级留隙 float" src="https://codepen.io/foreverZ133/embed/YzKdRVw?height=265&theme-id=0&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/YzKdRVw'>子级留隙 float</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
 ### 其他、已知空隙 calc 计算
 栅栏布局时代，`col-xs-3` 想补空隙就需要 **加子级** 再 `margin`。  
 而 `calc` 稍微能减轻一丢丢吧，但这是张鑫旭大佬并不推荐的做法，宽度设置最好分离开。
