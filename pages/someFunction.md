@@ -163,32 +163,32 @@ function count(type, options) {
     nums.splice(0, 0, options);
   }
 
-  // 小数点后面最长字符长度，比如 0.1 和 0.234 则返回 3
-  var maxDotLength = nums.reduce(function (max, num) {
-    return Math.max(max, ([num].toString().split('.')[1] || '').length);
-  }, 0);
-
-  // 改造成整数，并计算出结果，比如 0.1 + 0.2 改为 1+2
-  var startNum = _startConfig[type];
-  var pow = Math.pow(10, maxDotLength);
-  var result = nums.reduce(function (re, num, index) {
-    if (index === 0 && ['-', '/'].indexOf(type) > -1) return num;
-    num = parseFloat([num].toString().replace('.', ''));
-    // 注：% 求余运算也有双精度误差问题，但不适用于本函数
-    switch (type) {
-      case '-': return re - num;
-      case '*': return re * num;
-      case '/': return re / num;
-      case '+':
-      default: return re + num;
-    }
-  }, startNum);
-
-  // 回退到原小数形态，比如 3 转为 0.3
-  var _divideConfig = { '+': pow, '-': pow, '*': pow * pow, '/': 1 };
-  result = result / _divideConfig[type];
+  // 开始运算
+  var result = _startConfig[type];
+  for (var i=0; i<nums.length; i++) {
+    if (i === 0 && (type === '-' || type === '/')) { result = nums[0]; continue; }
+    result = _count(result, nums[i]);
+  }
 
   return result;
+
+  // 单次运算的结果
+  function _count(n1, n2) {
+    n1 = parseFloat(n1), n2 = parseFloat(n2);
+    if (isNaN(n1) || isNaN(n2)) return NaN;
+    var dot1 = (n1.toString().split('.')[1] || '').length;;
+    var dot2 = (n2.toString().split('.')[1] || '').length;;
+    var maxDotLength = Math.max(dot1, dot2, 0);
+    var num1 = parseFloat(n1.toFixed(maxDotLength).replace('.', ''));
+    var num2 = parseFloat(n2.toFixed(maxDotLength).replace('.', ''));
+    var pow = Math.pow(10, maxDotLength);
+    switch (type) {
+      case '/': return num1 / num2;
+      case '*': return (num1 * num2) / (pow * pow);
+      case '-': return (num1 - num2) / pow;
+      case '+': default: return (num1 + num2) / pow;
+    }
+  }
 }
 
 // 延展为 countPlus('0.1+0.2') 直接传入字符串
