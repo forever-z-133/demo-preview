@@ -133,14 +133,16 @@ function returnNumber() {
 
 ## * 小数的取整
 ```js
-// 相当于 toFixed 的拓展，且返回的是数字类型
+// 拓展 toFixed 结尾的取整策略，
+// 且返回的是数字类型，
+// 并能解决 166.665.toFixed(2) 不等于 166.67 这类部分数值未四舍五入的问题
 // toFixed(1.69, 1, 'round');  // 1.7
 function toFixed(num, decimal, mathType) {
-  decimal = decimal != null ? decimal : 2;
-  mathType = mathType || 'floor';  // ceil 向上取整， floor 向下取整，round 四舍五入
-
   if (isNaN(parseFloat(decimal))) throw new Error('第二位入参有误');
   if (!Math[mathType]) throw new Error('第三位入参有误');
+
+  decimal = decimal != null ? decimal : 2;
+  mathType = mathType || 'round';  // ceil 向上取整， floor 向下取整，round 四舍五入
 
   var pow = Math.pow(10, decimal);
   var mathFunc = Math[mathType];
