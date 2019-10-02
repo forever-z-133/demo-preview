@@ -181,9 +181,9 @@ function count(type, options) {
     var dot1 = (n1.toString().split('.')[1] || '').length;;
     var dot2 = (n2.toString().split('.')[1] || '').length;;
     var maxDotLength = Math.max(dot1, dot2, 0);
-    var num1 = parseFloat(n1.toFixed(maxDotLength).replace('.', ''));
-    var num2 = parseFloat(n2.toFixed(maxDotLength).replace('.', ''));
     var pow = Math.pow(10, maxDotLength);
+    var num1 = Math.round(n1 * pow);
+    var num2 = Math.round(n2 * pow);
     switch (type) {
       case '/': return num1 / num2;
       case '*': return (num1 * num2) / (pow * pow);
