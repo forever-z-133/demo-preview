@@ -218,16 +218,18 @@ function countPlus(str) {
 
 ## * 数组或数据去重
 ```js
-function unique(arr, key) {
-  var result = [],
-    temp = {};
-  for (var i in arr) {
-    if (!arr.hasOwnProperty(i)) continue;
-    var item = arr[i],
-      value = key ? item[key] : item;
+function unique(arr, key, options) {
+  var result = [];
+  var temp = {};
+  options = options || {};
+  var choose = options.choose || 'after'; // 取靠前的还是靠后的数据
+  if (choose === 'after') arr = arr.reverse();
+  for (var i=0; i<arr.length; i++) {
+    var item = arr[i];
+    var value = key ? item[key] : item;
     if (!(value in temp)) {
       temp[value] = true;
-      result.push(item)
+      result.push(item);
     }
   }
   return result;
