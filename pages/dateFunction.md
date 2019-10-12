@@ -37,6 +37,9 @@ function dateToString(date, format) {
 
   return result;
 }
+Date.prototype.format = function(format) {
+  return dateToString(this, format);
+}
 ```
 
 ## * 字符串转日期
@@ -68,7 +71,7 @@ function dateToObject(date) {
     hour: date.getHours(),
     minute: date.getMinutes(),
     second: date.getSeconds(),
-    day: (date.getDay() + 7) % 7, // 周一为 1，周日为 7
+    day: (date.getDay() + 7) % 7, // 周日为 0，周一为 1
     quarter: 1 + date.getMonth() / 3 >> 0, // 季度
     week: 2 + (date.getDate() - date.getDay()) / 7 >> 0, // 本月第几周
   }
@@ -157,7 +160,7 @@ function getFirstDate(date, dateType, offset) {
 ## * 两日期间所有日期的数组
 ```js
 // 前开后闭区间，注意时分秒会影响计算结果
-// getArrayFromTwoDate(new Date(2019,5,19,11), new Date(2019,5,21,10)) // [20,21]
+// getArrayFromTwoDate(new Date(2019,5,19,11), new Date(2019,5,21,10)) // [Date(2019,5,20),Date(2019,5,21)]
 function getArrayFromTwoDate(a, b) {
   var result = [];
   var daySecond = 24 * 60 * 60 * 1000;
@@ -201,7 +204,7 @@ function getPastDateString(date, options) {
 
 ## * 获取星期几
 ```js
-// getWeekName(0, null, 1);  offset 可让 0 为周一
+// getWeekName(0, null, 1);  offset 可让 date=0 为周一
 function getWeekName(date, strType, offset) {
   var _config = '日,一,二,三,四,五,六'.split(',');
   if (strType === 1) _config = '周日,周一,周二,周三,周四,周五,周六'.split(',');
@@ -221,20 +224,23 @@ function getWeekName(date, strType, offset) {
 ## * 倒计时
 ```js
 // 暂不支持暂停继续功能
+// TimeCount().start(60, 1e3, (num) => console.log(60 - num), () => console.log('end'));
 function TimeCount() {
   var timer = 0, now;
-  return {
-    start: function(start, delta, func, finish) {
-      func && func(start);
-      timer = setInterval(function() {
-        if (now <= 0) return finish && finish();
-        now = --start;
-        func && func(now);
-      }, delta);
-    },
-    stop: function() {
-      clearInterval(timer);
-    }
+  function start(target, delta, func, finish) {
+    func && func(target);
+    now = target;
+    timer = setInterval(function() {
+      now = --target;
+      func && func(now);
+      if (now <= 0) { stop(); finish && finish(); }
+    }, delta);
+    return this;
   }
+  function stop() {
+    clearInterval(timer);
+    return this;
+  }
+  return { start: start, stop: stop };
 }
 ```

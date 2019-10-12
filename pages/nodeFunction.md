@@ -14,7 +14,7 @@ function emptyDirSync(dir) {
     return mkdir.mkdirsSync(dir)
   }
   files.forEach(file => {
-    let url = dir + "/" + file;
+    const url = dir + "/" + file;
     if (fs.statSync(url).isDirectory()) {
       emptyDirSync(url); // 递归删除文件夹
       fs.rmdirSync(url);
@@ -57,28 +57,23 @@ function download(url, output, fileName, callback) {
     });
   });
 }
-async function downloadSync(url, output, fileName) {
-  return await new Promise(resolve => {
-    return download(url, output, fileName, resolve);
-  });
-}
 ```
 
 ## * 移动文件夹
 ```js
-function moveDirSync() {
+function moveDirSync(dir, output) {
 }
 ```
 
 ## * 复制文件
 ```js
-function copyFileSync() {
+function copyFileSync(url, output) {
 }
 ```
 
 ## * 复制文件夹
 ```js
-function copyDirSync() {
+function copyDirSync(dir, output) {
 }
 ```
 
@@ -87,7 +82,7 @@ function copyDirSync() {
 function readJson(url) {
   if (!fs.existsSync(url)) throw new Error('文件不存在');
   if (!/\.json$/i.test(url)) throw new Error('链接不是 json 文件');
-  let str = fs.readFileSync(url, 'utf8');
+  const str = fs.readFileSync(url, 'utf8');
   try {
     return JSON.parse(str);
   } catch(e) { throw e; }
@@ -95,7 +90,7 @@ function readJson(url) {
 function writeJson(url, data) {
   if (!/\.json$/i.test(url)) throw new Error('链接不是 json 文件');
   try {
-    var str = JSON.stringify(data);
+    const str = JSON.stringify(data);
     fs.writeFileSync(url, str);
   } catch(e) { throw e; }
 }

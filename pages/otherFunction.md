@@ -33,14 +33,11 @@
 // numberToMoney(12345.6789);  // 12,345.6789
 function numberToMoney(num) {
   if (!num) return '0.00';
-  var numStr = [num].toString().replace(/\$|\,/g, '');
+  var numStr = parseFloat(num).toString().replace(/\$|\,/g, '');
   if (isNaN(parseFloat(numStr))) numStr = "0";
-  return numStr
-    .split('.') // 小数点前的加逗号，小数点后的不管
-    .map(function (s, i) {
-      return i ? s : s.replace(/\B(?=(\d{3})+\b)/g, ',');
-    })
-    .join('.');
+  return numStr.replace(/\d+(?=$|\.)/, function(digits) { // 仅正则整数部分
+    return digits.replace(/\B(?=(\d{3})+\b)/g, ',');
+  });
 }
 ```
 
@@ -267,7 +264,6 @@ function InterceptManage() {
 ```js
 function Animation() {
   var animTimer = 0;
-
   function start(start, to, duration, callback) {
     var time = Date.now();
     stop();
@@ -279,7 +275,6 @@ function Animation() {
       animTimer = requestAnimationFrame(run);
     })();
   }
-
   function stop() {
     cancelAnimationFrame(animTimer);
   }
@@ -428,7 +423,7 @@ function copyText(text) {
 function useCache(fn) {
   var cache = {};
   return function(){
-    var key = arguments.length + Array.prototype.join.call(arguments, ",");
+    var key = arguments.length + JSON.stringify(arguments);
     if (key in cache) return cache[key];
     else return cache[key] = fn.apply(this, arguments);
   }
@@ -531,7 +526,7 @@ function createCurry(fn){
     _args = _args.concat([].slice.call(arguments));
     return _temp;
   }
-  _temp.toString = _temp.valueOf =function(){
+  _temp.toString = _temp.valueOf = function() {
     return fn.apply(fn, _args);
   }
   return _temp;
@@ -545,7 +540,7 @@ function Singleton(func) {
   var result;
   return function () {
     if (result) return result;
-    var args = [].slice.call(arguments);
+    var args = Array.prototype.slice.call(arguments);
     result = new (func.bind.apply(func, [null].concat(args)));
     return result;
   }
@@ -568,11 +563,11 @@ function distence(x1, y1, x2, y2) {
 // 可改为以下方式 const sleep = promisify((delay, next) => setTimeout(next, delay));
 function promisify(fn) {
   return function () {
-    var args = arguments;
+    var args = arguments, that = this;
     return new Promise(function (resolve) {
       args[args.length] = resolve;
       args.length += 1;
-      fn.apply(null, args);
+      fn.apply(that, args);
     });
   }
 }
