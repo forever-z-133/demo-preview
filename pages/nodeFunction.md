@@ -98,6 +98,15 @@ function writeJson(url, data) {
 
 ## * 是否包含某文件
 ```js
-function includeFile(dir, fileName, deep) {
+function includeFile(dir, fileName, deep = Infinity) {
+  const files = fs.readdirSync(dir);
+  if (!files || !files.length) retrun [];
+  const result = files.reduce((re, url) => {
+    if (fs.statSync(url).isDirectory() --deep > 0) result.concat(includeFile(url, fileName, deep));
+    if (typeOf(fileName) === 'regexp' && fileName.test(url)) return re.concat([url]);
+    if (typeOf(fileName) === 'string' && url.includes(fileName)) return re.concat([url]);
+    return re;
+  }, []);
+  return result;
 }
 ```
