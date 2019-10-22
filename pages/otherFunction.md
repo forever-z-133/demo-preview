@@ -14,6 +14,7 @@
 * [throttle](#-节流)（节流）
 * [download](#-下载)（下载）
 * [forEachAsync](#-异步循环)（异步循环）
+* [forEachDeep](#-递归循环)（递归循环）
 * [InterceptManage](#-次数拦截器)（次数拦截器）
 * [Animation](#-动画类)（动画类）
 * [divideDataForScroll](#-滚动加载数据)（滚动加载数据）
@@ -225,6 +226,20 @@ function forEachAsync(data, func, options) {
   function finish(result) {
     options.finish && options.finish(result);
   }
+}
+```
+
+## * 递归循环
+```js
+function forEachDeep(data, func, indexs = [], parents = []) {
+  data.forEach(function (item, index) {
+    indexs.push(index);
+    parents.push(item);
+    func(item, indexs, parents);
+    if (item.child && item.child.length) {
+      forEachDeep(item.child, func, indexs, parents);
+    }
+  });
 }
 ```
 

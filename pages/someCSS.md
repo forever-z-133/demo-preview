@@ -26,9 +26,7 @@
 .disabled {
   pointer-events: none;
   user-select: none;
-  &.gray {
-    filter: grayscale(1);
-  }
+  &.gray { filter: grayscale(1); }
 }
 ```
 
@@ -93,4 +91,14 @@ label.form-file {
 .textOverflow2 { @include line-clamp(2); };
 .textOverflow3 { @include line-clamp(3); };
 .textOverflow4 { @include line-clamp(4); };
+```
+
+```css
+table {
+  background-color: transparent;
+  empty-cells: show;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+td, th { padding: 0; }
 ```

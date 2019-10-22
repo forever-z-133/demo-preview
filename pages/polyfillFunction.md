@@ -19,4 +19,4 @@
     });
   })
 })([Element.prototype, window])
-````
+```
