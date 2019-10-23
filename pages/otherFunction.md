@@ -14,7 +14,8 @@
 * [throttle](#-节流)（节流）
 * [download](#-下载)（下载）
 * [forEachAsync](#-异步循环)（异步循环）
-* [forEachDeep](#-递归循环)（递归循环）
+* [forEachDeep](#-json-的深入遍历)（json 的深入遍历）
+* [forInDeep](#-对象的深入遍历)（对象的深入遍历）
 * [InterceptManage](#-次数拦截器)（次数拦截器）
 * [Animation](#-动画类)（动画类）
 * [divideDataForScroll](#-滚动加载数据)（滚动加载数据）
@@ -229,17 +230,36 @@ function forEachAsync(data, func, options) {
 }
 ```
 
-## * 递归循环
+## * json 的深入遍历
 ```js
-function forEachDeep(data, func, indexs = [], parents = []) {
-  data.forEach(function (item, index) {
+function forEachDeep(json, childKey, func, indexs = [], parents = []) {
+  json.forEach((item, index) => {
     indexs.push(index);
     parents.push(item);
     func(item, indexs, parents);
-    if (item.child && item.child.length) {
-      forEachDeep(item.child, func, indexs, parents);
+    if (item[childKey] && item[childKey].length) {
+      forEachDeep(item[childKey], childKey, func, indexs, parents);
     }
   });
+}
+```
+
+## * 对象的深入遍历
+```js
+function forInDeep(obj, func, map = new WeakMap()) {
+  if (typeOf(obj) === 'object' || typeOf(obj) === 'array') {
+      let clone = Array.isArray(obj) ? [] : {};
+      if (map.get(obj)) return map.get(obj);
+      map.set(obj, clone);
+      for (let key in obj) {
+        let value = obj[key];
+        value = func ? func(key, value, clone) : value;
+        clone[key] = forInDeep(value, map);
+      }
+      return clone;
+  } else {
+      return obj;
+  }
 }
 ```
 
