@@ -16,6 +16,7 @@
 * [forEachAsync](#-异步循环)（异步循环）
 * [forEachDeep](#-json-的深入遍历)（json 的深入遍历）
 * [forInDeep](#-对象的深入遍历)（对象的深入遍历）
+* [getLocationData](#-获取链接信息)（获取链接信息）
 * [InterceptManage](#-次数拦截器)（次数拦截器）
 * [Animation](#-动画类)（动画类）
 * [divideDataForScroll](#-滚动加载数据)（滚动加载数据）
@@ -253,13 +254,39 @@ function forInDeep(obj, func, map = new WeakMap()) {
       map.set(obj, clone);
       for (let key in obj) {
         let value = obj[key];
-        value = func ? func(key, value, clone) : value;
-        clone[key] = forInDeep(value, map);
+        const temp = func && func(key, value, obj);
+        value = func ? (temp === void 0 ? value : temp) : value;
+        clone[key] = forInDeep(value, func, map);
       }
       return clone;
   } else {
       return obj;
   }
+}
+```
+
+## * 获取链接信息
+```js
+function getLocationData(url) {
+  var obj = { href: url }
+  if (/^https?/.test(url)) {
+    url.replace(/(https?:)\/\/([^\/]*?)(\/.*)/, function(match, protocol, host, pathname) {
+      const [ hostname, port ] = host.split(':');
+      const origin = protocol + '//' + host;
+      obj = { ...obj, protocol, host, hostname, port, origin, pathname };
+    });
+  } else {
+    obj = { ...obj, protocol: null, host: null, hostname: null, prot: null, origin: null, pathname: url };
+  }
+  obj.pathname = obj.pathname.replace(/\?([^#]*)/, function(match, search) {
+    obj.search = search || '';
+    return '';
+  });
+  obj.pathname = obj.pathname.replace(/#([^\?]*)/, function(match, hash) {
+    obj.hash = hash || '';
+    return '';
+  });
+  return obj;
 }
 ```
 
