@@ -383,11 +383,24 @@ function arrayToData(arr, format, options) {
 // dataToObject([{id:1,x:'a'}, {id:2,x:'b'}], 'id', 'x'); // {1:'a',2:'b'}
 function dataToObject(data, keyName, valueName, options) {
   if (typeOf(data) !== 'array' || !data.length) return [];
+
   options = options || {};
+  var deepKey = options.deepKey || ''; // 按某 key 向下递归
+  var customFunc = options.custom || undefined;
+
   return data.reduce(function(re, item, index) {
     var key = keyName ? item[keyName] : index;
     var value = valueName ? item[valueName] : item;
-    re[key] = value;
+    if (customFunc) {
+      customFunc(re, key, value, index);
+    } else {
+      re[key] = value;
+    }
+    if (deepKey) {
+      var child = value[deepKey];  
+      var temp = dataToObject(child, keyName, valueName, options);
+      for (var i in temp) re[i] = temp[i];
+    }
     return re;
   }, {});
 }
