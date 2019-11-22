@@ -30,6 +30,7 @@
 * [Singleton](#-单例模式)（单例模式）
 * [distence](#-两点间距离)（两点间距离）
 * [promisify](#-转-Promise)（转-Promise）
+* [flexable](#px-转-rem-自适应)(px 转 rem 自适应)
 
 ## * 折算成金额
 ```js
@@ -632,5 +633,22 @@ function promisify(fn) {
       fn.apply(that, args);
     });
   }
+}
+```
+
+## * px 转 rem 自适应
+```js
+function flexable(remRatio = 10) {
+  function setRem() {
+    var winW = docEl.getBoundingClientRect().width;
+    $style.innerText = "html{font-size:" + (docEl.style.fontSize = winW / remRatio + "px") + " !important;}"
+  }
+  var win = window,
+      doc = document,
+      docEl = doc.documentElement,
+      $style = doc.createElement("style");
+  doc.head.appendChild($style);
+  setRem();
+  win.addEventListener("resize", setRem, !1);
 }
 ```
