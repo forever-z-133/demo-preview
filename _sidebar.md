@@ -15,6 +15,7 @@
 * [六种蜂巢形样式](./pages/honeycomb.md)
 * [遮罩/蒙版/裁剪效果](./pages/css-mask.md)
 * [尖角与箭头的实现](./pages/css-arrow.md)
+* [饼状图的实现](./pages/css-pie.md)
 
 ## 其他
 * [对象的深拷贝](./pages/deep-clone.md)

@@ -25,6 +25,7 @@
 * [六种蜂巢形样式](https://foreverz133.github.io/demo-preview/#/./pages/honeycomb.md)
 * [遮罩/蒙版/裁剪效果](https://foreverz133.github.io/demo-preview/#/./pages/css-mask.md)
 * [尖角与箭头的实现](https://foreverz133.github.io/demo-preview/#/./pages/css-arrow.md)
+* [饼状图的实现](https://foreverz133.github.io/demo-preview/#/./pages/css-pie.md)
 
 ## 其他
 * [对象的深拷贝](https://foreverz133.github.io/demo-preview/#/./pages/deep-clone.md)
