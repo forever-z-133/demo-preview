@@ -600,10 +600,9 @@ function createCurry(fn){
 ```js
 // A = Singleton(A); var a = new A(x); var b = new A(y);
 function Singleton(func) {
-  var result;
-  return function () {
+  let result = undefined;
+  return function (...args) {
     if (result) return result;
-    var args = Array.prototype.slice.call(arguments);
     result = new (func.bind.apply(func, [null].concat(args)));
     return result;
   }
@@ -625,9 +624,9 @@ function distence(x1, y1, x2, y2) {
 // const sleep = (delay) => new Promise(resolve => setTimeout(resolve, delay));
 // 可改为以下方式 const sleep = promisify((delay, next) => setTimeout(next, delay));
 function promisify(fn) {
-  return function () {
-    var args = arguments, that = this;
-    return new Promise(function (resolve) {
+  return function (...args) {
+    const that = this;
+    return new Promise((resolve) => {
       args[args.length] = resolve;
       args.length += 1;
       fn.apply(that, args);
@@ -638,7 +637,8 @@ function promisify(fn) {
 
 ## * px 转 rem 自适应
 ```js
-function flexable(remRatio = 10) {
+// 750rem = 100vw
+function flexable(remRatio = 750) {
   function setRem() {
     var winW = docEl.getBoundingClientRect().width;
     $style.innerText = "html{font-size:" + (docEl.style.fontSize = winW / remRatio + "px") + " !important;}"

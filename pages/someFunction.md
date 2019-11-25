@@ -7,18 +7,22 @@
 * [addZero](#-自动补零)（自动补零）
 * [random](#-随机数)（随机数）
 * [trim](#-字符串去空)（字符串去空）
+* [removeNull](#-删除对象中为空的键值对)（删除对象中为空的键值对）
 * [returnObject](#-返回非空对象)（返回非空对象）
 * [returnArray](#-返回可用数组)（返回可用数组）
 * [returnNumber](#-返回可用数字)（返回可用数字）
 * [toFixed](#-小数的取整)（小数的取整）
 * [count](#-数字计算)（数字计算）
+* [objectLength](#-获取对象的长度)（获取对象的长度）
 * [unique](#-数组或数据去重)（数组或数据去重）
 * [pushToUniqueArray](#-添加到去重数组)（添加到去重数组）
-* [filterData](#-筛选数据)（筛选数据）
+* [forEachDeep](#-数据的深度遍历)（数据的深度遍历）
+* [forInDeep](#-对象的深度遍历)（对象的深度遍历）
 * [deepClone](#-深拷贝)（深拷贝）
+* [filterData](#-筛选数据)（筛选数据）
 * [dataToArray](#-从数据中获取数组)（从数据中获取数组）
-* [arrayToData](#-数组转数据)（数组转数据）
 * [dataToObject](#-数据转对象)（数据转对象）
+* [arrayToData](#-数组转数据)（数组转数据）
 * [objectToData](#-对象转数据)（对象转数据）
 * [objectToString](#-对象转字符串)（对象转字符串）
 * [stringToObject](#-字符串转对象)（字符串转对象）
@@ -37,7 +41,7 @@
 ## * 判断数据类型
 ```js
 function typeOf(obj) {
-  var typeStr = Object.prototype.toString.call(obj).split(" ")[1];
+  const typeStr = Object.prototype.toString.call(obj).split(" ")[1];
   return typeStr.substr(0, typeStr.length - 1).toLowerCase();
 }
 function isType(obj, type) {
@@ -49,16 +53,14 @@ function isType(obj, type) {
 ```js
 function isEmpty(obj) {
   if (isNaN(obj) || (typeof obj !== 'number' && !obj)) return true;
-  for (var i in obj) return false;
   return true;
 }
 ```
 
 ## * 自动补零
 ```js
-function addZero(num, len) {
-  len = len || 2;
-  var numLen = (num + '').length;
+function addZero(num, len = 2) {
+  let numLen = (num + '').length;
   while (numLen++ < len) { num = '0' + num; }
   return num + '';
 }
@@ -66,10 +68,9 @@ function addZero(num, len) {
 
 ## * 随机数
 ```js
-function random(n1, n2) {
-  n2 = n2 || 0;
-  var min = Math.min(n1, n2);
-  var max = Math.max(n1, n2);
+function random(n1, n2 = 0) {
+  const min = Math.min(n1, n2);
+  const max = Math.max(n1, n2);
   return min + Math.random() * (max - min);
 }
 ```
@@ -78,12 +79,28 @@ function random(n1, n2) {
 ```js
 function trim(str, trimType) {
   trimType = trimType || 'ALL';
-  var _config = { ALL: /^\s+|\s+$/g, LEFT: /^\s+/, RIGHT: /\s+$/ };
-  var reg = _config[trimType];
+  const config = { ALL: /^\s+|\s+$/g, LEFT: /^\s+/, RIGHT: /\s+$/ };
+  const reg = config[trimType];
   return str.replace(reg, '');
 }
-String.prototype.trim = function(trimType) {
-  return trim(this, trimType);
+if (!String.prototype.trim) {
+  String.prototype.trim = (trimType) => {
+    return trim(this, trimType);
+  }
+}
+```
+
+## * 删除对象中为空的键值对
+```js
+function removeNull(obj) {
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      const val = obj[key];
+      if (val === undefined) {
+        delete obj[key];
+      }
+    }
+  }
 }
 ```
 
@@ -91,29 +108,18 @@ String.prototype.trim = function(trimType) {
 ```js
 // returnObject({});  // null
 function returnObject(obj) {
-  if (Object.keys) {
-    if (Object.keys(obj).length) return obj
-  } else {
-    for (var key in obj) {
-      if (!obj.hasOwnProperty(key)) continue;
-      return obj;
-    }
-  }
-  return null;
+  if (isEmpty(obj)) return null;
+  for (const key in obj) if ({}.hasOwnProperty.call(obj, key)) return false;
+  return obj;
 }
 ```
 
 ## * 返回数组
 ```js
 function returnArray(obj) {
-  if (!obj) return [];
-  if (typeof obj === 'string') {
-    return obj.split(',');
-  } else if (typeOf(obj) === 'array') {
-    return obj;
-  } else {
-    throw new Error('入参有误');
-  }
+  if (typeof obj === 'string' && obj) return obj.split(',');
+  if (typeOf(obj) === 'array') return obj;
+  return [];
 }
 ```
 
@@ -121,11 +127,11 @@ function returnArray(obj) {
 ```js
 // returnNumber(NaN, null, 'null', [], ''); // NaN
 // returnNumber('0', '', 1); // 0
-function returnNumber() {
-  for (var i = 0; i < arguments.length; i++) {
-    var item = arguments[i];
-    var _item = parseFloat(item);
-    if (!isNaN(_item)) return _item;
+function returnNumber(...args) {
+  for (let i = 0; i < args.length; i++) {
+    const item = args[i];
+    const num = parseFloat(item);
+    if (!isNaN(num)) return num;
   }
   return NaN;
 }
@@ -144,8 +150,8 @@ function toFixed(num, decimal, mathType) {
   decimal = decimal != null ? decimal : 2;
   mathType = mathType || 'round';  // ceil 向上取整， floor 向下取整，round 四舍五入
 
-  var pow = Math.pow(10, decimal);
-  var mathFunc = Math[mathType];
+  const pow = Math.pow(10, decimal);
+  const mathFunc = Math[mathType];
   return mathFunc(num * pow) / pow;
 }
 ```
@@ -155,80 +161,96 @@ function toFixed(num, decimal, mathType) {
 // 解决，1. 非数字型数字的运算 2. 小数计算的精度问题
 // count('+', 0.1, 0.2);  // 0.3
 // 或 countPlus('0.1+0.2');  // 0.3
-function count(type, options) {
-  var nums = [].slice.call(arguments, 2);
-  var _startConfig = { '+': 0, '-': 0, '*': 1, '/': 1 };
-  if (!(type in _startConfig)) throw new Error('首位入参有误');
 
-  // 可能往后会加入些配置，但如果不是对象则不是配置
-  if (typeOf(options) !== 'object') {
-    nums.splice(0, 0, options);
-  }
-
-  // 开始运算
-  var result = _startConfig[type];
-  for (var i=0; i<nums.length; i++) {
-    if (i === 0 && (type === '-' || type === '/')) { result = nums[0]; continue; }
-    result = _count(result, nums[i]);
-  }
-
-  return result;
-
-  // 单次运算的结果
-  function _count(n1, n2) {
-    n1 = parseFloat(n1), n2 = parseFloat(n2);
-    if (isNaN(n1) || isNaN(n2)) return NaN;
-    var dot1 = (n1.toString().split('.')[1] || '').length;;
-    var dot2 = (n2.toString().split('.')[1] || '').length;;
-    var maxDotLength = Math.max(dot1, dot2, 0);
-    var pow = Math.pow(10, maxDotLength);
-    var num1 = Math.round(n1 * pow);
-    var num2 = Math.round(n2 * pow);
-    switch (type) {
-      case '/': return num1 / num2;
-      case '*': return (num1 * num2) / (pow * pow);
-      case '-': return (num1 - num2) / pow;
-      case '+': default: return (num1 + num2) / pow;
-    }
+function count(type, n1, n2) {
+  n1 = parseFloat(n1);
+  n2 = parseFloat(n2);
+  if (isNaN(n1) || isNaN(n2)) return NaN;
+  const dot1 = (n1.toString().split('.')[1] || '').length;
+  const dot2 = (n2.toString().split('.')[1] || '').length;
+  const maxDotLength = Math.max(dot1, dot2, 0);
+  const pow = Math.pow(10, maxDotLength);
+  const num1 = Math.round(n1 * pow);
+  const num2 = Math.round(n2 * pow);
+  switch (type) {
+    case '/':
+      return num1 / num2;
+    case '*':
+      return (num1 * num2) / (pow * pow);
+    case '-':
+      return (num1 - num2) / pow;
+    case '+':
+    default:
+      return (num1 + num2) / pow;
   }
 }
-
-// 延展为 countPlus('0.1+0.2') 直接传入字符串
+// 拓展支持多个数字的运算 countMore('+', 1, 2, 3)
+function countMore(type, options, ...nums) {
+  const _startConfig = { '+': 0, '-': 0, '*': 1, '/': 1 };
+  if (!(type in _startConfig)) throw new Error('首位入参有误');
+  // 可能往后会加入些配置，但如果不是对象则不是配置
+  if (typeOf(options) !== 'object') nums.splice(0, 0, options);
+  // 开始运算
+  let result = _startConfig[type];
+  for (let i = 0; i < nums.length; i++) {
+    if (i === 0 && (type === '-' || type === '/')) {
+      result = nums[0];
+      continue;
+    }
+    result = count(result, nums[i]);
+  }
+  return result;
+}
+// 拓展支持带符号字符串式运算 countPlus('0.1+0.2')
 function countPlus(str) {
-  var result = str.replace(/\s/g, '');
-
-  // 先处理括号内的运算
-  result = result.replace(/\(([^\)]*)\)/g, function(match, _str) {
-    return countPlus(_str);
-  });
-
+  let result = str.replace(/\s/g, '');
+  // 先递归处理括号内的运算
+  result = result.replace(/\(([^)]*)\)/g, (match, _str) => countPlus(_str));
   // 先乘除，后加减，用 exec 正则出来一个个计算并替换
-  var _numReg = '(-?[0-9]+[\\.\\e]?[0-9]*)';
-  ['/*', '+-'].forEach(function (item) {
+  const _numReg = '(-?[0-9]+[\\.\\e]?[0-9]*)';
+  ['/*', '+-'].forEach((item) => {
     item = item.replace(/(?<=\B)/g, '\\\\').slice(0, -2);
-    var match, _reg = new RegExp(_numReg + '([' + item + '])' + _numReg);
-    while (match = _reg.exec(result)) {
-      result = result.replace(match[0], count(match[2], match[1], match[3]))
+    const _reg = new RegExp(_numReg + '([' + item + '])' + _numReg);
+    let match = _reg.exec(result);
+    while (match) {
+      result = result.replace(match[0], count(match[2], match[1], match[3]));
+      match = _reg.exec(result);
     }
   });
-
   return parseFloat(result);
+}
+```
+
+## * 获取对象的长度
+```js
+function objectLength(obj) {
+  if (isEmpty(obj)) return 0;
+  if (Object.keys) {
+    return Object.keys(obj).length;
+  }
+  var length = 0;
+  for (var key in obj) {
+    if ({}.hasOwnProperty.call(obj, key)) {
+      length++;
+    }
+  }
+  return length;
 }
 ```
 
 ## * 数组或数据去重
 ```js
 function unique(arr, key, options) {
-  var result = [];
-  var temp = {};
+  const result = [];
+  const temp = {};
   options = options || {};
-  var choose = options.choose || 'after'; // 取靠前的还是靠后的数据
+  const choose = options.choose || 'after'; // 取靠前的还是靠后的数据
   if (choose === 'after') arr = arr.reverse();
-  for (var i=0; i<arr.length; i++) {
-    var item = arr[i];
-    var value = key ? item[key] : item;
-    if (!(value in temp)) {
-      temp[value] = true;
+  for (let i = 0; i < arr.length; i++) {
+    const item = arr[i];
+    const val = key ? item[key] : item;
+    if (!(val in temp)) {
+      temp[val] = true;
       result.push(item);
     }
   }
@@ -247,12 +269,76 @@ function pushToUniqueArray(arr, newItem, key, options) {
   if (arr.length < 1) return [newItem];
 
   options = options || {};
-  var remove = options.remove || false;
+  const remove = options.remove || false;
 
-  return arr.reduce(function (re, item) {
-    var inArray = key ? (newItem[key] === item[key]) : (newItem === item);
+  return arr.reduce((re, item) => {
+    const inArray = key ? (newItem[key] === item[key]) : (newItem === item);
     return inArray && remove ? re : re.concat([item]);
   }, []);
+}
+```
+
+## * 数据的深度遍历
+```js
+function forEachDeep(json, childKey, func, indexs = [], parents = []) {
+  json.forEach((item, index) => {
+    indexs.push(index);
+    parents.push(item);
+    func(item, indexs, parents);
+    if (item[childKey] && item[childKey].length) {
+      forEachDeep(item[childKey], childKey, func, indexs, parents);
+    }
+  });
+}
+```
+
+## * 对象的深度遍历
+```js
+function forInDeep(obj, func, options, map = new WeakMap()) {
+  if (typeOf(obj) === 'object' || typeOf(obj) === 'array') {
+    let clone = Array.isArray(obj) ? [] : {};
+    if (map.get(obj)) return map.get(obj);
+    map.set(obj, clone);
+    for (let key in obj) {
+      let val = obj[key];
+      const temp = func && func(key, val, obj, clone);
+      val = func ? (temp === void 0 ? val : temp) : val;
+      clone[key] = forInDeep(val, func, map);
+    }
+    return clone;
+  } else {
+    return obj;
+  }
+}
+```
+
+## * 深拷贝
+```js
+function deepClone(rawObj, map = new WeakMap()) {
+  if (!(rawObj instanceof Object)) return rawObj;
+  let objectClone;
+  const Constructor = rawObj.constructor;
+  switch (Constructor) {
+    case RegExp:
+    case Error:
+    case Date:
+      objectClone = new Constructor(rawObj); break;
+    case Function:
+      objectClone = rawObj; break;
+    default:
+      objectClone = new Constructor();
+  }
+  if (map.get(rawObj)) return map.get(rawObj);
+  map.set(rawObj, objectClone);
+  for (const prop in rawObj) {
+    if ({}.hasOwnProperty.call(rawObj, prop)) {
+      objectClone[prop] = deepClone(rawObj[prop]);
+    }
+  }
+  return objectClone;
+}
+function cloneDeep2(obj) {
+  return forInDeep(obj);
 }
 ```
 
@@ -263,16 +349,18 @@ function filterData(data, value, key, options) {
   if (typeOf(data) !== 'array' || !data.length) return [];
 
   options = options || {};
-  var judgeType = options.type || '=='; // 判断类型
-  var customJudgeFunc = options.custom || undefined; // 自定义判断
-  var reserve = options.reserve || false; // 反选
+  const judgeType = options.type || '=='; // 判断类型
+  const invert = options.invert || false; // 取反
+  const deepKey = options.deepKey || ''; // 按某 key 向下递归
+  let customJudgeFunc = options.custom || undefined; // 自定义判断
 
   if (typeof key === 'function') customJudgeFunc = key;
 
-  return data.reduce(function (re, item) {
-    var val = key ? item[key] : item;
-    var inner = false;
-    var result = [];
+  let result = [];
+  forEachDeep(data, deepKey, (item) => {
+    const val = key ? item[key] : item;
+    let inner = false;
+    let temp = [];
 
     // 判断值是否对应
     if (typeOf(customJudgeFunc) === 'function') {
@@ -283,37 +371,17 @@ function filterData(data, value, key, options) {
         inner = val.indexOf(value) > -1;
       }
     } else {
+      // eslint-disable-next-line no-eval
       inner = eval(val + judgeType + value);
     }
 
-    if (reserve) inner = !inner;
-    if (inner) result = [item];
+    if (invert) inner = !inner;
 
-    return re.concat(result);
-  }, []);
-}
-```
+    if (inner) temp = [item];
+    result = result.concat(temp);
+  });
 
-## * 深拷贝
-```js
-function deepClone(rawObj) {
-  if (!(rawObj instanceof Object)) return rawObj;
-  var objectClone;
-  var Constructor = rawObj.constructor;
-  switch (Constructor) {
-    case RegExp:
-    case Error:
-    case Date:
-      objectClone = new Constructor(rawObj); break;
-    case Function: 
-      objectClone = rawObj; break;
-    default:
-      objectClone = new Constructor();
-  }
-  for (var prop in rawObj) {
-    objectClone[prop] = deepClone(rawObj[prop]);
-  }
-  return objectClone;
+  return result;
 }
 ```
 
@@ -325,56 +393,17 @@ function dataToArray(data, key, options) {
   if (!key) throw new Error('第二位入参有误');
 
   options = options || {};
-  var noEmpty = options.noEmpty || false; // 排除值为空的
-  var deepKey = options.deepKey || ''; // 按某 key 向下递归
+  const noEmpty = options.noEmpty || false; // 排除值为空的
+  const deepKey = options.deepKey || ''; // 按某 key 向下递归
 
-  return data.reduce(function (re, item) {
-    var value = item[key],
-      deep = [];
-    if (noEmpty && value == undefined) return re;
-    if (deepKey) {
-      var child = typeOf(item) === 'array' ? item : item[deepKey];
-      deep = dataToArray(child, key, options);
-    }
-    return re.concat([value], deep);
-  }, []);
-}
-```
+  const result = [];
+  forEachDeep(data, deepKey, (item) => {
+    const val = item[key];
+    if (noEmpty && (val === undefined || val === null)) return;
+    result.push(val);
+  });
 
-## * 数组转数据
-```js
-// arrayToData([1,2], {a:'$item',i:'$index'}) => [{a:1,i:0},{a:2,i:1}]
-function arrayToData(arr, format, options) {
-  if (typeOf(arr) !== 'array' || !arr.length) return [];
-  if (typeOf(format) !== 'object') throw new Error('第二位入参有误');
-
-  options = options || {};
-  var customFunc = options.custom || undefined;
-  
-  if (typeof format === 'function') customFunc = format;
-
-  return arr.reduce(function(re, item, index) {
-    var temp = {};
-    if (customFunc) {
-      // 自定义处理每一项，需返回对象
-      temp = customFunc(item, index);
-    } else {
-      // 将 format 模板中的数据替换掉
-      for (var i in format) {
-        var val = format[i];
-        i = i.replace('$index', index);
-        i = i.replace('$item', item);
-        if (typeof val === 'string') {
-          val = val.replace('$index', index);
-          val = val.replace('$item', item);
-        } else if (typeof val === 'function') {
-          val = val(item, index);
-        }
-        temp[i] = val;
-      }
-    }
-    return re.concat([temp]);
-  }, []);
+  return result;
 }
 ```
 
@@ -385,24 +414,60 @@ function dataToObject(data, keyName, valueName, options) {
   if (typeOf(data) !== 'array' || !data.length) return [];
 
   options = options || {};
-  var deepKey = options.deepKey || ''; // 按某 key 向下递归
-  var customFunc = options.custom || undefined;
+  const deepKey = options.deepKey || ''; // 按某 key 向下递归
+  const customFunc = options.custom || undefined;
 
-  return data.reduce(function(re, item, index) {
-    var key = keyName ? item[keyName] : index;
-    var value = valueName ? item[valueName] : item;
+  const result = {};
+  forEachDeep(data, deepKey, (item, indexs) => {
+    const key = keyName ? item[keyName] : index;
+    const val = valueName ? item[valueName] : item;
     if (customFunc) {
-      customFunc(re, key, value, index);
+      customFunc(result, key, val, index);
     } else {
-      re[key] = value;
+      result[key] = val;
     }
-    if (deepKey) {
-      var child = value[deepKey];  
-      var temp = dataToObject(child, keyName, valueName, options);
-      for (var i in temp) re[i] = temp[i];
+  });
+
+  return result;
+}
+```
+
+## * 数组转数据
+```js
+// arrayToData([1,2], {a:'$item',i:'$index'}) => [{a:1,i:0},{a:2,i:1}]
+function arrayToData(arr, format, options) {
+  if (typeOf(arr) !== 'array' || !arr.length) return [];
+  if (typeOf(arr) !== 'object' || typeof format !== 'function') throw new Error('第二位入参有误');
+
+  options = options || {};
+  let customFormat = options.custom || undefined;
+
+  if (typeof format === 'function') customFormat = format;
+
+  return arr.reduce((re, item, index) => {
+    let newItem = {};
+    if (customFormat) {
+      // 自定义处理每一项，需返回对象
+      newItem = customFormat(item, index);
+    } else {
+      // 将 format 模板中的数据替换掉
+      for (let i in format) {
+        if ({}.hasOwnProperty.call(format, i)) {
+          let val = format[i];
+          i = i.replace('$index', index);
+          i = i.replace('$item', item);
+          if (typeof val === 'string') {
+            val = val.replace('$index', index);
+            val = val.replace('$item', item);
+          } else if (typeof val === 'function') {
+            val = val(item, index);
+          }
+          newItem[i] = val;
+        }
+      }
     }
-    return re;
-  }, {});
+    return re.concat([newItem]);
+  }, []);
 }
 ```
 
@@ -413,33 +478,37 @@ function objectToData(obj, format, options) {
   if (typeOf(format) !== 'object') throw new Error('第二位入参有误');
 
   options = options || {};
-  var customFunc = options.custom || undefined;
-  var result = [];
+  let customFormat = options.custom || undefined;
+  const result = [];
 
-  if (typeof format === 'function') customFunc = format;
+  if (typeof format === 'function') customFormat = format;
 
-  for (var index in obj) {
-    var temp = {};
-    var item = obj[index];
-    if (customFunc) {
-      // 自定义处理每一项，需返回对象
-      temp = customFunc(item, index);
-    } else {
-      // 将 format 模板中的数据替换掉
-      for (var i in format) {
-        var val = format[i];
-        i = i.replace('$key', index);
-        i = i.replace('$item', item);
-        if (typeof val === 'string') {
-          val = val.replace('$key', index);
-          val = val.replace('$item', item);
-        } else if (typeof val === 'function') {
-          val = val(item, index);
+  for (const index in obj) {
+    if ({}.hasOwnProperty.call(obj, index)) {
+      let temp = {};
+      const item = obj[index];
+      if (customFormat) {
+        // 自定义处理每一项，需返回对象
+        temp = customFormat(item, index);
+      } else {
+        // 将 format 模板中的数据替换掉
+        for (let i in format) {
+          if ({}.hasOwnProperty.call(format, i)) {
+            let val = format[i];
+            i = i.replace('$key', index);
+            i = i.replace('$item', item);
+            if (typeof val === 'string') {
+              val = val.replace('$key', index);
+              val = val.replace('$item', item);
+            } else if (typeof val === 'function') {
+              val = val(item, index);
+            }
+            temp[i] = val;
+          }
         }
-        temp[i] = val;
       }
+      result.push(temp);
     }
-    result.push(temp);
   }
 
   return result;
@@ -449,15 +518,14 @@ function objectToData(obj, format, options) {
 ## * 对象转字符串
 ```js
 // {a:1,b:2} 转为 a=1&b=2
-function objectToString(obj, divide, concat) {
-  divide = divide || '&';
-  concat = concat || '=';
-  var result = [];
-  for (var key in obj) {
-    if (!obj.hasOwnProperty(key)) continue;
-    var value = obj[key];
-    if (value == undefined) value = '';
-    result.push(encodeURIComponent(key) + concat + encodeURIComponent(value));
+function objectToString(obj, divide = '&', concat = '=') {
+  let result = [];
+  for (const key in obj) {
+    if ({}.hasOwnProperty.call(obj, key)) {
+      let val = obj[key];
+      if (val === undefined || val == null) val = '';
+      result.push(encodeURIComponent(key) + concat + encodeURIComponent(val));
+    }
   }
   result = result.join(divide);
   return result;
@@ -467,21 +535,19 @@ function objectToString(obj, divide, concat) {
 ## * 字符串转对象
 ```js
 // a=1&b=2 转为 {a:1,b:2}
-function stringToObject(str, divide, concat) {
+function stringToObject(str, divide = '&', concat = '=') {
   if (!str || typeof str !== 'string') return {};
-  divide = divide || '&';
-  concat = concat || '=';
-  var arr = str.split(divide);
-  return arr.reduce(function (re, item) {
+  const arr = str.split(divide);
+  return arr.reduce((re, item) => {
     if (!item) return re;
-    var temp = item.split(concat);
-    var key = temp.shift().trim();
-    var value = temp.join(concat).trim();
+    const temp = item.split(concat);
+    const key = temp.shift().trim();
+    let val = temp.join(concat).trim();
     if (!key) return re;
-    if (['null', 'undefined'].indexOf(value) > -1) value = undefined;
-    if (value === 'true') value = true;
-    if (value === 'false') value = false;
-    re[key] = value;
+    if (['null', 'undefined'].indexOf(val) > -1) val = undefined;
+    if (val === 'true') val = true;
+    if (val === 'false') val = false;
+    re[key] = val;
     return re;
   }, {});
 }
@@ -493,7 +559,7 @@ function stringToObject(str, divide, concat) {
 function addDataToUrl(url, data) {
   if (!data) return url;
   
-  var concat = /\?/.test(url) ? '&' : '?';
+  const concat = /\?/.test(url) ? '&' : '?';
 
   if (typeof data === 'string') {
     return url + concat + data;
@@ -507,8 +573,8 @@ function addDataToUrl(url, data) {
 
 ## * 获取链接中的数据
 ```js
-function getDataFromUrl(name, url) {
-  var obj = stringToObject((url || location.href).split('?')[1], /[#?&]/);
+function getDataFromUrl(name, url = location.href) {
+  const obj = stringToObject(url.split('?')[1], /[#?&]/);
   return name ? obj[name] : obj;
 }
 ```
@@ -518,13 +584,13 @@ function getDataFromUrl(name, url) {
 function objectEqual(a, b) {
   if (a === b) return true;
 
-  var aProps = Object.getOwnPropertyNames(a);
-  var bProps = Object.getOwnPropertyNames(b);
+  const aProps = Object.getOwnPropertyNames(a);
+  const bProps = Object.getOwnPropertyNames(b);
 
-  if (aProps.length != bProps.length) return false;
+  if (aProps.length !== bProps.length) return false;
 
-  for (var i = 0; i < aProps.length; i++) {
-    var key = aProps[i];
+  for (let i = 0; i < aProps.length; i++) {
+    const key = aProps[i];
     if (a[key] !== b[key]) return false;
   }
   return true;
@@ -537,35 +603,35 @@ function objectEqual(a, b) {
 // getObjectValue({a:{b:1}}, 'a.c.d');  // undefined
 function getObjectValue(obj, keyStr) {
   if (!keyStr) throw new Error('入参有误');
-  var keys = keyStr.split('.');
-  return keys.reduce(function(re, key) {
+  const keys = keyStr.split('.');
+  return keys.reduce((re, key) => {
     return (re || {})[key];
   }, obj);
-}
-```
-
-## * 图片链接转 base64
-```js
-function imageToBase64(src, callback) {
-  var img = new Image();
-  img.onload = function () {
-    var canvas = document.createElement('canvas');
-    var imgW = canvas.width = img.width;
-    var imgH = canvas.height = img.height;
-    var ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, imgW, imgH);
-    var base64 = canvas.toDataURL('image/jpeg');
-    callback && callback(base64, canvas);
-  };
-  img.src = src;
 }
 ```
 
 ## * 安全转字符串
 ```js
 function toString(obj) {
-  if (obj == null || isNaN(obj)) return '';
+  if (obj === null || obj === undefined || isNaN(obj)) return '';
   return typeof obj === 'object' ? JSON.stringify(obj) : String(obj);
+}
+```
+
+## * 图片链接转 base64
+```js
+function imageToBase64(src, callback) {
+  const img = new Image();
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    const imgW = canvas.width = img.width;
+    const imgH = canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, imgW, imgH);
+    const base64 = canvas.toDataURL('image/jpeg');
+    if (callback) callback(base64, canvas);
+  };
+  img.src = src;
 }
 ```
 
@@ -573,25 +639,25 @@ function toString(obj) {
 ```js
 function base64ToFile(base64, imgName, callback, options) {
   options = options || {};
-  var type = options.type || 'image/jpeg';
-  var byteString = atob(base64.split(',')[1]);
-  var ab = new ArrayBuffer(byteString.length);
-  var ia = new Uint8Array(ab);
-  for (var i = 0; i < byteString.length; i++) {
+  const type = options.type || 'image/jpeg';
+  const byteString = window.atob(base64.split(',')[1]);
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  for (let i = 0; i < byteString.length; i++) {
     ia[i] = byteString.charCodeAt(i);
   }
-  var file = new File([ia], imgName, { type: type, lastModified: Date.now() });
-  callback && callback(file);
+  const file = new File([ia], imgName, { type, lastModified: Date.now() });
+  if (callback) callback(file);
 }
 ```
 
 ## * File 对象转 base64
 ```js
 function fileToBase64(file, callback) {
-  var reader = new FileReader();
-  reader.onload = function (e) {
-    var base64 = e.target.result;
-    callback && callback(base64, e.target);
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const base64 = e.target.result;
+    if (callback) callback(base64, e.target);
   };
   reader.readAsDataURL(file);
 }
@@ -633,24 +699,24 @@ function fillElmentWithData($range, data, tagName, options) {
   $range.find('[' + tagName + ']').each(function () {
     var $this = $(this),
       key = $this.attr(tagName),
-      value = data[key];
+      val = data[key];
 
-    if (!key || value == undefined) return;
+    if (!key || val == undefined) return;
 
     if ($this.is(':radio')) {
-      $this.prop('checked', value && $this.attr('value') == value);
+      $this.prop('checked', val && $this.attr('value') == val);
     } else if ($this.is(':checkbox')) {
-      var vals = value ? value.split(',') : [];
+      var vals = val ? val.split(',') : [];
       var check = vals.indexOf($this.attr('value')) > -1;
-      $this.prop('checked', value && check);
+      $this.prop('checked', val && check);
     } else if ($(this).is('img')) {
-      value ? $this.attr('src', value) : $this.removeAttr('src');
-    } else if ($this.is('select[multiple]') && typeof value === 'string') {
-      $this.val(value.split(','))
+      val ? $this.attr('src', val) : $this.removeAttr('src');
+    } else if ($this.is('select[multiple]') && typeof val === 'string') {
+      $this.val(val.split(','))
     } else if ($this.is(':input, select, textarea')) {
-      $this.val(value);
+      $this.val(val);
     } else {
-      $this.text(value);
+      $this.text(val);
     }
   });
 }
