@@ -2,44 +2,67 @@
 
 需要 jQuery 插件的会在标题后加上 `$` 字样。
 
+* [trim](#-字符串去空)（字符串去空）
+* [toFirstUpperCase](#-首字母大写)（首字母大写）
 * [numberToMoney](#-折算成金额)（折算成金额）
 * [returnChineseNumber](#-转中文数字)（转中文数字）
-* [toAngle](#-弧度转角度)（弧度转角度）
-* [toRadian](#-角度转弧度)（角度转弧度）
-* [toFirstUpperCase](#-首字母大写)（首字母大写）
+* [toAngle/toRadian](#-角度弧度转化)（角度弧度转化）
+* [distence](#-两点间距离)（两点间距离）
 * [camelize/hyphenate](#-驼峰或连字符)（驼峰或连字符）
 * [htmlToString](#-html-转义)（html 转义）
 * [stringToHtml](#-html-字符串反转义)（html 字符串反转义）
+* [imageToBase64](#-图片链接转-base64)（图片链接转 base64）
+* [base64ToFile](#-base64-转-File-对象)（base64 转 File 对象）
+* [fileToBase64](#-File-对象转-base64)（File 对象转 base64）
 * [debounce](#-去抖)（去抖）
 * [throttle](#-节流)（节流）
+* [useCache](#-使用函数结果缓存)（使用函数结果缓存）
+* [flexable](#px-转-rem-自适应)(px 转 rem 自适应)
+* [singleton](#-单例模式)（单例模式）
+* [promisify](#-转-Promise)（转-Promise）
 * [download](#-下载)（下载）
-* [forEachAsync](#-异步循环)（异步循环）
-* [forEachDeep](#-json-的深入遍历)（json 的深入遍历）
-* [forInDeep](#-对象的深入遍历)（对象的深入遍历）
+* [copyText](#-复制文本)（复制文本）
 * [getLocationData](#-获取链接信息)（获取链接信息）
+* [divideDataForScroll](#-滚动加载数据)（滚动加载数据）
 * [InterceptManage](#-次数拦截器)（次数拦截器）
 * [Animation](#-动画类)（动画类）
-* [divideDataForScroll](#-滚动加载数据)（滚动加载数据）
 * [createQrCode](#-生成二维码-)（生成二维码 `$`）
-* [copyText](#-复制文本)（复制文本）
-* [useCache](#-使用函数结果缓存)（使用函数结果缓存）
 * [PhoneShake](#-手机摇一摇)（手机摇一摇）
-* [forceReflow](#-强制重排)（强制重排）
 * [toHashCode](#-转为-Hash-数字)（转为 Hash 数字）
-* [createCurry](#-函数科里化)（函数科里化）
-* [Singleton](#-单例模式)（单例模式）
-* [distence](#-两点间距离)（两点间距离）
-* [promisify](#-转-Promise)（转-Promise）
-* [flexable](#px-转-rem-自适应)(px 转 rem 自适应)
+* [currying](#-函数科里化)（函数科里化）
+
+## * 字符串去空
+```js
+function trim(str, trimType) {
+  trimType = trimType || 'ALL';
+  const config = { ALL: /^\s+|\s+$/g, LEFT: /^\s+/, RIGHT: /\s+$/ };
+  const reg = config[trimType];
+  return str.replace(reg, '');
+}
+if (!String.prototype.trim) {
+  String.prototype.trim = (trimType) => {
+    return trim(this, trimType);
+  }
+}
+```
+
+## * 首字母大写
+```js
+function toFirstUpperCase(str) {
+  return str.slice(0, 1).toUpperCase() + str.slice(1).toLowerCase();
+}
+```
 
 ## * 折算成金额
 ```js
 // numberToMoney(12345.6789);  // 12,345.6789
 function numberToMoney(num) {
   if (!num) return '0.00';
-  var numStr = parseFloat(num).toString().replace(/\$|\,/g, '');
-  if (isNaN(parseFloat(numStr))) numStr = "0";
-  return numStr.replace(/\d+(?=$|\.)/, function(digits) { // 仅正则整数部分
+  if (typeof num === 'string') { // 要处理 '$1,234' 和 '1e3' 的情况
+    num = parseFloat(num.replace(/\$|\,/g, ''));
+  }
+  if (isNaN(num)) return '0.00';
+  return num.toString().replace(/\d+(?=$|\.)/, function(digits) { // 仅正则整数部分
     return digits.replace(/\B(?=(\d{3})+\b)/g, ',');
   });
 }
@@ -51,22 +74,22 @@ function numberToMoney(num) {
 function returnChineseNumber(num, chineseType) {
   if (!num) return '';
 
-  var numArr = [num].toString().split('');
-  var _numConfig = '零一二三四五六七八九'.split('');
-  var _unitConfig = ' 十百千'.split('');
-  var _sizeConfig = ' 万亿兆'.split('');
+  const numArr = [num].toString().split('');
+  let numConfig = '零一二三四五六七八九'.split('');
+  let unitConfig = ' 十百千'.split('');
+  let sizeConfig = ' 万亿兆'.split('');
   if (chineseType) {
-    _numConfig = '零壹贰叁肆伍陆柒捌玖'.split('');
-    _unitConfig = ' 拾佰仟'.split('');
-    // _sizeConfig = ' 萬億兆'.split('');
+    numConfig = '零壹贰叁肆伍陆柒捌玖'.split('');
+    unitConfig = ' 拾佰仟'.split('');
+    sizeConfig = ' 萬億兆'.split('');
   }
 
-  var result = '';
-  for (var i = 0, len = numArr.length; i < len; i++) {
-    var n = Number(numArr[len - i - 1]);
-    var cn = _numConfig[n];
-    var unit = i % 4 !== 0 ? _unitConfig[i % 4] : '';
-    var size = i % 4 === 0 && i !== 0 ? _sizeConfig[i / 4] : '';
+  let result = '';
+  for (let i = 0, len = numArr.length; i < len; i++) {
+    const n = Number(numArr[len - i - 1]);
+    let cn = numConfig[n];
+    let unit = i % 4 !== 0 ? unitConfig[i % 4] : '';
+    const size = i % 4 === 0 && i !== 0 ? sizeConfig[i / 4] : '';
 
     // 现在将返回 1001 => 一千零百零十一，不符合情况，则进行以下处理
     if (cn === '零') unit = '';
@@ -79,24 +102,25 @@ function returnChineseNumber(num, chineseType) {
 }
 ```
 
-## * 弧度转角度
+## * 角度弧度转化
 ```js
+// 弧度转角度
 function toAngle(radian) {
   return radian / Math.PI * 180;
 }
-```
-
-## * 角度转弧度
-```js
+// 角度转弧度
 function toRadian(angle) {
   return angle / 180 * Math.PI;
 }
 ```
 
-## * 首字母大写
+## * 两点间距离
 ```js
-function toFirstUpperCase(str) {
-  return str.slice(0, 1).toUpperCase() + str.slice(1).toLowerCase();
+function distence(x1, y1, x2, y2) {
+  if (x2 == undefined && y2 == undefined) {
+    return Math.abs(x1 - y1);
+  }
+  return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
 }
 ```
 
@@ -115,9 +139,9 @@ function camelize(str) {
 // htmlToString('<p>x</p>'); // &lt;p&gt;x&lt;/p&gt;
 function htmlToString(html) {
   if (!html) return '';
-  var ele = document.createElement('span');
+  let ele = document.createElement('span');
   ele.appendChild( document.createTextNode( html ) );
-  var result = ele.innerHTML;
+  const result = ele.innerHTML;
   ele = null;
   return result;
 }
@@ -129,11 +153,57 @@ function htmlToString(html) {
 // htmlToString('<p>x</p>'); // x 注意此方法对次运行可能不是预期结果
 function stringToHtml (str) {
   if (!str) return '';
-  var ele = document.createElement('span');
+  let ele = document.createElement('span');
   ele.innerHTML = str;
-  var result = ele.innerText || ele.textContent;
+  const result = ele.innerText || ele.textContent;
   ele = null;
   return result;
+}
+```
+
+
+## * 图片链接转 base64
+```js
+function imageToBase64(src, callback) {
+  const img = new Image();
+  img.onload = () => {
+    const canvas = document.createElement('canvas');
+    const imgW = canvas.width = img.width;
+    const imgH = canvas.height = img.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(img, 0, 0, imgW, imgH);
+    const base64 = canvas.toDataURL('image/jpeg');
+    if (callback) callback(base64, canvas);
+  };
+  img.src = src;
+}
+```
+
+## * base64 转 File 对象
+```js
+function base64ToFile(base64, imgName, callback, options) {
+  options = options || {};
+  const type = options.type || 'image/jpeg';
+  const byteString = window.atob(base64.split(',')[1]);
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  const file = new File([ia], imgName, { type, lastModified: Date.now() });
+  if (callback) callback(file);
+}
+```
+
+## * File 对象转 base64
+```js
+function fileToBase64(file, callback) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const base64 = e.target.result;
+    if (callback) callback(base64, e.target);
+  };
+  reader.readAsDataURL(file);
 }
 ```
 
@@ -141,11 +211,10 @@ function stringToHtml (str) {
 ```js
 // 不断操作无效，只有停止操作 delta 秒后才触发
 function debounce(fn, delta, context) {
-  var timeoutID = null;
-  return function () {
-    var args = arguments;
+  let timeoutID = null;
+  return (...args) => {
     clearTimeout(timeoutID);
-    timeoutID = setTimeout(function () {
+    timeoutID = setTimeout(() => {
       fn.apply(context, args);
     }, delta);
     return timeoutID;
@@ -157,18 +226,76 @@ function debounce(fn, delta, context) {
 ```js
 // 每隔 delta 秒时触发
 function throttle(fn, delta, context) {
-  var safe = true;
-  return function () {
+  let safe = true;
+  return (...args) => {
     if (!safe) return;
-
-    var args = arguments;
     fn.call(context, args);
-
     safe = false;
-    setTimeout(function () {
+    setTimeout(() => {
       safe = true;
     }, delta);
   };
+}
+```
+
+## * 使用函数结果缓存
+```js
+// add = userCache((a,b) => a+b);
+// add(1,2); add(1,2); // 第二次会直接取缓存
+function useCache(fn) {
+  const cache = {};
+  return function(...args){
+    const key = args.length + JSON.stringify(args);
+    if (key in cache) return cache[key];
+    else return cache[key] = fn.apply(this, args);
+  }
+}
+```
+
+## * px 转 rem 自适应
+```js
+// 750rem = 100vw
+function flexable(remRatio = 750) {
+  function setRem() {
+    const winW = docEl.getBoundingClientRect().width;
+    $style.innerText = "html{font-size:" + (docEl.style.fontSize = winW / remRatio + "px") + " !important;}"
+  }
+  const win = window,
+    doc = document,
+    docEl = doc.documentElement,
+    $style = doc.createElement("style");
+  doc.head.appendChild($style);
+  setRem();
+  win.addEventListener("resize", setRem, !1);
+}
+```
+
+## * 单例模式
+```js
+// A = singleton(A); var a = new A(x); var b = new A(y);
+function singleton(func) {
+  let result = undefined;
+  return function (...args) {
+    if (result) return result;
+    result = new (func.bind.apply(func, [null].concat(args)));
+    return result;
+  }
+}
+```
+
+## * 转 Promise
+```js
+// const sleep = (delay) => new Promise(resolve => setTimeout(resolve, delay));
+// 可改为以下方式 const sleep = promisify((delay, next) => setTimeout(next, delay));
+function promisify(fn) {
+  return function (...args) {
+    const that = this;
+    return new Promise((resolve) => {
+      args[args.length] = resolve;
+      args.length += 1;
+      fn.apply(that, args);
+    });
+  }
 }
 ```
 
@@ -176,12 +303,11 @@ function throttle(fn, delta, context) {
 ```js
 // download('base64', 'xx.jpg', 'image/jpeg')
 // download('words', 'xx.txt', 'text/plain')
-function download() {
-  var scriptId = 'downloadScript';
-  var args = [].slice.call(arguments);
+function download(...args) {
+  const scriptId = 'downloadScript';
 
   if (!document.getElementById(scriptId)) {
-    var script = document.createElement('script');
+    const script = document.createElement('script');
     script.id = scriptId;
     script.src = 'http://danml.com/js/download.js';
     script.onload = scriptReady;
@@ -194,82 +320,23 @@ function download() {
 }
 ```
 
-## * 异步循环
+## * 复制文本
 ```js
-/**
- * forEachAsync([data], function(index, item, next) {
- *   var img = new Image(); img.onload = next; img.src = item.url;
- * }, {
- *   number: 5,  // 每次同时发起 5 个请求
- *   finish: function(result) {}, // 结果为 next 的入参集合
- * });
- */
-function forEachAsync(data, func, options) {
-  options = options || {};
-  var timesConfig = Math.min(options.number || 5, 8); // 最大线程数
-  var total = data.length - 1;
-  var result = [];
-
-  var restQueue = timesConfig; // 剩余队列数
-  var started = 0; // 已发起
-  var loaded = 0; // 已完成
-  (function loop(index) {
-    const item = data[index];
-    if (!item) return;
-    func(index, item, function(res) {
-      restQueue++;
-      result[index] = res;
-      if (++loaded > total) return finish(result);
-      loop(++started);
-    });
-    if (--restQueue > 0) loop(++started);
-  })(0);
-
-  // 全部运行完成
-  function finish(result) {
-    options.finish && options.finish(result);
-  }
-}
-```
-
-## * json 的深入遍历
-```js
-function forEachDeep(json, childKey, func, indexs = [], parents = []) {
-  json.forEach((item, index) => {
-    indexs.push(index);
-    parents.push(item);
-    func(item, indexs, parents);
-    if (item[childKey] && item[childKey].length) {
-      forEachDeep(item[childKey], childKey, func, indexs, parents);
-    }
-  });
-}
-```
-
-## * 对象的深入遍历
-```js
-function forInDeep(obj, func, map = new WeakMap()) {
-  if (typeOf(obj) === 'object' || typeOf(obj) === 'array') {
-      let clone = Array.isArray(obj) ? [] : {};
-      if (map.get(obj)) return map.get(obj);
-      map.set(obj, clone);
-      for (let key in obj) {
-        let value = obj[key];
-        const temp = func && func(key, value, obj);
-        value = func ? (temp === void 0 ? value : temp) : value;
-        clone[key] = forInDeep(value, func, map);
-      }
-      return clone;
-  } else {
-      return obj;
-  }
+function copyText(text) {
+  let $input = document.createElement('textarea');
+  document.body.appendChild($input);
+  $input.value = text;
+  $input.select();
+  document.execCommand("Copy");
+  document.body.removeChild($input);
+  $input = null;
 }
 ```
 
 ## * 获取链接信息
 ```js
 function getLocationData(url) {
-  var obj = { href: url }
+  let obj = { href: url }
   if (/^https?/.test(url)) {
     url.replace(/(https?:)\/\/([^\/]*?)(\/.*)/, function(match, protocol, host, pathname) {
       const [ hostname, port ] = host.split(':');
@@ -288,6 +355,42 @@ function getLocationData(url) {
     return '';
   });
   return obj;
+}
+```
+
+## * 滚动加载数据
+```js
+function divideDataForScroll($scroller, data, callback, options) {
+  options = options || {};
+  const size = options.size || 20;
+  const winH = $scroller.offsetHeight;
+  const threshold = options.threshold || 50;
+
+  $scroller.removeEventListener('scroll', myScroll);
+  $scroller.addEventListener('scroll', myScroll);
+
+  let page = 1;
+  myScroll();
+
+  function myScroll() {
+    const elemH = $scroller.scrollHeight;
+    const sTop = $scroller.scrollTop;
+    if (sTop + winH + threshold > elemH) touchBottom();
+  }
+
+  function touchBottom() {
+    const nowSize = page * size;
+    const nowData = data.slice(0, nowSize);
+
+    // 数据全部加载完毕
+    if (data.slice(nowSize - size, nowSize).length < 1) {
+      options.finish && options.finish(data, page, size); // 全部完成
+      return $scroller.removeEventListener('scroll', myScroll);
+    }
+
+    // 每页的回调
+    callback && callback(nowData, page, size);
+  }
 }
 ```
 
@@ -326,14 +429,14 @@ function InterceptManage() {
 ## * 动画类
 ```js
 function Animation() {
-  var animTimer = 0;
+  let animTimer = 0;
   function start(start, to, duration, callback) {
-    var time = Date.now();
+    const time = Date.now();
     stop();
     (function run() {
-      var per = Math.min(1, (Date.now() - time) / duration);
+      const per = Math.min(1, (Date.now() - time) / duration);
       if (per >= 1) return callback && callback(to, 1);
-      var now = start + (to - start) * per;
+      const now = start + (to - start) * per;
       callback && callback(now, per);
       animTimer = requestAnimationFrame(run);
     })();
@@ -344,42 +447,6 @@ function Animation() {
   return {
     start: start,
     stop: stop
-  }
-}
-```
-
-## * 滚动加载数据
-```js
-function divideDataForScroll($scroller, data, callback, options) {
-  options = options || {};
-  var size = options.size || 20;
-  var winH = $scroller.height();
-  var threshold = options.threshold || 50;
-
-  $scroller.removeEventListener('scroll', _scroll);
-  $scroller.addEventListener('scroll', _scroll);
-
-  var page = 1;
-  _go();
-
-  function _scroll() {
-    var elemH = $scroller.scrollHeight;
-    var sTop = $scroller.scrollTop;
-    if (sTop + winH + threshold > elemH) _go();
-  }
-
-  function _go() {
-    var nowSize = page * size;
-    var nowData = data.slice(0, nowSize);
-
-    // 数据全部加载完毕
-    if (data.slice(nowSize - size, nowSize).length < 1) {
-      options.finish && options.finish(data, page, size); // 全部完成
-      return $scroller.removeEventListener('scroll', _scroll);
-    }
-
-    // 每页的回调
-    callback && callback(nowData, page, size);
   }
 }
 ```
@@ -466,33 +533,6 @@ function createQrCode(text, callback, options) {
 }
 ```
 
-## * 复制文本
-```js
-function copyText(text) {
-  var $input = document.createElement('textarea');
-  document.body.appendChild($input);
-  $input.value = text;
-  $input.select();
-  document.execCommand("Copy");
-  document.body.removeChild($input);
-  $input = null;
-}
-```
-
-## * 使用函数结果缓存
-```js
-// add = userCache((a,b) => a+b);
-// add(1,2); add(1,2); // 第二次会直接取缓存
-function useCache(fn) {
-  var cache = {};
-  return function(){
-    var key = arguments.length + JSON.stringify(arguments);
-    if (key in cache) return cache[key];
-    else return cache[key] = fn.apply(this, arguments);
-  }
-}
-```
-
 ## * 手机摇一摇
 ```js
 function PhoneShake(func, options) {
@@ -546,23 +586,6 @@ function PhoneShake(func, options) {
 }
 ```
 
-## * 强制重排
-```js
-function forceReflow() {
-  var tempDivID = "reflowDivBlock";
-  var tempDiv = document.getElementById(tempDivID);
-  if (!tempDiv) {
-    tempDiv = document.createElement("div");
-    tempDiv.id = tempDivID;
-    document.body.appendChild(tempDiv);
-  }
-  var parentNode = tempDiv.parentNode;
-  var nextSibling = tempDiv.nextSibling;
-  parentNode.removeChild(tempDiv);
-  parentNode.insertBefore(tempDiv, nextSibling);
-}
-```
-
 ## * 转为 Hash 数字
 ```js
 function toHashCode(str){
@@ -579,76 +602,14 @@ function toHashCode(str){
 
 ## * 函数科里化
 ```js
-// 此为科里化中的一种流派，其他的待整理
-// var add = (...args) => args.reduce((re,x) => re+x, 0);
-// add = createCurry(add);
-// add(1,2)(3)(4); // 10
-function createCurry(fn){
-  var _args = [];
-  var _temp = function() {
-    _args = _args.concat([].slice.call(arguments));
-    return _temp;
+// 将入参分批传入，只要实参数量与形参数量一致
+// function log(time, type, message) {};  todayLog(new Date(), 'error', '报错')
+// var todayLog = currying(log, new Date()); todayLog('error', '报错')
+// var todayErrorLog = currying(todayLog, 'error'); todayErrorLog('报错')
+function currying(fn, ...rawArgs) {
+  return function(...args) {
+    args = rawArgs.concat(args);
+    return fn.apply(this, newArgs)
   }
-  _temp.toString = _temp.valueOf = function() {
-    return fn.apply(fn, _args);
-  }
-  return _temp;
-}
-```
-
-## * 单例模式
-```js
-// A = Singleton(A); var a = new A(x); var b = new A(y);
-function Singleton(func) {
-  let result = undefined;
-  return function (...args) {
-    if (result) return result;
-    result = new (func.bind.apply(func, [null].concat(args)));
-    return result;
-  }
-}
-```
-
-## * 两点间距离
-```js
-function distence(x1, y1, x2, y2) {
-  if (x2 == undefined && y2 == undefined) {
-    return Math.abs(x1 - y1);
-  }
-  return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-}
-```
-
-## * 转 Promise
-```js
-// const sleep = (delay) => new Promise(resolve => setTimeout(resolve, delay));
-// 可改为以下方式 const sleep = promisify((delay, next) => setTimeout(next, delay));
-function promisify(fn) {
-  return function (...args) {
-    const that = this;
-    return new Promise((resolve) => {
-      args[args.length] = resolve;
-      args.length += 1;
-      fn.apply(that, args);
-    });
-  }
-}
-```
-
-## * px 转 rem 自适应
-```js
-// 750rem = 100vw
-function flexable(remRatio = 750) {
-  function setRem() {
-    var winW = docEl.getBoundingClientRect().width;
-    $style.innerText = "html{font-size:" + (docEl.style.fontSize = winW / remRatio + "px") + " !important;}"
-  }
-  var win = window,
-      doc = document,
-      docEl = doc.documentElement,
-      $style = doc.createElement("style");
-  doc.head.appendChild($style);
-  setRem();
-  win.addEventListener("resize", setRem, !1);
 }
 ```

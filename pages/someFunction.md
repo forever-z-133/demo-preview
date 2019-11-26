@@ -6,7 +6,6 @@
 * [isEmpty](#-对象是否为空)（对象是否为空）
 * [addZero](#-自动补零)（自动补零）
 * [random](#-随机数)（随机数）
-* [trim](#-字符串去空)（字符串去空）
 * [removeNull](#-删除对象中为空的键值对)（删除对象中为空的键值对）
 * [returnObject](#-返回非空对象)（返回非空对象）
 * [returnArray](#-返回可用数组)（返回可用数组）
@@ -18,6 +17,7 @@
 * [pushToUniqueArray](#-添加到去重数组)（添加到去重数组）
 * [forEachDeep](#-数据的深度遍历)（数据的深度遍历）
 * [forInDeep](#-对象的深度遍历)（对象的深度遍历）
+* [forEachAsync](#-异步循环)（异步循环）
 * [deepClone](#-深拷贝)（深拷贝）
 * [filterData](#-筛选数据)（筛选数据）
 * [dataToArray](#-从数据中获取数组)（从数据中获取数组）
@@ -31,9 +31,6 @@
 * [objectEqual](#-对象是否相等)（对象是否相等）
 * [getObjectValue](#-获取对象的值)（获取对象的值）
 * [toString](#-安全转字符串)（安全转字符串）
-* [imageToBase64](#-图片链接转-base64)（图片链接转 base64）
-* [base64ToFile](#-base64-转-File-对象)（base64 转 File 对象）
-* [fileToBase64](#-File-对象转-base64)（File 对象转 base64）
 * [getElementData](#-获取表单数据-)（获取表单数据 `$`）
 * [fillElmentWithData](#-用数据填充表单-)（用数据填充表单 `$`）
 * [clearElmentAndData](#-清空表单-)（清空表单 `$`）
@@ -72,21 +69,6 @@ function random(n1, n2 = 0) {
   const min = Math.min(n1, n2);
   const max = Math.max(n1, n2);
   return min + Math.random() * (max - min);
-}
-```
-
-## * 字符串去空
-```js
-function trim(str, trimType) {
-  trimType = trimType || 'ALL';
-  const config = { ALL: /^\s+|\s+$/g, LEFT: /^\s+/, RIGHT: /\s+$/ };
-  const reg = config[trimType];
-  return str.replace(reg, '');
-}
-if (!String.prototype.trim) {
-  String.prototype.trim = (trimType) => {
-    return trim(this, trimType);
-  }
 }
 ```
 
@@ -308,6 +290,44 @@ function forInDeep(obj, func, options, map = new WeakMap()) {
     return clone;
   } else {
     return obj;
+  }
+}
+```
+
+## * 异步循环
+```js
+/**
+ * forEachAsync([data], function(index, item, next) {
+ *   var img = new Image(); img.onload = next; img.src = item.url;
+ * }, {
+ *   number: 5,  // 每次同时发起 5 个请求
+ *   finish: function(result) {}, // 结果为 next 的入参集合
+ * });
+ */
+function forEachAsync(data, func, options) {
+  options = options || {};
+  const timesConfig = Math.min(options.number || 5, 8); // 最大线程数
+  const total = data.length - 1;
+  const result = [];
+
+  let restQueue = timesConfig; // 剩余队列数
+  let started = 0; // 已发起
+  let loaded = 0; // 已完成
+  (function loop(index) {
+    const item = data[index];
+    if (!item) return;
+    func(index, item, (res) => {
+      restQueue++;
+      result[index] = res;
+      if (++loaded > total) return finish(result);
+      loop(++started);
+    });
+    if (--restQueue > 0) loop(++started);
+  })(0);
+
+  // 全部运行完成
+  function finish(result) {
+    options.finish && options.finish(result);
   }
 }
 ```
@@ -615,51 +635,6 @@ function getObjectValue(obj, keyStr) {
 function toString(obj) {
   if (obj === null || obj === undefined || isNaN(obj)) return '';
   return typeof obj === 'object' ? JSON.stringify(obj) : String(obj);
-}
-```
-
-## * 图片链接转 base64
-```js
-function imageToBase64(src, callback) {
-  const img = new Image();
-  img.onload = () => {
-    const canvas = document.createElement('canvas');
-    const imgW = canvas.width = img.width;
-    const imgH = canvas.height = img.height;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, imgW, imgH);
-    const base64 = canvas.toDataURL('image/jpeg');
-    if (callback) callback(base64, canvas);
-  };
-  img.src = src;
-}
-```
-
-## * base64 转 File 对象
-```js
-function base64ToFile(base64, imgName, callback, options) {
-  options = options || {};
-  const type = options.type || 'image/jpeg';
-  const byteString = window.atob(base64.split(',')[1]);
-  const ab = new ArrayBuffer(byteString.length);
-  const ia = new Uint8Array(ab);
-  for (let i = 0; i < byteString.length; i++) {
-    ia[i] = byteString.charCodeAt(i);
-  }
-  const file = new File([ia], imgName, { type, lastModified: Date.now() });
-  if (callback) callback(file);
-}
-```
-
-## * File 对象转 base64
-```js
-function fileToBase64(file, callback) {
-  const reader = new FileReader();
-  reader.onload = (e) => {
-    const base64 = e.target.result;
-    if (callback) callback(base64, e.target);
-  };
-  reader.readAsDataURL(file);
 }
 ```
 
