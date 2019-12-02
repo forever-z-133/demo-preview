@@ -14,7 +14,7 @@ function emptyDirSync(dir) {
     return mkdir.mkdirsSync(dir)
   }
   files.forEach(file => {
-    const url = dir + "/" + file;
+    const url = `${dir}/${file}`;
     if (fs.statSync(url).isDirectory()) {
       emptyDirSync(url); // 递归删除文件夹
       fs.rmdirSync(url);

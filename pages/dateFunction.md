@@ -14,11 +14,10 @@
 
 ## * 日期转为字符串
 ```js
-function dateToString(date, format) {
-  format = format || 'yyyy-MM-dd';
-  var d = new Date(date);
-  var result = format;
-  var _config = {
+function dateToString(date, format = 'yyyy-MM-dd') {
+  const d = new Date(date);
+  let result = format;
+  const _config = {
     'y+': d.getFullYear(),
     'M+': d.getMonth() + 1, // 月
     'd+': d.getDate(), // 日
@@ -27,11 +26,11 @@ function dateToString(date, format) {
     's+': d.getSeconds(), // 秒
   };
 
-  for (var reg in _config) {
-    if (!(new RegExp('(' + reg + ')').test(result))) continue;
-    var match = RegExp.$1;
-    var num = _config[reg] + '';
-    while (num.length < match.length) { num = '0' + num }
+  for (const reg in _config) {
+    if (!(new RegExp(`(${reg})`).test(result))) continue;
+    const match = RegExp.$1;
+    let num = `${_config[reg]}`;
+    while (num.length < match.length) { num = `0${num}` }
     result = result.replace(match, num);
   }
 
@@ -44,15 +43,14 @@ Date.prototype.format = function(format) {
 
 ## * 字符串转日期
 ```js
-function stringToDate(str, format) {
-  format = format || 'yyyy-MM-dd';
-  var args = [/y+/, /M+/, /d+/, /h+/, /m+/, /s+/];
-  args = args.reduce(function (re, reg, index) {
-    var match = format.match(reg);
-    var defaultValue = [1970, 0, 1, 0, 0, 0][index];
+function stringToDate(str, format = 'yyyy-MM-dd') {
+  let args = [/y+/, /M+/, /d+/, /h+/, /m+/, /s+/];
+  args = args.reduce((re, reg, index) => {
+    const match = format.match(reg);
+    const defaultValue = [1970, 0, 1, 0, 0, 0][index];
     if (!match) return re.concat([defaultValue]);
     var index = match.index;
-    var num = Number(str.slice(index).match(/\d+/));
+    const num = Number(str.slice(index).match(/\d+/));
     return re.concat([num]);
   }, []);
   args.unshift(null);
@@ -81,10 +79,9 @@ function dateToObject(date) {
 ## * 日期加减
 ```js
 // addDate(new Date(2019,5,19,10,40,0), 1); // Thu Jun 20 2019 10:40:00
-function addDate(date, offset, dateType) {
-  dateType = dateType || 'date';
-  var d = new Date(date);
-  var _config = {
+function addDate(date, offset, dateType = 'date') {
+  const d = new Date(date);
+  const _config = {
     'year': 'FullYear',
     'month': 'Month',
     'date': 'Date',
@@ -92,10 +89,10 @@ function addDate(date, offset, dateType) {
     'hour': 'Hours',
     'minute': 'Minutes',
     'second': 'Seconds'
-  }
-  var _type = _config[dateType];
-  var setFunc = date['set' + _type].bind(d);
-  var getFunc = date['get' + _type].bind(d);
+  };
+  const _type = _config[dateType];
+  const setFunc = date[`set${_type}`].bind(d);
+  const getFunc = date[`get${_type}`].bind(d);
   return new Date(setFunc(getFunc() + offset));
 }
 ```
@@ -105,9 +102,9 @@ function addDate(date, offset, dateType) {
 // 有时，时分秒会影响计算结果，故有此方法
 // 也可用作获取本年首日，本月首日，本天初始的功能
 function getSimpleDate(date, dateType) {
-  var d = new Date(date);
+  const d = new Date(date);
   dateType = dateType || 'date';
-  var _config = {
+  const _config = {
     'year': '1000000',
     'month': '1100000',
     'date': '1110000',
@@ -115,8 +112,8 @@ function getSimpleDate(date, dateType) {
     'hour': '1111000',
     'minute': '1111100',
     'second': '1111110'
-  }
-  _config[dateType].split('').forEach(function (item, index) {
+  };
+  _config[dateType].split('').forEach((item, index) => {
     if (item === '1') return;
     index === 1 && d.setMonth(0);
     index === 2 && d.setDate(1);
@@ -133,9 +130,9 @@ function getSimpleDate(date, dateType) {
 ```js
 function getDayNumberInThisMonth(date, month, year) {
   month = (month || date.getMonth()) % 11;
-  var tempYear = month / 11 >> 0; // month 可能会超出 11 则再加 1 年
+  const tempYear = month / 11 >> 0; // month 可能会超出 11 则再加 1 年
   year = (year || date.getFullYear()) + tempYear;
-  var m = [31, null, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  const m = [31, null, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   m[1] = (year % 4 === 0 && year % 100 !== 0 || year % 400 === 0) ? 29 : 28;
   return m[month];
 }
@@ -144,14 +141,13 @@ function getDayNumberInThisMonth(date, month, year) {
 ## * 获取首日
 ```js
 // 如，每周首日，每月首日
-function getFirstDate(date, dateType, offset) {
-  offset = offset || 0;
+function getFirstDate(date, dateType, offset = 0) {
   if (dateType !== 'week') {
     var d = getSimpleDate(date, dateType);
     return addDate(d, offset, 'date');
   } else { // 注，每周首日为周一，可用 offset 调节
     var d = new Date(date);
-    var over = -1 * d.getDay() + 1 + offset;
+    const over = -1 * d.getDay() + 1 + offset;
     return addDate(d, over, 'date');
   }
 }
@@ -162,10 +158,10 @@ function getFirstDate(date, dateType, offset) {
 // 前开后闭区间，注意时分秒会影响计算结果
 // getArrayFromTwoDate(new Date(2019,5,19,11), new Date(2019,5,21,10)) // [Date(2019,5,20),Date(2019,5,21)]
 function getArrayFromTwoDate(a, b) {
-  var result = [];
-  var daySecond = 24 * 60 * 60 * 1000;
-  var start = Math.min(a, b);
-  var target = Math.max(a, b);
+  const result = [];
+  const daySecond = 24 * 60 * 60 * 1000;
+  let start = Math.min(a, b);
+  const target = Math.max(a, b);
 
   while (start < target) {
     start = new Date(+start + daySecond);
@@ -180,20 +176,19 @@ function getArrayFromTwoDate(a, b) {
 ```js
 // 此方法并不标准，需按业务情景进行调整
 // getPastDateString(new Date()); // '刚刚'
-function getPastDateString(date, options) {
-  options = options || {};
-  var time = +new Date(date);
-  var now = +new Date();
-  var diff = (now - time) / 1000;
+function getPastDateString(date, options = {}) {
+  const time = +new Date(date);
+  const now = +new Date();
+  const diff = (now - time) / 1000;
 
   if (diff < 0) return '';  // 未知时间
 
   if (diff < 60) {
     return '刚刚'
   } else if (diff < 60*60) {
-    return (diff/60>>0) + '分钟前';
+    return `${diff/60>>0}分钟前`;
   } else if (diff < 24*60*60) {
-    return (diff/3600>>0) + '小时前';
+    return `${diff/3600>>0}小时前`;
   } else if (diff < 2*24*60*60) {
     return '一天前';
   } else {
@@ -206,7 +201,7 @@ function getPastDateString(date, options) {
 ```js
 // getWeekName(0, null, 1);  offset 可让 date=0 为周一
 function getWeekName(date, strType, offset) {
-  var _config = '日,一,二,三,四,五,六'.split(',');
+  let _config = '日,一,二,三,四,五,六'.split(',');
   if (strType === 1) _config = '周日,周一,周二,周三,周四,周五,周六'.split(',');
   if (strType === 2) _config = '星期日,星期一,星期二,星期三,星期四,星期五,星期六'.split(',');
   if (strType === 3) _config = 'Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday'.split(',');
@@ -214,7 +209,7 @@ function getWeekName(date, strType, offset) {
   if (typeOf(strType) === 'array') _config = strType;
 
   offset = offset || 0;
-  var day = typeOf(date) === 'date' ? date.getDay() : date;
+  let day = typeOf(date) === 'date' ? date.getDay() : date;
   day = (day + offset) % 6;
 
   return _config[day];
@@ -226,11 +221,12 @@ function getWeekName(date, strType, offset) {
 // 暂不支持暂停继续功能
 // TimeCount().start(60, 1e3, (num) => console.log(60 - num), () => console.log('end'));
 function TimeCount() {
-  var timer = 0, now;
+  let timer = 0;
+  let now;
   function start(target, delta, func, finish) {
     func && func(target);
     now = target;
-    timer = setInterval(function() {
+    timer = setInterval(() => {
       now = --target;
       func && func(now);
       if (now <= 0) { stop(); finish && finish(); }
@@ -241,6 +237,6 @@ function TimeCount() {
     clearInterval(timer);
     return this;
   }
-  return { start: start, stop: stop };
+  return { start, stop };
 }
 ```

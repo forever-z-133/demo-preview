@@ -210,8 +210,8 @@ function objectLength(obj) {
   if (Object.keys) {
     return Object.keys(obj).length;
   }
-  var length = 0;
-  for (var key in obj) {
+  let length = 0;
+  for (const key in obj) {
     if ({}.hasOwnProperty.call(obj, key)) {
       length++;
     }
@@ -228,14 +228,15 @@ function unique(arr, key, options) {
   options = options || {};
   const choose = options.choose || 'after'; // 取靠前的还是靠后的数据
   if (choose === 'after') arr = arr.reverse();
-  for (let i = 0; i < arr.length; i++) {
-    const item = arr[i];
+
+  for (const item of arr) {
     const val = key ? item[key] : item;
     if (!(val in temp)) {
       temp[val] = true;
       result.push(item);
     }
   }
+
   return result;
 }
 ```
@@ -304,8 +305,7 @@ function forInDeep(obj, func, options, map = new WeakMap()) {
  *   finish: function(result) {}, // 结果为 next 的入参集合
  * });
  */
-function forEachAsync(data, func, options) {
-  options = options || {};
+function forEachAsync(data, func, options = {}) {
   const timesConfig = Math.min(options.number || 5, 8); // 最大线程数
   const total = data.length - 1;
   const result = [];
@@ -388,7 +388,7 @@ function filterData(data, value, key, options) {
     } else if (typeOf(val) === 'array' || typeOf(val) === 'object') {
       inner = false; // 注意 eval([1,2] = 2) 的处理是有问题的
       if (judgeType === 'indexOf') {
-        inner = val.indexOf(value) > -1;
+        inner = val.includes(value);
       }
     } else {
       // eslint-disable-next-line no-eval
@@ -564,7 +564,7 @@ function stringToObject(str, divide = '&', concat = '=') {
     const key = temp.shift().trim();
     let val = temp.join(concat).trim();
     if (!key) return re;
-    if (['null', 'undefined'].indexOf(val) > -1) val = undefined;
+    if (['null', 'undefined'].includes(val)) val = undefined;
     if (val === 'true') val = true;
     if (val === 'false') val = false;
     re[key] = val;
@@ -609,10 +609,10 @@ function objectEqual(a, b) {
 
   if (aProps.length !== bProps.length) return false;
 
-  for (let i = 0; i < aProps.length; i++) {
-    const key = aProps[i];
+  for (const key of aProps) {
     if (a[key] !== b[key]) return false;
   }
+
   return true;
 }
 ```
@@ -624,9 +624,7 @@ function objectEqual(a, b) {
 function getObjectValue(obj, keyStr) {
   if (!keyStr) throw new Error('入参有误');
   const keys = keyStr.split('.');
-  return keys.reduce((re, key) => {
-    return (re || {})[key];
-  }, obj);
+  return keys.reduce((re, key) => (re || {})[key], obj);
 }
 ```
 
