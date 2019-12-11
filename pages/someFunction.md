@@ -179,7 +179,7 @@ function countMore(type, options, ...nums) {
       result = nums[0];
       continue;
     }
-    result = count(result, nums[i]);
+    result = count(type, result, nums[i]);
   }
   return result;
 }
@@ -189,7 +189,7 @@ function countPlus(str) {
   // 先递归处理括号内的运算
   result = result.replace(/\(([^)]*)\)/g, (match, _str) => countPlus(_str));
   // 先乘除，后加减，用 exec 正则出来一个个计算并替换
-  const _numReg = '(-?[0-9]+[\\.\\e]?[0-9]*)';
+  const _numReg = '((?=\\D|^)-?[0-9]+[\\.\\e]?[0-9]*)';
   ['/*', '+-'].forEach((item) => {
     item = item.replace(/(?<=\B)/g, '\\\\').slice(0, -2);
     const _reg = new RegExp(_numReg + '([' + item + '])' + _numReg);
@@ -539,6 +539,7 @@ function objectToData(obj, format, options) {
 ```js
 // {a:1,b:2} 转为 a=1&b=2
 function objectToString(obj, divide = '&', concat = '=') {
+  if (!obj || typeof obj !== 'object') return '';
   let result = [];
   for (const key in obj) {
     if ({}.hasOwnProperty.call(obj, key)) {
@@ -547,8 +548,7 @@ function objectToString(obj, divide = '&', concat = '=') {
       result.push(encodeURIComponent(key) + concat + encodeURIComponent(val));
     }
   }
-  result = result.join(divide);
-  return result;
+  return result.join(divide);
 }
 ```
 

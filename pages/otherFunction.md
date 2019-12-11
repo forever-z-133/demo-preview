@@ -320,6 +320,39 @@ function download(...args) {
 }
 ```
 
+## * 下载 Excel
+```js
+function downloadExcel(api, data, callback, options = {}) {
+  const url = addDataToUrl(api, data);
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  xhr.responseType = "blob";
+  xhr.onload = function() {
+    const res = this.response;
+    const isBlob = res.constructor.toString().slice(9, 13) === 'Blob';
+    if (+this.status === 200 && isBlob) {
+      let filename = options.filename;
+      if (!filename) {
+        const dis = filename = xhr.getResponseHeader("Content-Disposition");
+        filename = dis.match(/filename=(.*)/i)[1];
+        filename = filename ? decodeURIComponent(filename) : '新建文件.xlsx';
+      }
+      download(res, filename, 'application/octet-stream');
+      callback && callback();
+    } else {
+      ajaxError(res, this);
+    }
+  };
+  xhr.onerror = function (err) {
+    ajaxError(err, this);
+  };
+  xhr.send();
+  function ajaxError(err, xhr) {
+    options.error && options.error(err, xhr);
+  }
+}
+```
+
 ## * 复制文本
 ```js
 function copyText(text) {
