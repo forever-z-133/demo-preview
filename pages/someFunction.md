@@ -14,7 +14,6 @@
 * [count](#-数字计算)（数字计算）
 * [objectLength](#-获取对象的长度)（获取对象的长度）
 * [unique](#-数组或数据去重)（数组或数据去重）
-* [pushToUniqueArray](#-添加到去重数组)（添加到去重数组）
 * [forEachDeep](#-数据的深度遍历)（数据的深度遍历）
 * [forInDeep](#-对象的深度遍历)（对象的深度遍历）
 * [forEachAsync](#-异步循环)（异步循环）
@@ -49,7 +48,9 @@ function isType(obj, type) {
 ## * 对象是否为空
 ```js
 function isEmpty(obj) {
-  if (isNaN(obj) || (typeof obj !== 'number' && !obj)) return true;
+  if (typeof obj === 'number' && isNaN(obj)) return true;
+  if (typeof obj !== 'number' && !obj) return true;
+  for (const key in obj) if ({}.hasOwnProperty.call(obj, key)) return false;
   return true;
 }
 ```
@@ -222,42 +223,24 @@ function objectLength(obj) {
 
 ## * 数组或数据去重
 ```js
-function unique(arr, key, options) {
-  const result = [];
-  const temp = {};
-  options = options || {};
-  const choose = options.choose || 'after'; // 取靠前的还是靠后的数据
-  if (choose === 'after') arr = arr.reverse();
+function unique(arr, keyName, options = {}) {
+	const temp = {};
+	const customValue = options.value;
 
-  for (const item of arr) {
-    const val = key ? item[key] : item;
-    if (!(val in temp)) {
-      temp[val] = true;
-      result.push(item);
-    }
-  }
+	return arr.reduce((re, item, index) => {
+		let key, value;
 
-  return result;
-}
-```
+		if (typeof keyName === 'function') key = keyName(item, index);
+		key = !isEmpty(key) ? key : (keyName ? item[keyName] : item);
 
-## * 添加到去重数组
-```js
-// pushToUniqueArray([1, 2], 2);  // [1,2]
-// pushToUniqueArray([{a:1}, {a:2}], {a:2}, 'a');  // [{a:1}, {a:2}]
-// 加 true 表示相同则删除，适用于 checkbox 反选
-// pushToUniqueArray([1, 2], 2, null, true);  // [1]
-function pushToUniqueArray(arr, newItem, key, options) {
-  if (typeOf(arr) !== 'array') return [];
-  if (arr.length < 1) return [newItem];
+		if (key in temp) return re;
+		temp[key] = true;
 
-  options = options || {};
-  const remove = options.remove || false;
+		if (typeof customValue === 'function') value = customValue(item, index);
+		value = !isEmpty(value) ? value : item;
 
-  return arr.reduce((re, item) => {
-    const inArray = key ? (newItem[key] === item[key]) : (newItem === item);
-    return inArray && remove ? re : re.concat([item]);
-  }, []);
+		return re.concat([value]);
+	}, []);
 }
 ```
 

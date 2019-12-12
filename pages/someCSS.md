@@ -1,8 +1,11 @@
 # 常用的 CSS 原子类
 
+可直接查看下方链接：
+https://github.com/forever-z-133/rebuild-panda/tree/master/src/themes/common
+
 ```css
 .scroller {
-  height: 100%;
+  max-height: 100%;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -49,11 +52,33 @@
   & > .grow { flex-grow: 1; overflow: hidden; }
   & > :not(.grow) { flex-shrink: 0; }
 }
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+```
+
+```scss
+.inblock-row {
+  letter-spacing: -1em;
+  & > * {
+    display: inline-block;
+    letter-spacing: 0;
+  }
+}
+.float-row {
+  overflow: hidden;
+  & > * {
+    float: left;
+  }
+}
 ```
 
 ```scss
 .cover { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
 .fitCover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+.pos-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
 ```
 
 ```scss
@@ -70,27 +95,26 @@
 label.form-file {
   position: relative;
   vertical-align: middle;
-  overflow: hidden;
   cursor: pointer;
   & > input[type="file"] { position: absolute; left: -999em; }
 }
 ```
 
 ```scss
-.textOverflow { text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
-
-/* scss 语法 */
-@mixin line-clamp($line) {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-all;
-  display: -webkit-box;
-  -webkit-line-clamp: @line;
-  -webkit-box-orient: vertical;
+@mixin textOverflow($line) {
+  @if $line==1 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  } @else {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    display: -webkit-box;
+    -webkit-line-clamp: $line;
+    -webkit-box-orient: vertical;
+  }
 }
-.textOverflow2 { @include line-clamp(2); };
-.textOverflow3 { @include line-clamp(3); };
-.textOverflow4 { @include line-clamp(4); };
 ```
 
 ```css
@@ -101,4 +125,44 @@ table {
   border-collapse: collapse;
 }
 td, th { padding: 0; }
+.list {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+}
+```
+
+```scss
+@mixin this($sel) {
+  @at-root #{if(not &, $sel, selector-append(&, $sel))} {
+    @content;
+  }
+}
+```
+
+```scss
+// 三角函数系列
+@function PI() {
+  @return 3.14159265359;
+}
+@function sin($angle) {
+  $sin: 0;
+  $angle: rad($angle);
+  @for $i from 0 through 10 {
+    $sin: $sin + pow(-1, $i) * pow($angle, (2 * $i + 1)) / fact(2 * $i + 1);
+  }
+  @return $sin;
+}
+@function cos($angle) {
+  $cos: 0;
+  $angle: rad($angle);
+  @for $i from 0 through 10 {
+    $cos: $cos + pow(-1, $i) * pow($angle, 2 * $i) / fact(2 * $i);
+  }
+  @return $cos;
+}
+@function tan($angle) {
+  @return sin($angle) / cos($angle);
+}
 ```

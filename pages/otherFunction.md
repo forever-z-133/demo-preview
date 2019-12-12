@@ -17,10 +17,11 @@
 * [debounce](#-去抖)（去抖）
 * [throttle](#-节流)（节流）
 * [useCache](#-使用函数结果缓存)（使用函数结果缓存）
-* [flexable](#px-转-rem-自适应)(px 转 rem 自适应)
+* [flexible](#px-转-rem-自适应)(px 转 rem 自适应)
 * [singleton](#-单例模式)（单例模式）
 * [promisify](#-转-Promise)（转-Promise）
 * [download](#-下载)（下载）
+* [downloadExcel](#-下载-Excel)（下载 Excel）
 * [copyText](#-复制文本)（复制文本）
 * [getLocationData](#-获取链接信息)（获取链接信息）
 * [divideDataForScroll](#-滚动加载数据)（滚动加载数据）
@@ -29,6 +30,7 @@
 * [createQrCode](#-生成二维码-)（生成二维码 `$`）
 * [PhoneShake](#-手机摇一摇)（手机摇一摇）
 * [toHashCode](#-转为-Hash-数字)（转为 Hash 数字）
+* [partial](#-偏函数)（偏函数）
 * [currying](#-函数科里化)（函数科里化）
 
 ## * 字符串去空
@@ -62,7 +64,7 @@ function numberToMoney(num) {
     num = parseFloat(num.replace(/\$|\,/g, ''));
   }
   if (isNaN(num)) return '0.00';
-  return num.toString().replace(/\d+(?=$|\.)/, function(digits) { // 仅正则整数部分
+  return num.toString().replace(/\d+(?=$|\.)/, (digits) => { // 仅正则整数部分
     return digits.replace(/\B(?=(\d{3})+\b)/g, ',');
   });
 }
@@ -255,10 +257,12 @@ function useCache(fn) {
 ## * px 转 rem 自适应
 ```js
 // 750rem = 100vw
-function flexable(remRatio = 750) {
+function flexible(remRatio = 750) {
   function setRem() {
     const winW = docEl.getBoundingClientRect().width;
-    $style.innerText = "html{font-size:" + (docEl.style.fontSize = winW / remRatio + "px") + " !important;}"
+    const fontSize = winW / remRatio;
+    docEl.style.fontSize = fontSize;
+    $style.innerText = `html{font-size:${fontSize}px !important;}`;
   }
   const win = window,
     doc = document,
@@ -322,14 +326,14 @@ function download(...args) {
 
 ## * 下载 Excel
 ```js
-function downloadExcel(api, data, callback, options = {}) {
-  const url = addDataToUrl(api, data);
+function downloadExcel(url, callback, options = {}) {
+  onError = options.error;
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url, true);
   xhr.responseType = "blob";
   xhr.onload = function() {
     const res = this.response;
-    const isBlob = res.constructor.toString().slice(9, 13) === 'Blob';
+    const isBlob = typeOf(res) === 'Blob';
     if (+this.status === 200 && isBlob) {
       let filename = options.filename;
       if (!filename) {
@@ -340,16 +344,11 @@ function downloadExcel(api, data, callback, options = {}) {
       download(res, filename, 'application/octet-stream');
       callback && callback();
     } else {
-      ajaxError(res, this);
+      onError && onError(res, this);
     }
   };
-  xhr.onerror = function (err) {
-    ajaxError(err, this);
-  };
+  xhr.onerror = onError && onError;
   xhr.send();
-  function ajaxError(err, xhr) {
-    options.error && options.error(err, xhr);
-  }
 }
 ```
 
@@ -633,16 +632,31 @@ function toHashCode(str){
 }
 ```
 
+## * 偏函数
+```js
+// function log(time, type, message) {};  todayLog(new Date(), 'error', '报错')
+// var todayLog = partial(log, new Date()); todayLog('error', '报错')
+// var todayErrorLog = partial(todayLog, 'error'); todayErrorLog('报错')
+function partial(fn, ...rawArgs) {
+  return function(...args) {
+    return func.call(this, ...rawArgs, ...args);
+  };
+}
+```
+
 ## * 函数科里化
 ```js
-// 将入参分批传入，只要实参数量与形参数量一致
-// function log(time, type, message) {};  todayLog(new Date(), 'error', '报错')
-// var todayLog = currying(log, new Date()); todayLog('error', '报错')
-// var todayErrorLog = currying(todayLog, 'error'); todayErrorLog('报错')
-function currying(fn, ...rawArgs) {
-  return function(...args) {
-    args = rawArgs.concat(args);
-    return fn.apply(this, newArgs)
+// 和偏函数类似，但将入参分批传入，只要实参数量与形参数量一致
+// var todayErrorLog = currying(log)(new Date())('error'); todayErrorLog('报错')
+function currying(func, ...rawArgs) {
+  return function curried(...args) {
+    if (args.length >= func.length) {
+      return func.call(this, ...rawArgs, ...args);
+    } else {
+      return function(...args2) {
+        return curried.call(this, ...rawArgs, ...args, ...args2);
+      }
+    }
   }
 }
 ```
