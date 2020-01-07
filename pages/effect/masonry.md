@@ -20,7 +20,8 @@
   column-count: 5;
   column-gap: 20px;
 }
-.item { /* 注意：这里很关键，不然 .desc  */
+.item {
+  /* 注意：这里很关键，不然子级会分离到下一栏  */
   height: 100%;
   overflow: auto;
 }
@@ -85,7 +86,7 @@ columns = columns.map((item, index) => ({ index: index, height: 0 }));
 listData.reduce((re, item) => {
   var min = columns.sort((a, b) => b.height - a.height).slice(-1)[0];
   $columns[min.index].innerHTML += getItemHTML(item); // 可优化为一次添加
-  min.height +=getItemHeight(item); // 这里没算 img 的高度，需优化
+  min.height += getItemHeight(item); // 这里没算 img 的高度，需优化
   return re;
 }, columns);
 ```
@@ -97,7 +98,8 @@ listData.reduce((re, item) => {
 
 ### 四、纯 js 计算的 float 瀑布流
 
-很难算，整理中...
+很难算，整理中...  
+另外这渲染性能极差，小动一下都会重排。
 
 ### 其他：固定宽高的 grid 瀑布流
 

@@ -40,11 +40,18 @@
 
 ### inline-block
 ```css
-.wrap {
-  display: flex;
+.wrap:before {
+  content: "";
+  height: 100%;
 }
+.wrap {
+  letter-spacing: -1em;
+}
+.wrap:before,
 .wrap > * {
-  margin-top: auto;
+  display: inline-block;
+  vertical-align: bottom;
+  letter-spacing: 0;
 }
 ```
 <iframe height="265" style="width: 100%;" scrolling="no" title="底部对齐 inline-block" src="//codepen.io/foreverZ133/embed/QYYzeJ/?height=265&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">

@@ -21,7 +21,8 @@
 
 ### 二、background
 
-有三种设置 `background` 的办法，更推荐 base64 图片
+有三种设置 `background` 的办法，更推荐 base64 图片，  
+渐变或 svg 亦可，并且可修改颜色。
 
 ```scss
 @media screen and (min-device-pixel-ratio: 2) {

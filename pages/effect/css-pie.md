@@ -2,7 +2,7 @@
 
 ## 一、SVG
 
-```html
+```
 <svg viewBox="0 0 100 100" width="50">
   <circle r="25" cx="50" cy="50" fill="transparent" stroke="#655" stroke-width="50" />
 </svg>

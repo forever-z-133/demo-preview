@@ -183,4 +183,4 @@ a { color: inherit; text-decoration: none; display: block; }
 </iframe>
 
 ### 其他方法
-还有 CSS 的 `-webkit-mask` 或 canvas 做等直接蒙版或裁剪的操作，可跳往 [此处](./css-mask.md) 查看。
+还有 CSS 的 `-webkit-mask` 或 canvas 做等直接蒙版或裁剪的操作，可跳往 [此处](./pages/effect/css-mask.md) 查看。

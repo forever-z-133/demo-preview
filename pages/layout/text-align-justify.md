@@ -1,6 +1,6 @@
 # 两种文本均匀留隙的实现
 
-也可以叫做两端对齐吧，类似 `justify-content: space-between` 那样的效果。
+也可以叫做两端对齐吧，类似 `justify-content: space-between` 那样的效果，但仅针对文本。
 ```css
 .wrap { width: 5em; display: inline-block; border: 1px solid red; vertical-align: middle; }
 ```
@@ -44,4 +44,4 @@
 
 ### 其他、将文字拆分为元素
 
-那就得去看元素篇的均匀留隙咯，[案例](./pages/child-align-justify)
+那就得去看元素篇的均匀留隙咯，[案例](./pages/layout/child-align-justify)

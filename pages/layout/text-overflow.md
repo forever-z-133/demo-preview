@@ -11,9 +11,10 @@
 
 ### 方法 1：text-overflow
 
+**需注意：** 不宜加载 span 元素上，推荐加在其父级
+
 ```css
 .text1 {
-  word-wrap: normal;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

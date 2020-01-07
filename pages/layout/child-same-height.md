@@ -16,7 +16,7 @@
 还需考虑的其他问题：
 * 子级是否需定宽
 * 如果父级宽度不足是否会换行
-* 子级间是否有间隙
+* 子级间是否可直接加间隙
 
 ### 一、margin + padding
 ```css
@@ -67,34 +67,17 @@
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
-### 四、视觉欺骗：背景色
-
-```css
-.wrap {
-  overflow: hidden;
-  background-image: linear-gradient(to right, #00FFFF 150px, #FF0000 150px, #FF0000 400px, #00FF00 400px, #00FF00 500px, rgba(0,0,0,0) 500px);
-}
-.wrap > .box {
-  background: none;
-  float: left;
-}
-```
-<iframe height="265" style="width: 100%;" scrolling="no" title="子级等高 背景色" src="//codepen.io/foreverZ133/embed/KEzWEZ/?height=265&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href='https://codepen.io/foreverZ133/pen/KEzWEZ/'>子级等高 背景色</a> by 张永恒
-  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
-</iframe>
-
-### 其他、视觉欺骗：边框
-
-这是相当拙劣的一种方案，用来充数看看就好，项目中很难会这样来用的。
-
-<iframe height="265" style="width: 100%;" scrolling="no" title="子级等高 边框" src="//codepen.io/foreverZ133/embed/gErmJM/?height=265&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
-  See the Pen <a href='https://codepen.io/foreverZ133/pen/gErmJM/'>子级等高 边框</a> by 张永恒
-  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
-</iframe>
-
-
 ### 其他、min-height 定值
 
 当已知某子级最大高度时，给所有子级定值 min-height 也是种办法。  
 如果未知或强调精确，JS 获取由于图片高度问题其实也不美妙，所以还是采用上述几种吧。
+
+### 其他、视觉欺骗
+
+这是相当拙劣的一种方案，看上去仿佛是等高的，  
+用来充数看看就好，项目中很难会这样来用的。
+
+<iframe height="265" style="width: 100%;" scrolling="no" title="子级等高 背景色" src="//codepen.io/foreverZ133/embed/KEzWEZ/?height=265&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/KEzWEZ/'>子级等高 背景色</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>

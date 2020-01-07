@@ -20,6 +20,6 @@ function typeOfColor(str) {
 ```
 
 ## 借鉴
-https://github.com/Qix-/color-string
-https://github.com/Qix-/color-convert
-https://github.com/colorjs/color-name
+https://github.com/Qix-/color-string  
+https://github.com/Qix-/color-convert  
+https://github.com/colorjs/color-name  
