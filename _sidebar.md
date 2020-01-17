@@ -30,6 +30,17 @@
 * [兼容性的 Polyfill 代码](./pages/function/polyfillFunction.md)
 * [颜色相关的公共方法](./pages/function/colorFunction.md)
 
+## 博客文章
+
+#### 学习笔记
+
+* [SEO 概述](./pages/articles/学习笔记/SEO%20概述.md)
+
+#### 随笔感想
+
+* [闲谈 css 的 float](./pages/articles/随笔感想/闲谈%20css%20的%20float.md)
+* [读《面向前端的设计规范-文字初探》](./pages/articles/随笔感想/读《面向前端的设计规范-文字初探》.md)
+
 ## 其他
 
 * [对象的深拷贝](./pages/others/deep-clone.md)

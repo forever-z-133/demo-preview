@@ -20,6 +20,9 @@
 .sidebar-nav li {
   margin: 0 0 0;
 }
+.sidebar-nav h4 {
+  margin: 0 0;
+}
 .sidebar .sidebar-nav a:hover {
   text-decoration: none;
 }
