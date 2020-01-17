@@ -6,14 +6,14 @@
 const isNumber = (num) => !isNaN(parseFloat(num);
 
 // 是完整的数字
-// 比如输入了 1. 或 - 都不算完整
+// 比如输入了 1. 或 - 还尚不完整
 const isValidNumber = (num) => /\d$/.test(num);
 
 // 是正数
 const isPositive = (num) => num > 0;
 
 // 是整数
-const isInteger = (num) => num >> 0 === num;
+const isInteger = (num) => Math.floor(num) === num;
 
 // 是小数
 const isDecimal = (num) => !isInteger(num);
@@ -39,6 +39,9 @@ const isWeChat = isWeChat() && /wechatdevtools/i.test(ua);
 
 // 支付宝浏览器
 const isAliPay = /AlipayClient/i.test(ua);
+
+// 小于 IE9
+const ltIE9 = !+"\v1";
 ```
 
 ## * 其他常用

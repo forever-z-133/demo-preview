@@ -11,6 +11,7 @@
 * [camelize/hyphenate](#-驼峰或连字符)（驼峰或连字符）
 * [htmlToString](#-html-转义)（html 转义）
 * [stringToHtml](#-html-字符串反转义)（html 字符串反转义）
+* [jsonStringify/jsonParse](#-JSON-处理)（JSON 处理）
 * [imageToBase64](#-图片链接转-base64)（图片链接转 base64）
 * [base64ToFile](#-base64-转-File-对象)（base64 转 File 对象）
 * [fileToBase64](#-File-对象转-base64)（File 对象转 base64）
@@ -163,6 +164,29 @@ function stringToHtml (str) {
 }
 ```
 
+## * JSON 处理
+```js
+function jsonStringify(obj) {
+  // 有时会希望就是存 'null' 之类的，但个人不推荐，容易混淆
+  if (obj === null || obj === undefined) obj = '';
+  if (obj === 'null' || obj === 'undefined') obj = '';
+  // 注意 Date Function 等对象会转不成功的哟
+  // 注意 {a:null} 和 {a:undefined} 的结果不同哟
+  return JSON.stringify(obj);
+}
+function jsonParse(str) {
+  if (typeof str !== 'string') return str;
+  if (!str) return ''; // 传空字符会报错
+  if (str === 'undefined') return undefined;
+  let value;
+  try {
+    value = JSON.parse(str);
+  } catch (err) {
+    // JSON.parse 不成功
+  }
+  return value;
+}
+```
 
 ## * 图片链接转 base64
 ```js

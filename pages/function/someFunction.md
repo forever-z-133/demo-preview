@@ -143,8 +143,6 @@ function toFixed(num, decimal, mathType) {
 ```js
 // 解决，1. 非数字型数字的运算 2. 小数计算的精度问题
 // count('+', 0.1, 0.2);  // 0.3
-// 或 countPlus('0.1+0.2');  // 0.3
-
 function count(type, n1, n2) {
   n1 = parseFloat(n1);
   n2 = parseFloat(n2);
@@ -167,6 +165,8 @@ function count(type, n1, n2) {
       return (num1 + num2) / pow;
   }
 }
+```
+```js
 // 拓展支持多个数字的运算 countMore('+', 1, 2, 3)
 function countMore(type, options, ...nums) {
   const _startConfig = { '+': 0, '-': 0, '*': 1, '/': 1 };
@@ -184,15 +184,17 @@ function countMore(type, options, ...nums) {
   }
   return result;
 }
+```
+```js
 // 拓展支持带符号字符串式运算 countPlus('0.1+0.2')
 function countPlus(str) {
   let result = str.replace(/\s/g, '');
   // 先递归处理括号内的运算
   result = result.replace(/\(([^)]*)\)/g, (match, _str) => countPlus(_str));
   // 先乘除，后加减，用 exec 正则出来一个个计算并替换
-  const _numReg = '((?=\\D|^)-?[0-9]+[\\.\\e]?[0-9]*)';
-  ['/*', '+-'].forEach((item) => {
-    item = item.replace(/(?<=\B)/g, '\\\\').slice(0, -2);
+  const _numReg = '((?=\\D|\\b)-?[0-9]+[\\.\\e]?[0-9]*)';
+  ['/*', '+-'].forEach(item => {
+    item = item.replace(/(?=\B)/g, '\\\\').slice(0, -2);
     const _reg = new RegExp(_numReg + '([' + item + '])' + _numReg);
     let match = _reg.exec(result);
     while (match) {
