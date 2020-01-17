@@ -34,12 +34,12 @@
 
 #### 学习笔记
 
-* [SEO 概述](./pages/articles/学习笔记/SEO%20概述.md)
+* [SEO 概述](./articles/学习笔记/SEO%20概述.md)
 
 #### 随笔感想
 
-* [闲谈 css 的 float](./pages/articles/随笔感想/闲谈%20css%20的%20float.md)
-* [读《面向前端的设计规范-文字初探》](./pages/articles/随笔感想/读《面向前端的设计规范-文字初探》.md)
+* [闲谈 css 的 float](./articles/随笔感想/闲谈%20css%20的%20float.md)
+* [读《面向前端的设计规范-文字初探》](./articles/随笔感想/读《面向前端的设计规范-文字初探》.md)
 
 ## 其他
 

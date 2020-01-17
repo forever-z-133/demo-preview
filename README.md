@@ -1,6 +1,6 @@
-分享一堆稀奇古怪的案例，以 CSS 为主，SVG 和 canvas 为辅，主要涉猎布局和样式方面的巧妙实现。
+本博客使用 [docsify](https://docsify.js.org/#/?id=docsify) + [gittalk](https://github.com/gitalk/gitalk) + [codepen](https://codepen.io/forever-z-133/collections/popular/) 搭建。
 
-本文档使用 [docsify](https://docsify.js.org/#/?id=docsify) + [gittalk](https://github.com/gitalk/gitalk) + [codepen](https://codepen.io/forever-z-133/collections/popular/) 搭建。
+收录了 [永恒君](https://github.com/forever-z-133) 前端开发过程中的测验、实战、总结与感想，与君共勉。
 
 ## 在线预览
 
@@ -39,7 +39,18 @@
 * [兼容性的 Polyfill 代码](https://forever-z-133.github.io/demo-preview/#/./pages/function/polyfillFunction.md)
 * [颜色相关的公共方法](https://forever-z-133.github.io/demo-preview/#/./pages/function/colorFunction.md)
 
-> #### 其他
+## 博客文章
+
+> #### 学习笔记
+
+* [SEO 概述](https://forever-z-133.github.io/demo-preview/#/./articles/学习笔记/SEO%20概述.md)
+
+> #### 随笔感想
+
+* [闲谈 css 的 float](https://forever-z-133.github.io/demo-preview/#/./articles/随笔感想/闲谈%20css%20的%20float.md)
+* [读《面向前端的设计规范-文字初探》](https://forever-z-133.github.io/demo-preview/#/./articles/随笔感想/读《面向前端的设计规范-文字初探》.md)
+
+## 其他
 
 * [对象的深拷贝](https://forever-z-133.github.io/demo-preview/#/./pages/others/deep-clone.md)
 * [日常的瞎鸡儿玩](https://forever-z-133.github.io/demo-preview/#/./pages/others/others.md)
