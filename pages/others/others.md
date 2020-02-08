@@ -25,12 +25,17 @@
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
-<iframe
-  src="https://codesandbox.io/embed/rough-forest-ffu4u?fontsize=14&hidenavigation=1&theme=dark"
-  style="width:100%; height:500px; border:0; border-radius: 4px; overflow:hidden;"
-  title="rough-forest-ffu4u"
-  allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb"
-  sandbox="allow-modals allow-forms allow-popups allow-scripts allow-same-origin"
->
-  加上了滚动加载的 Select 组件
+<iframe height="265" style="width: 100%;" scrolling="no" title="movable-area" src="https://codepen.io/foreverZ133/embed/rNaaZyp?height=265&theme-id=default&default-tab=js,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/rNaaZyp'>movable-area</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+<iframe height="265" style="width: 100%;" scrolling="no" title="尖角边框" src="https://codepen.io/foreverZ133/embed/zYxLLZY?height=265&theme-id=default&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/zYxLLZY'>尖角边框</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+<iframe height="265" style="width: 100%;" scrolling="no" title="高度不足底部也吸底" src="https://codepen.io/foreverZ133/embed/VwYREVM?height=265&theme-id=default&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/VwYREVM'>高度不足底部也吸底</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
