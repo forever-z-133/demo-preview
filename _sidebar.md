@@ -46,6 +46,12 @@
 - [读《面向前端的设计规范-文字初探》](./articles/随笔感想/读《面向前端的设计规范-文字初探》.md)
 - [我理解的前端动画](./articles/随笔感想/我理解的前端动画.md)
 
+## 开源项目
+
+- [common-scss-mixin](./pages/open-source/common-scss-mixin.md)
+- [common-less-mixin](./pages/open-source/common-less-mixin.md)
+- [list-data](./pages/open-source/list-data.md)
+
 ## 其他
 
 - [常用工具集锦](./pages/others/tools.md)

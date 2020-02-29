@@ -1,3 +1,7 @@
+<p></p>
+
+<img src="favicon.png" width="100" style="margin:-4em 0 -1.5em" />
+
 本博客使用 [docsify](https://docsify.js.org/#/?id=docsify) + [gittalk](https://github.com/gitalk/gitalk) + [codepen](https://codepen.io/forever-z-133/collections/popular/) 搭建。
 
 收录了 [永恒君](https://github.com/forever-z-133) 前端开发过程中的测验、实战、总结与感想，与君共勉。
@@ -54,10 +58,16 @@
 
 - [闲谈 css 的 float](https://forever-z-133.github.io/demo-preview/#/./articles/随笔感想/闲谈%20css%20的%20float.md)
 - [读《面向前端的设计规范-文字初探》](https://forever-z-133.github.io/demo-preview/#/./articles/随笔感想/读《面向前端的设计规范-文字初探》.md)
+- [我理解的前端动画](https://forever-z-133.github.io/demo-preview/#/./articles/随笔感想/我理解的前端动画.md)
 
-* [我理解的前端动画](https://forever-z-133.github.io/demo-preview/#/./articles/随笔感想/我理解的前端动画.md)
+## 开源项目
+
+- [common-scss-mixin](https://www.npmjs.com/package/common-scss-mixin)（常用 scss 原子类）
+- [common-less-mixin](https://www.npmjs.com/package/common-less-mixin)（常用 less 原子类）
+- [list-data](https://www.npmjs.com/package/list-data)（分页请求公共方法）
 
 ## 其他
 
-- [对象的深拷贝](https://forever-z-133.github.io/demo-preview/#/./pages/others/deep-clone.md)
+- [常用工具集锦](https://forever-z-133.github.io/demo-preview/#/./pages/others/tools.md)
+- [四种对象的深拷贝](https://forever-z-133.github.io/demo-preview/#/./pages/others/deep-clone.md)
 - [日常的瞎鸡儿玩](https://forever-z-133.github.io/demo-preview/#/./pages/others/others.md)
