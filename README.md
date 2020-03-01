@@ -47,6 +47,7 @@
 
 > #### 填坑记录
 
+- [字体文件的引用与压缩](https://forever-z-133.github.io/demo-preview/#/./articles/填坑记录/字体文件的引用与压缩.md)
 - [JS 数据类型方面的蹊跷](https://forever-z-133.github.io/demo-preview/#/./articles/填坑记录/JS%20数据类型方面的蹊跷.md)
 - [webpack 打包时对 import 和 require 的处理](https://forever-z-133.github.io/demo-preview/#/./articles/填坑记录/webpack%20打包时对%20import%20和%20require%20的处理.md)
 
