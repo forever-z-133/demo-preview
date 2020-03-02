@@ -53,6 +53,7 @@
 
 > #### 学习笔记
 
+- [惰性函数&偏函数&科里化](https://forever-z-133.github.io/demo-preview/#/./articles/学习笔记/惰性函数&偏函数&科里化.md)
 - [SEO 概述](https://forever-z-133.github.io/demo-preview/#/./articles/学习笔记/SEO%20概述.md)
 
 > #### 随笔感想
