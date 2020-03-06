@@ -81,7 +81,7 @@ body
 
 ## 不同级层叠水平大者居上
 
-_注：z-index 好像不同浏览器版本有差异，如需 z-index 生效最好就是定位，如 relative。_
+_注：z-index 好像不同浏览器版本有差异，如需 z-index 生效最好加上定位，如 relative。_
 
 ```
 body
@@ -98,21 +98,65 @@ body
 
 ## 层叠水平的嵌套
 
+当父级或祖父级元素含有层叠上下文时，内部的层叠上下文类似于水平的水平这样的嵌套关系。<br>
+这意味着，当父级层叠水平不够高时，子级的层叠水平再高也没用。
+
 ```
 body
   - gray【含层叠上下文，z-index: auto】
-    - red【含层叠上下文，z-index: 99999】
+    - red【含层叠上下文，z-index: 999】
   - pink【含层叠上下文，z-index: auto】
-    - green【含层叠上下文，z-index: 10】
+    - green【含层叠上下文，z-index: 1】
 ```
 
+<iframe height="295" style="width: 100%;" scrolling="no" title="层叠水平的嵌套" src="https://codepen.io/foreverZ133/embed/ZEGXdJY?height=265&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/ZEGXdJY'>层叠水平的嵌套</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
 
+## 层叠水平内部覆盖规则改变
 
-
-
-
-
-
-## 层叠上下文之上，覆盖关系完全不同了
+起初我并不能理解下图是何含义，但当我发现 z-index: -1 在父级是否含有层叠上下文时的不同表现时才意识到，<br>
+层叠水平内部元素的覆盖关系，可能与普通元素的覆盖关系有所不同。
 
 ![](https://cdn.nlark.com/yuque/0/2019/png/158440/1561019816571-2406a408-f6c6-4063-8464-b27f2ea40bd7.png#align=left&display=inline&height=375&originHeight=375&originWidth=599&size=0&status=done&width=599)
+
+如果父级不含层叠上下文，
+
+```
+body
+  - gray【普通元素】
+    - red【普通元素】
+    - green【含层叠上下文，z-index: -1】
+```
+
+<iframe height="265" style="width: 100%;" scrolling="no" title="父级不含层叠上下文的负值水平" src="https://codepen.io/foreverZ133/embed/dyoVBJV?height=265&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/dyoVBJV'>父级不含层叠上下文的负值水平</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+```
+body
+  - gray【含层叠上下文，z-index: auto】
+    - red【普通元素】
+    - green【含层叠上下文，z-index: -1】
+```
+
+<iframe height="265" style="width: 100%;" scrolling="no" title="父级含层叠上下文的负值水平" src="https://codepen.io/foreverZ133/embed/XWbeLZd?height=265&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/XWbeLZd'>父级含层叠上下文的负值水平</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+## 总结
+
+以上便是创建层叠上下文后与众不同的视觉表现的规律。
+
+可以在遇到奇怪的覆盖样式问题时有一定理论思路：https://codepen.io/foreverZ133/pen/GbMKXd
+
+也可利用水平嵌套时 z-index: -1 的表现制作更多优秀效果：https://codepen.io/foreverZ133/pen/EBoWBd
+
+还可以利用层叠上下文高于普通元素的表现区别于普通元素的覆盖问题：https://codepen.io/foreverZ133/pen/jjYOyo
+
+更多案例：<br> 
+https://codepen.io/foreverZ133/pen/orpZKR   
+https://codepen.io/hexagoncircle/pen/JZNVdE
