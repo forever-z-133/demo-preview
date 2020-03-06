@@ -160,3 +160,28 @@ body
 更多案例：<br> 
 https://codepen.io/foreverZ133/pen/orpZKR   
 https://codepen.io/hexagoncircle/pen/JZNVdE
+
+### 思考题：层叠上下文的底层实现
+
+假如你正在开发一款基于 canvas 的布局工具，元素的数据结构如下：<br>
+明显不太方便处理元素覆盖的表现，而需要另一个数据来专门存储覆盖关系，那么它的数据结构是怎样的？<br>
+当产生点击事件时，向内寻找向内冒泡时，又是如何知道最终点中的是上层覆盖的元素的？
+
+```
+[
+  selector: '',
+  rect: { x: 0, y: 0, width: 100, height: 100, zIndex: 1 },
+  children: [{
+    selector: '',
+    rect: { x: 0, y: 0, width: 100, height: 100 },
+  }],
+]
+```
+
+## 思考题：非层叠上下文时的覆盖关系
+
+在研究过程中，我发现了一些奇特的规律，<br>
+比如 inline-block 始终高于其他 display 的元素，<br>
+或者，文字与背景中间还能再覆盖其他元素等。
+
+可点开右侧链接来体验：https://codepen.io/foreverZ133/pen/LKpqOj/
