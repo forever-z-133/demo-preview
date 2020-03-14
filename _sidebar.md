@@ -24,6 +24,7 @@
 - [不常用的公共方法](./pages/function/otherFunction.md)
 - [时间相关的公共方法](./pages/function/dateFunction.md)
 - [NodeJS 相关的公共方法](./pages/function/nodeFunction.md)
+- [DOM 相关的公共方法](./pages/function/domFunction.md)
 - [各种判断函数](./pages/function/someRegExp.md)
 - [常用的 CSS 原子类](./pages/function/someCSS.md)
 - [兼容性的 Polyfill 代码](./pages/function/polyfillFunction.md)

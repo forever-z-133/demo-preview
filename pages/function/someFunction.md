@@ -2,42 +2,43 @@
 
 需要 jQuery 插件的会在标题后加上 `$` 字样。
 
-* [typeOf](#-判断数据类型)（判断数据类型）
-* [isEmpty](#-对象是否为空)（对象是否为空）
-* [addZero](#-自动补零)（自动补零）
-* [random](#-随机数)（随机数）
-* [removeNull](#-删除对象中为空的键值对)（删除对象中为空的键值对）
-* [returnObject](#-返回非空对象)（返回非空对象）
-* [returnArray](#-返回可用数组)（返回可用数组）
-* [returnNumber](#-返回可用数字)（返回可用数字）
-* [toFixed](#-小数的取整)（小数的取整）
-* [count](#-数字计算)（数字计算）
-* [objectLength](#-获取对象的长度)（获取对象的长度）
-* [unique](#-数组或数据去重)（数组或数据去重）
-* [forEachDeep](#-数据的深度遍历)（数据的深度遍历）
-* [forInDeep](#-对象的深度遍历)（对象的深度遍历）
-* [forEachAsync](#-异步循环)（异步循环）
-* [deepClone](#-深拷贝)（深拷贝）
-* [filterData](#-筛选数据)（筛选数据）
-* [dataToArray](#-从数据中获取数组)（从数据中获取数组）
-* [dataToObject](#-数据转对象)（数据转对象）
-* [arrayToData](#-数组转数据)（数组转数据）
-* [objectToData](#-对象转数据)（对象转数据）
-* [objectToString](#-对象转字符串)（对象转字符串）
-* [stringToObject](#-字符串转对象)（字符串转对象）
-* [addDataToUrl](#-给链接添加参数)（给链接添加参数）
-* [getDataFromUrl](#-获取链接中的数据)（获取链接中的数据）
-* [objectEqual](#-对象是否相等)（对象是否相等）
-* [getObjectValue](#-获取对象的值)（获取对象的值）
-* [toString](#-安全转字符串)（安全转字符串）
-* [getElementData](#-获取表单数据-)（获取表单数据 `$`）
-* [fillElmentWithData](#-用数据填充表单-)（用数据填充表单 `$`）
-* [clearElmentAndData](#-清空表单-)（清空表单 `$`）
+- [typeOf](#-判断数据类型)（判断数据类型）
+- [isEmpty](#-对象是否为空)（对象是否为空）
+- [addZero](#-自动补零)（自动补零）
+- [random](#-随机数)（随机数）
+- [removeUndefined](#-删除对象中为空的键值对)（删除对象中为空的键值对）
+- [returnObject](#-返回非空对象)（返回非空对象）
+- [returnArray](#-返回可用数组)（返回可用数组）
+- [returnNumber](#-返回可用数字)（返回可用数字）
+- [toFixed](#-小数的取整)（小数的取整）
+- [count / countMore / countPlus](#-数字计算)（数字计算）
+- [objectLength](#-获取对象的长度)（获取对象的长度）
+- [unique](#-数组或数据去重)（数组或数据去重）
+- [forEachDeep](#-数据的深度遍历)（数据的深度遍历）
+- [forInDeep](#-对象的深度遍历)（对象的深度遍历）
+- [forEachAsync](#-异步循环)（异步循环）
+- [deepClone](#-深拷贝)（深拷贝）
+- [filterData](#-筛选数据)（筛选数据）
+- [dataToArray](#-从数据中获取数组)（从数据中获取数组）
+- [dataToObject](#-数据转对象)（数据转对象）
+- [arrayToData](#-数组转数据)（数组转数据）
+- [objectToData](#-对象转数据)（对象转数据）
+- [objectToString](#-对象转字符串)（对象转字符串）
+- [stringToObject](#-字符串转对象)（字符串转对象）
+- [addDataToUrl](#-给链接添加参数)（给链接添加参数）
+- [getDataFromUrl](#-获取链接中的数据)（获取链接中的数据）
+- [objectEqual](#-对象是否相等)（对象是否相等）
+- [getObjectValue](#-获取对象的值)（获取对象的值）
+- [toString](#-安全转字符串)（安全转字符串）
+- [getElementData](#-获取表单数据-)（获取表单数据 `$`）
+- [fillElmentWithData](#-用数据填充表单-)（用数据填充表单 `$`）
+- [clearElmentAndData](#-清空表单-)（清空表单 `$`）
 
-## * 判断数据类型
+## \* 判断数据类型
+
 ```js
 function typeOf(obj) {
-  const typeStr = Object.prototype.toString.call(obj).split(" ")[1];
+  const typeStr = Object.prototype.toString.call(obj).split(' ')[1];
   return typeStr.substr(0, typeStr.length - 1).toLowerCase();
 }
 function isType(obj, type) {
@@ -45,8 +46,10 @@ function isType(obj, type) {
 }
 ```
 
-## * 对象是否为空
+## \* 对象是否为空
+
 ```js
+// 判 [], {}, undefined, NaN, null, "", false；不包含 0
 function isEmpty(obj) {
   if (typeof obj === 'number' && isNaN(obj)) return true;
   if (typeof obj !== 'number' && !obj) return true;
@@ -55,16 +58,20 @@ function isEmpty(obj) {
 }
 ```
 
-## * 自动补零
+## \* 自动补零
+
 ```js
 function addZero(num, len = 2) {
   let numLen = (num + '').length;
-  while (numLen++ < len) { num = '0' + num; }
+  while (numLen++ < len) {
+    num = '0' + num;
+  }
   return num + '';
 }
 ```
 
-## * 随机数
+## \* 随机数
+
 ```js
 function random(n1, n2 = 0) {
   const min = Math.min(n1, n2);
@@ -73,13 +80,14 @@ function random(n1, n2 = 0) {
 }
 ```
 
-## * 删除对象中为空的键值对
+## \* 删除对象中为空的键值对
+
 ```js
-function removeNull(obj) {
+function removeUndefined(obj, match = undefined) {
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
       const val = obj[key];
-      if (val === undefined) {
+      if (val === match) {
         delete obj[key];
       }
     }
@@ -87,7 +95,8 @@ function removeNull(obj) {
 }
 ```
 
-## * 返回非空对象
+## \* 返回非空对象
+
 ```js
 // returnObject({});  // null
 function returnObject(obj) {
@@ -97,16 +106,19 @@ function returnObject(obj) {
 }
 ```
 
-## * 返回数组
+## \* 返回可用数组
+
 ```js
-function returnArray(obj) {
-  if (typeof obj === 'string' && obj) return obj.split(',');
+// 处理 ''.split('') 为 [''] 的问题
+function returnArray(obj, divide) {
+  if (typeof obj === 'string' && obj) return obj.split(divide);
   if (typeOf(obj) === 'array') return obj;
   return [];
 }
 ```
 
-## * 返回可用的数字
+## \* 返回可用数字
+
 ```js
 // returnNumber(NaN, null, 'null', [], ''); // NaN
 // returnNumber('0', '', 1); // 0
@@ -120,26 +132,21 @@ function returnNumber(...args) {
 }
 ```
 
-## * 小数的取整
+## \* 小数的取整
+
 ```js
-// 拓展 toFixed 结尾的取整策略，
-// 且返回的是数字类型，
+// 拓展 toFixed 结尾的取整策略，且返回的是数字类型，
 // 并能解决 166.665.toFixed(2) 不等于 166.67 这类部分数值未四舍五入的问题
-// toFixed(1.69, 1, 'round');  // 1.7
-function toFixed(num, decimal, mathType) {
-  if (isNaN(parseFloat(decimal))) throw new Error('第二位入参有误');
-  if (!Math[mathType]) throw new Error('第三位入参有误');
-
-  decimal = decimal != null ? decimal : 2;
-  mathType = mathType || 'round';  // ceil 向上取整， floor 向下取整，round 四舍五入
-
+// ceil 向上取整， floor 向下取整，round 四舍五入
+function toFixed(num, decimal = 2, mathType = 'round') {
   const pow = Math.pow(10, decimal);
   const mathFunc = Math[mathType];
   return mathFunc(num * pow) / pow;
 }
 ```
 
-## * 数字计算
+## \* 数字计算
+
 ```js
 // 解决，1. 非数字型数字的运算 2. 小数计算的精度问题
 // count('+', 0.1, 0.2);  // 0.3
@@ -166,18 +173,16 @@ function count(type, n1, n2) {
   }
 }
 ```
+
 ```js
 // 拓展支持多个数字的运算 countMore('+', 1, 2, 3)
-function countMore(type, options, ...nums) {
-  const _startConfig = { '+': 0, '-': 0, '*': 1, '/': 1 };
-  if (!(type in _startConfig)) throw new Error('首位入参有误');
-  // 可能往后会加入些配置，但如果不是对象则不是配置
-  if (typeOf(options) !== 'object') nums.splice(0, 0, options);
-  // 开始运算
-  let result = _startConfig[type];
+function countMore(type, ...nums) {
+  const startConfig = { '+': 0, '-': 0, '*': 1, '/': 1 };
+  if (!(type in startConfig)) throw new Error('首位入参有误');
+  let result = startConfig[type];
   for (let i = 0; i < nums.length; i++) {
     if (i === 0 && (type === '-' || type === '/')) {
-      result = nums[0];
+      result = nums[i];
       continue;
     }
     result = count(type, result, nums[i]);
@@ -185,6 +190,7 @@ function countMore(type, options, ...nums) {
   return result;
 }
 ```
+
 ```js
 // 拓展支持带符号字符串式运算 countPlus('0.1+0.2')
 function countPlus(str) {
@@ -206,10 +212,11 @@ function countPlus(str) {
 }
 ```
 
-## * 获取对象的长度
+## \* 获取对象的长度
+
 ```js
+// 请注意排除 null undefined
 function objectLength(obj) {
-  if (isEmpty(obj)) return 0;
   if (Object.keys) {
     return Object.keys(obj).length;
   }
@@ -223,30 +230,34 @@ function objectLength(obj) {
 }
 ```
 
-## * 数组或数据去重
+## \* 数组或数据去重
+
 ```js
+// unique([1,1]);
+// unique([{a:1},{a:2}], 'a');
 function unique(arr, keyName, options = {}) {
-	const temp = {};
-	const customValue = options.value;
+  const temp = {};
+  const customValue = options.value;
 
-	return arr.reduce((re, item, index) => {
-		let key, value;
+  return arr.reduce((re, item, index) => {
+    let key, value;
 
-		if (typeof keyName === 'function') key = keyName(item, index);
-		key = !isEmpty(key) ? key : (keyName ? item[keyName] : item);
+    if (typeof keyName === 'function') key = keyName(item, index);
+    key = !isEmpty(key) ? key : keyName ? item[keyName] : item;
 
-		if (key in temp) return re;
-		temp[key] = true;
+    if (key in temp) return re;
+    temp[key] = true;
 
-		if (typeof customValue === 'function') value = customValue(item, index);
-		value = !isEmpty(value) ? value : item;
+    if (typeof customValue === 'function') value = customValue(item, index);
+    value = !isEmpty(value) ? value : item;
 
-		return re.concat([value]);
-	}, []);
+    return re.concat([value]);
+  }, []);
 }
 ```
 
-## * 数据的深度遍历
+## \* 数据的深度遍历
+
 ```js
 function forEachDeep(json, childKey, func, indexs = [], parents = []) {
   json.forEach((item, index) => {
@@ -260,7 +271,8 @@ function forEachDeep(json, childKey, func, indexs = [], parents = []) {
 }
 ```
 
-## * 对象的深度遍历
+## \* 对象的深度遍历
+
 ```js
 function forInDeep(obj, func, options, map = new WeakMap()) {
   if (typeOf(obj) === 'object' || typeOf(obj) === 'array') {
@@ -280,7 +292,8 @@ function forInDeep(obj, func, options, map = new WeakMap()) {
 }
 ```
 
-## * 异步循环
+## \* 异步循环
+
 ```js
 /**
  * forEachAsync([data], function(index, item, next) {
@@ -301,7 +314,7 @@ function forEachAsync(data, func, options = {}) {
   (function loop(index) {
     const item = data[index];
     if (!item) return;
-    func(index, item, (res) => {
+    func(index, item, res => {
       restQueue++;
       result[index] = res;
       if (++loaded > total) return finish(result);
@@ -317,7 +330,8 @@ function forEachAsync(data, func, options = {}) {
 }
 ```
 
-## * 深拷贝
+## \* 深拷贝
+
 ```js
 function deepClone(rawObj, map = new WeakMap()) {
   if (!(rawObj instanceof Object)) return rawObj;
@@ -327,9 +341,11 @@ function deepClone(rawObj, map = new WeakMap()) {
     case RegExp:
     case Error:
     case Date:
-      objectClone = new Constructor(rawObj); break;
+      objectClone = new Constructor(rawObj);
+      break;
     case Function:
-      objectClone = rawObj; break;
+      objectClone = rawObj;
+      break;
     default:
       objectClone = new Constructor();
   }
@@ -347,7 +363,8 @@ function cloneDeep2(obj) {
 }
 ```
 
-## * 筛选数据
+## \* 筛选数据
+
 ```js
 // filterData([{id:1},{id:5}], 2, 'id', { type: '>=' }); // [{id:5}]
 function filterData(data, value, key, options) {
@@ -362,7 +379,7 @@ function filterData(data, value, key, options) {
   if (typeof key === 'function') customJudgeFunc = key;
 
   let result = [];
-  forEachDeep(data, deepKey, (item) => {
+  forEachDeep(data, deepKey, item => {
     const val = key ? item[key] : item;
     let inner = false;
     let temp = [];
@@ -390,7 +407,8 @@ function filterData(data, value, key, options) {
 }
 ```
 
-## * 从数据中获取数组
+## \* 从数据中获取数组
+
 ```js
 // [{a:1},{a:2}], 'a' => [1,2]
 function dataToArray(data, key, options) {
@@ -402,7 +420,7 @@ function dataToArray(data, key, options) {
   const deepKey = options.deepKey || ''; // 按某 key 向下递归
 
   const result = [];
-  forEachDeep(data, deepKey, (item) => {
+  forEachDeep(data, deepKey, item => {
     const val = item[key];
     if (noEmpty && (val === undefined || val === null)) return;
     result.push(val);
@@ -412,7 +430,8 @@ function dataToArray(data, key, options) {
 }
 ```
 
-## * 数据转对象
+## \* 数据转对象
+
 ```js
 // dataToObject([{id:1,x:'a'}, {id:2,x:'b'}], 'id', 'x'); // {1:'a',2:'b'}
 function dataToObject(data, keyName, valueName, options) {
@@ -437,7 +456,8 @@ function dataToObject(data, keyName, valueName, options) {
 }
 ```
 
-## * 数组转数据
+## \* 数组转数据
+
 ```js
 // arrayToData([1,2], {a:'$item',i:'$index'}) => [{a:1,i:0},{a:2,i:1}]
 function arrayToData(arr, format, options) {
@@ -476,7 +496,8 @@ function arrayToData(arr, format, options) {
 }
 ```
 
-## * 对象转数据
+## \* 对象转数据
+
 ```js
 // objectToData({1:'a',2:'b'}, {id:'$item',value:'$key'}) => [{id:1,value:'a'}, {id:2,value:'b'}]
 function objectToData(obj, format, options) {
@@ -520,7 +541,8 @@ function objectToData(obj, format, options) {
 }
 ```
 
-## * 对象转字符串
+## \* 对象转字符串
+
 ```js
 // {a:1,b:2} 转为 a=1&b=2
 function objectToString(obj, divide = '&', concat = '=') {
@@ -537,7 +559,8 @@ function objectToString(obj, divide = '&', concat = '=') {
 }
 ```
 
-## * 字符串转对象
+## \* 字符串转对象
+
 ```js
 // a=1&b=2 转为 {a:1,b:2}
 function stringToObject(str, divide = '&', concat = '=') {
@@ -558,12 +581,13 @@ function stringToObject(str, divide = '&', concat = '=') {
 }
 ```
 
-## * 给链接添加参数
+## \* 给链接添加参数
+
 ```js
 // addDataToUrl('x.html?a=1', {b:2}) // x.html?a=1&b=2
 function addDataToUrl(url, data) {
   if (!data) return url;
-  
+
   const concat = /\?/.test(url) ? '&' : '?';
 
   if (typeof data === 'string') {
@@ -576,7 +600,8 @@ function addDataToUrl(url, data) {
 }
 ```
 
-## * 获取链接中的数据
+## \* 获取链接中的数据
+
 ```js
 function getDataFromUrl(name, url = location.href) {
   const obj = stringToObject(url.split('?')[1], /[#?&]/);
@@ -584,7 +609,8 @@ function getDataFromUrl(name, url = location.href) {
 }
 ```
 
-## * 对象是否相等
+## \* 对象是否相等
+
 ```js
 function objectEqual(a, b) {
   if (a === b) return true;
@@ -602,7 +628,8 @@ function objectEqual(a, b) {
 }
 ```
 
-## * 获取对象的值
+## \* 获取对象的值
+
 ```js
 // getObjectValue({a:{b:1}}, 'a.b');  // 1
 // getObjectValue({a:{b:1}}, 'a.c.d');  // undefined
@@ -613,7 +640,8 @@ function getObjectValue(obj, keyStr) {
 }
 ```
 
-## * 安全转字符串
+## \* 安全转字符串
+
 ```js
 function toString(obj) {
   if (obj === null || obj === undefined || isNaN(obj)) return '';
@@ -621,12 +649,13 @@ function toString(obj) {
 }
 ```
 
-## * 获取表单数据 `$`
+## \* 获取表单数据 `$`
+
 ```js
 function getElementData($range, tagName) {
   tagName = tagName || 'name';
   var result = {};
-  $range.find('[' + tagName + ']').each(function () {
+  $range.find('[' + tagName + ']').each(function() {
     var $this = $(this),
       keyName = $this.attr(tagName);
     if ($this.is(':radio, :checkbox')) {
@@ -640,7 +669,8 @@ function getElementData($range, tagName) {
       result[keyName] = $this.is(':input,select,textarea') ? $this.val() : $this.text();
     }
   });
-  for (var key in result) { // 多选生成的数组改为逗号字符串
+  for (var key in result) {
+    // 多选生成的数组改为逗号字符串
     if (Array.isArray(result[key])) {
       result[key] = result[key].join(',').replace(/^,+|,+$|,{2}/g, '');
     }
@@ -649,12 +679,13 @@ function getElementData($range, tagName) {
 }
 ```
 
-## * 用数据填充表单 `$`
+## \* 用数据填充表单 `$`
+
 ```js
 function fillElmentWithData($range, data, tagName, options) {
   options = options || {};
   $range = $range ? $range : $(document);
-  $range.find('[' + tagName + ']').each(function () {
+  $range.find('[' + tagName + ']').each(function() {
     var $this = $(this),
       key = $this.attr(tagName),
       val = data[key];
@@ -670,7 +701,7 @@ function fillElmentWithData($range, data, tagName, options) {
     } else if ($(this).is('img')) {
       val ? $this.attr('src', val) : $this.removeAttr('src');
     } else if ($this.is('select[multiple]') && typeof val === 'string') {
-      $this.val(val.split(','))
+      $this.val(val.split(','));
     } else if ($this.is(':input, select, textarea')) {
       $this.val(val);
     } else {
@@ -680,11 +711,12 @@ function fillElmentWithData($range, data, tagName, options) {
 }
 ```
 
-## * 清空表单 `$`
+## \* 清空表单 `$`
+
 ```js
 function clearElmentAndData($range, tagName) {
   $range = $range ? $range : $(document);
-  $range.find('[' + tagName + ']').each(function (i, elment) {
+  $range.find('[' + tagName + ']').each(function(i, elment) {
     var $this = $(this);
     if ($this.is(':radio, :checkbox')) {
       $this.prop('checked', false);

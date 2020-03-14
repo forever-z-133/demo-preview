@@ -38,6 +38,7 @@
 - [不常用的公共方法](https://forever-z-133.github.io/demo-preview/#/./pages/function/otherFunction.md)
 - [时间相关的公共方法](https://forever-z-133.github.io/demo-preview/#/./pages/function/dateFunction.md)
 - [NodeJS 相关的公共方法](https://forever-z-133.github.io/demo-preview/#/./pagesfunction//nodeFunction.md)
+- [DOM 相关的公共方法](https://forever-z-133.github.io/demo-preview/#/./pages/function/domFunction.md)
 - [常用的 CSS 原子类](https://forever-z-133.github.io/demo-preview/#/./pages/function/someCSS.md)
 - [各种判断函数](https://forever-z-133.github.io/demo-preview/#/./pages/function/someRegExp.md)
 - [兼容性的 Polyfill 代码](https://forever-z-133.github.io/demo-preview/#/./pages/function/polyfillFunction.md)

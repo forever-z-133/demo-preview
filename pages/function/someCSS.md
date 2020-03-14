@@ -16,7 +16,9 @@ https://www.npmjs.com/package/common-less-mixin
 .disabled {
   pointer-events: none;
   user-select: none;
-  &.gray { filter: grayscale(1); }
+  &.gray {
+    filter: grayscale(1);
+  }
 }
 ```
 
@@ -24,30 +26,71 @@ https://www.npmjs.com/package/common-less-mixin
 .flex-row {
   display: flex;
   align-items: center;
-  &.t { align-items: flex-start; }
-  &.m { align-items: center; }
-  &.b { align-items: flex-end; }
-  &.s { align-items: stretch; }
-  &.l { justify-content: flex-start; }
-  &.c { justify-content: center; }
-  &.r { justify-content: flex-end; }
-  &.sb { justify-content: space-between; }
-  &.w { flex-wrap: wrap; }
-  & > .grow { flex-grow: 1; overflow: hidden; }
-  & > :not(.grow) { flex-shrink: 0; }
+  &.t {
+    align-items: flex-start;
+  }
+  &.m {
+    align-items: center;
+  }
+  &.b {
+    align-items: flex-end;
+  }
+  &.s {
+    align-items: stretch;
+  }
+  &.l {
+    justify-content: flex-start;
+  }
+  &.c {
+    justify-content: center;
+  }
+  &.r {
+    justify-content: flex-end;
+  }
+  &.sb {
+    justify-content: space-between;
+  }
+  &.w {
+    flex-wrap: wrap;
+  }
+  & > .grow {
+    flex-grow: 1;
+    overflow: hidden;
+  }
+  & > :not(.grow) {
+    flex-shrink: 0;
+  }
 }
 .flex-col {
   display: flex;
   flex-direction: column;
-  &.t { justify-content: flex-start; }
-  &.m { justify-content: center; }
-  &.b { justify-content: flex-end; }
-  &.sb { justify-content: space-between; }
-  &.l { align-items: flex-start; }
-  &.c { align-items: center; }
-  &.r { align-items: flex-end; }
-  & > .grow { flex-grow: 1; }
-  & > :not(.grow) { flex-shrink: 0; }
+  &.t {
+    justify-content: flex-start;
+  }
+  &.m {
+    justify-content: center;
+  }
+  &.b {
+    justify-content: flex-end;
+  }
+  &.sb {
+    justify-content: space-between;
+  }
+  &.l {
+    align-items: flex-start;
+  }
+  &.c {
+    align-items: center;
+  }
+  &.r {
+    align-items: flex-end;
+  }
+  & > .grow {
+    flex-grow: 1;
+  }
+  & > :not(.grow) {
+    flex-shrink: 0;
+  }
 }
 .flex-center {
   display: flex;
@@ -73,20 +116,59 @@ https://www.npmjs.com/package/common-less-mixin
 ```
 
 ```css
-.cover { position: absolute; top: 0; left: 0; right: 0; bottom: 0; }
-.fit-cover { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
-.pos-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
-.pos-hide { position: absolute; left: -9999em; }
+.cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.fit-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.pos-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.pos-hide {
+  position: absolute;
+  left: -9999em;
+}
 ```
 
 ```less
-.ratio { position: relative; }
-.ratio::before { content: ''; float: left; padding-top: 100%; }
-.ratio::after { content: ''; display: block; clear: both; }
+.ratio {
+  position: relative;
+}
+.ratio::before {
+  content: '';
+  float: left;
+  padding-top: 100%;
+}
+.ratio::after {
+  content: '';
+  display: block;
+  clear: both;
+}
 
-.image-ratio { position: relative; }
-.image-ratio::before { content: ''; float: left; padding-top: 100%; }
-.image-ratio > * { .fit-cover(); }
+.image-ratio {
+  position: relative;
+}
+.image-ratio::before {
+  content: '';
+  float: left;
+  padding-top: 100%;
+}
+.image-ratio > * {
+  .fit-cover();
+}
 ```
 
 ```less
@@ -94,7 +176,9 @@ label.form-file {
   position: relative;
   vertical-align: middle;
   cursor: pointer;
-  & > input[type="file"] { .pos-hide(); }
+  & > input[type='file'] {
+    .pos-hide();
+  }
 }
 ```
 
@@ -121,11 +205,22 @@ table {
   border-spacing: 0;
   border-collapse: collapse;
 }
-td, th { padding: 0; }
+td,
+th {
+  padding: 0;
+}
 .list {
   margin-top: 0;
   margin-bottom: 0;
   padding-left: 0;
   list-style: none;
+}
+```
+
+```css
+@font-face {
+  font-family: 'color-emoji';
+  src: local('Apple Color Emoji'), local('Segoe UI Emoji'), local('Segoe UI Symbol'), local('Noto Color Emoji');
+  unicode-range: U+1F000-1F644, U+203C-3299; /* 需根据实际情况进行调整 */
 }
 ```
