@@ -64,6 +64,7 @@
 
 - [闲谈 css 的 float](https://forever-z-133.github.io/demo-preview/#/./articles/随笔感想/闲谈%20css%20的%20float.md)
 - [读《面向前端的设计规范-文字初探》](https://forever-z-133.github.io/demo-preview/#/./articles/随笔感想/读《面向前端的设计规范-文字初探》.md)
+- [关于间距样式的两点建议](https://forever-z-133.github.io/demo-preview/#/./articles/随笔感想/关于间距样式的两点建议.md)
 - [我理解的前端-动画篇](https://forever-z-133.github.io/demo-preview/#/./articles/随笔感想/我理解的前端动画.md)
 - [我理解的前端-布局篇](https://forever-z-133.github.io/demo-preview/#/./articles/随笔感想/我理解的前端布局.md)
 - [我理解的前端-交互篇](https://forever-z-133.github.io/demo-preview/#/./articles/随笔感想/我理解的前端交互.md)
