@@ -59,6 +59,7 @@
 - [SEO 概述](https://forever-z-133.github.io/demo-preview/#/./articles/学习笔记/SEO%20概述.md)
 - [CSS 层叠上下文](https://forever-z-133.github.io/demo-preview/#/./articles/学习笔记/CSS%20层叠上下文.md)
 - [响应式或自适应布局的流派](https://forever-z-133.github.io/demo-preview/#/./articles/学习笔记/响应式或自适应布局的流派.md)
+- [正则小知识记录](https://forever-z-133.github.io/demo-preview/#/./articles/学习笔记/正则小知识记录.md)
 
 > #### 随笔感想
 
