@@ -36,6 +36,7 @@
 
 - [字体文件的引用与压缩](./articles/填坑记录/字体文件的引用与压缩.md)
 - [JS 数据类型方面的蹊跷](./articles/填坑记录/JS%20数据类型方面的蹊跷.md)
+- [移动端视频播放方面的坑](./articles/填坑记录/移动端视频播放方面的坑.md)
 - [webpack 打包时对 import 和 require 的处理](./articles/填坑记录/webpack%20打包时对%20import%20和%20require%20的处理.md)
 - [setTimeout 在 js 加载前的问题探究](./articles/填坑记录/setTimeout%20在%20js%20加载前的问题探究.md)
 
