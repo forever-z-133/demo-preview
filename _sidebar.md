@@ -68,6 +68,7 @@
 ## 其他
 
 - [常用工具集锦](./pages/others/tools.md)
-- [Git 操作规范](./articles/学习笔记/git%20操作规范.md)
+- [前端代码规范](./pages/doc/前端代码规范.md)
+- [Git 操作规范](./pages/doc/Git%20操作规范.md)
 - [对象的深拷贝](./pages/others/deep-clone.md)
 - [日常的瞎鸡儿玩](./pages/others/others.md)

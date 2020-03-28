@@ -80,6 +80,7 @@
 ## 其他
 
 - [常用工具集锦](https://forever-z-133.github.io/demo-preview/#/./pages/others/tools.md)
-- [Git 操作规范](https://forever-z-133.github.io/demo-preview/#/./articles/学习笔记/git%20操作规范.md)
+- [前端代码规范](https://forever-z-133.github.io/demo-preview/#/./pages/doc/前端代码规范.md)
+- [Git 操作规范](https://forever-z-133.github.io/demo-preview/#/./pages/doc/Git%20操作规范.md)
 - [四种对象的深拷贝](https://forever-z-133.github.io/demo-preview/#/./pages/others/deep-clone.md)
 - [日常的瞎鸡儿玩](https://forever-z-133.github.io/demo-preview/#/./pages/others/others.md)
