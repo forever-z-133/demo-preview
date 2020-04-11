@@ -27,6 +27,7 @@
 - [CSS 层叠上下文](https://forever-z-133.github.io/demo-preview/#/./articles/学习笔记/CSS%20层叠上下文.md)
 - [响应式或自适应布局的流派](https://forever-z-133.github.io/demo-preview/#/./articles/学习笔记/响应式或自适应布局的流派.md)
 - [正则小知识记录](https://forever-z-133.github.io/demo-preview/#/./articles/学习笔记/正则小知识记录.md)
+- [打包的原理与实现](https://forever-z-133.github.io/demo-preview/#/./articles/学习笔记/打包的原理与实现.md)
 
 > #### 随笔感想
 
