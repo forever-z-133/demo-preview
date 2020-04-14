@@ -19,7 +19,7 @@
 - [debounce](#-去抖)（去抖）
 - [throttle](#-节流)（节流）
 - [useCache](#-使用函数结果缓存)（使用函数结果缓存）
-- [flexible](#px-转-rem-自适应)(px 转 rem 自适应)
+- [flexible](#-px-转-rem-自适应)(px 转 rem 自适应)
 - [singleton](#-单例模式)（单例模式）
 - [promisify](#-转-Promise)（转-Promise）
 - [download](#-下载)（下载）
