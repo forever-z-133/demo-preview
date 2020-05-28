@@ -60,4 +60,6 @@ const email_reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
 const password_reg = /(?=.*[0-9]|.*[a-zA-Z]).{6,30}/;
 // 带 css 单位的数字
 const css_number_reg = /^(-?\d*?\.?\d+)(px|%|r?em|vw|vh|pt)$/;
+// /**/ 注释
+const comment_reg = /\/\/*(.|\n)*?\*\//;
 ```

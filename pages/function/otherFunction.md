@@ -3,6 +3,8 @@
 需要 jQuery 插件的会在标题后加上 `$` 字样。
 
 - [trim](#-字符串去空)（字符串去空）
+- [reverseString](#-颠倒字符串)（颠倒字符串）
+- [sliceString](#-截取字符串)（截取字符串）
 - [toFirstUpperCase](#-首字母大写)（首字母大写）
 - [numberToMoney](#-折算成金额)（折算成金额）
 - [returnChineseNumber](#-转中文数字)（转中文数字）
@@ -51,11 +53,42 @@ if (!String.prototype.trim) {
 }
 ```
 
+## \* 颠倒字符串
+
+```js
+// 用 for-of 避免 utf-16 字符的拆分
+function reverseString(str) {
+  let result = '';
+  for (let char of str) {
+    result = char + result;
+  }
+  return result;
+}
+```
+
+## \* 截取字符串
+
+```js
+// 用 for-of 避免 utf-16 字符的拆分
+function sliceString(str, start, end = str.length) {
+  if (end < 0) { console.error('不支持传入负数'); return ''; }
+  let i = -1;
+  let result = '';
+  for (let char of str) {
+    if (++i >= start && i <= end) result += char;
+  }
+  return result;
+}
+```
+
 ## \* 首字母大写
 
 ```js
 function toFirstUpperCase(str) {
   return str.slice(0, 1).toUpperCase() + str.slice(1).toLowerCase();
+}
+function toFirstUpperCase2(str) {
+  return str.replace(/\b[a-z]/g, char => char.toUpperCase());
 }
 ```
 
