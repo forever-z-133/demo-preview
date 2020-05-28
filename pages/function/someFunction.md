@@ -6,6 +6,7 @@
 - [isEmpty](#-对象是否为空)（对象是否为空）
 - [addZero](#-自动补零)（自动补零）
 - [random](#-随机数)（随机数）
+- [getLength](#-获取长度)（获取长度）
 - [removeUndefined](#-删除对象中为空的键值对)（删除对象中为空的键值对）
 - [returnObject](#-返回非空对象)（返回非空对象）
 - [returnArray](#-返回可用数组)（返回可用数组）
@@ -80,12 +81,27 @@ function random(n1, n2 = 0) {
 }
 ```
 
+## \* 获取长度
+
+```js
+// 用于获取 object 的长度或 utf-16 字符串的实际长度
+function getLength(obj) {
+  let count = 0;
+  if (typeof obj === 'string') {
+    for (let char of obj) count++;
+  } else {
+    for (let key in obj) if ({}.hasOwnProperty.call(obj, key)) count++;
+  }
+  return count;
+}
+```
+
 ## \* 删除对象中为空的键值对
 
 ```js
 function removeUndefined(obj, match = undefined) {
   for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
+    if ({}.hasOwnProperty.call(obj, key)) {
       const val = obj[key];
       if (val === match) {
         delete obj[key];
