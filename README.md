@@ -19,6 +19,7 @@
 - [移动端视频播放方面的坑](https://forever-z-133.github.io/demo-preview/#/./articles/填坑记录/移动端视频播放方面的坑.md)
 - [webpack 打包时对 import 和 require 的处理](https://forever-z-133.github.io/demo-preview/#/./articles/填坑记录/webpack%20打包时对%20import%20和%20require%20的处理.md)
 - [setTimeout 在 js 加载前的问题探究](https://forever-z-133.github.io/demo-preview/#/./articles/填坑记录/setTimeout%20在%20js%20加载前的问题探究.md)
+- [如何合理使用用户协议等富文本](https://forever-z-133.github.io/demo-preview/#/./articles/填坑记录/如何合理使用用户协议等富文本.md)
 
 > #### 学习笔记
 
