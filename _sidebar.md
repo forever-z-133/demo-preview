@@ -8,6 +8,7 @@
 - [webpack 打包时对 import 和 require 的处理](./articles/topic/webpack%20打包时对%20import%20和%20require%20的处理.md)
 - [setTimeout 在 js 加载前的问题探究](./articles/topic/setTimeout%20在%20js%20加载前的问题探究.md)
 - [如何合理使用用户协议等富文本](./articles/topic/如何合理使用用户协议等富文本.md)
+- [如何实现主题换肤功能](./articles/topic/如何实现主题换肤功能.md)
 
 #### 学习笔记
 
@@ -17,6 +18,7 @@
 - [响应式或自适应布局的流派](./articles/study/响应式或自适应布局的流派.md)
 - [正则小知识记录](./articles/study/正则小知识记录.md)
 - [打包的原理与实现](./articles/study/打包的原理与实现.md)
+- [JS 的面向对象](./articles/study/JS%20的面向对象.md)
 
 #### 随笔感想
 
