@@ -48,6 +48,7 @@
 - [common-scss-mixin](https://www.npmjs.com/package/common-scss-mixin)（常用 scss 原子类）
 - [common-less-mixin](https://www.npmjs.com/package/common-less-mixin)（常用 less 原子类）
 - [list-data](https://www.npmjs.com/package/list-data)（分页请求公共方法）
+- [after-async-data](https://www.npmjs.com/package/after-async-data)（排队等待数据）
 
 ## 公共方法
 

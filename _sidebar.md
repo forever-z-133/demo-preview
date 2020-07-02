@@ -36,6 +36,7 @@
 - [common-scss-mixin](./pages/open-source/common-scss-mixin.md)
 - [common-less-mixin](./pages/open-source/common-less-mixin.md)
 - [list-data](./pages/open-source/list-data.md)
+- [after-async-data](./pages/open-source/after-async-data)
 
 ## 公共方法
 
