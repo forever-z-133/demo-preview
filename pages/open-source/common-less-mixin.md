@@ -1,11 +1,9 @@
-# 常用的 less 的 mixin 方法
-
-且只有 mixin 方法，不会产生不必要的 css 导出。
+常见而公用的 less 的 mixin 方法，且只有 mixin 方法，不会产生不必要的 css 导出。
 
 ## 1、如何使用
 
 ```
-npm i common-less-mixin
+npm i -D common-less-mixin
 ```
 https://www.npmjs.com/package/common-less-mixin
 
@@ -13,7 +11,7 @@ https://www.npmjs.com/package/common-less-mixin
 
 ```less
 // xxx.less
-@import 'common-less-mixin';
+@import "~common-less-mixin";
 
 .someClass {
   .pos-top(); /* 顶部定位 */
@@ -29,8 +27,9 @@ https://www.npmjs.com/package/common-less-mixin
 ```less
 // 也有打包好的 css 可供使用，但类名会有所不同
 // 如果喜欢本项目的话，可通过源码进一步尝试
-@import 'common-less-mixin/dist.min.css';
+@import "~common-less-mixin/dist.min.css";
 ```
+
 ```html
 <div class="post-top flex-row padding-row gap-right-5 border-bottom"></div>
 ```
@@ -39,32 +38,37 @@ https://www.npmjs.com/package/common-less-mixin
 
 ```less
 // 如果担心编译太多 mixin 会影响性能，可分别引入
-@import 'common-less-mixin/src/border.scss';
-@import 'common-less-mixin/src/flex.scss';
-@import 'common-less-mixin/src/form.scss';
-@import 'common-less-mixin/src/gap.scss';
-@import 'common-less-mixin/src/layout.scss';
-@import 'common-less-mixin/src/others.scss';
-@import 'common-less-mixin/src/position.scss';
-@import 'common-less-mixin/src/text.scss';
-@import 'common-less-mixin/src/utils.scss';
-@import 'common-less-mixin/src/var.scss';
+@import "~common-less-mixin/src/border.scss";
+@import "~common-less-mixin/src/flex.scss";
+@import "~common-less-mixin/src/form.scss";
+@import "~common-less-mixin/src/gap.scss";
+@import "~common-less-mixin/src/layout.scss";
+@import "~common-less-mixin/src/others.scss";
+@import "~common-less-mixin/src/position.scss";
+@import "~common-less-mixin/src/text.scss";
+@import "~common-less-mixin/src/utils.scss";
+@import "~common-less-mixin/src/var.scss";
 
 // 单个 css 则可以自己打包
-@import 'common-less-mixin/src/flex.scss';
+@import "~common-less-mixin/src/flex.scss";
+@import "~common-less-mixin/src/gap.scss";
 .flex-build();
+.gap-build();
 ```
 
 ## 2、如何自定义
 
-_此功能还未实现，嘤嘤嘤_
-
 ```less
+// common.less
+@import "~common-less-mixin";
 @px: 1rem;
-@import 'common-less-mixin';
+
+// 使用时
+@import "common.less";
 ```
 
 可配置项一览：
+
 ```less
 @px: 1px;
 
@@ -76,11 +80,22 @@ _此功能还未实现，嘤嘤嘤_
 @child-gap: @gap-xs;
 
 @radius-md: 4 * @px;
-@radius-round: 1000px;
+@radius-round: 1000em;
 @radius-circle: 50%;
 
 @border-width: 1PX;
 @border-color: #e8e8e8;
+
+// 当在小程序上使用时不支持 > :not() 和 *，故而可通过以下配置改为 view
+@flex-grow-children: ~".grow";
+@flex-shrink-children: ~"";
+@flex-column-grow-children: ~".item", ~".col";
+@float-row-children: ~"*";
+@inblock-row-children: ~"*";
+@child-gap-children: ~"";
+@child-gap-children-not: ~":last-child";
+@input-file-children: ~'[type="file"]';
+@image-ratio-children: ~"*";
 ```
 
 ## 3、总览
@@ -92,9 +107,9 @@ _此功能还未实现，嘤嘤嘤_
 .border-left(@color, @width);
 .border-right(@color, @width);
 .border-bottom(@color, @width);
-.raduis(@rdius);
-.radius-round();
-.radius-circle();
+.raduis(@rdius, @overflow);
+.radius-round(@overflow);
+.radius-circle(@overflow);
 
 /* gap.scss */
 .padding-row(@gap);
@@ -107,7 +122,7 @@ _此功能还未实现，嘤嘤嘤_
 
 /* flex.scss */
 .flex-row-normal();
-.flex-row(@child);
+.flex-row(@children);
 .flex-row-top();
 .flex-row-middle();
 .flex-row-bottom();
@@ -119,7 +134,7 @@ _此功能还未实现，嘤嘤嘤_
 .flex-row-wrap();
 
 .flex-col-normal();
-.flex-col(@child);
+.flex-col(@children);
 .flex-col-top();
 .flex-col-middle();
 .flex-col-bottom();
@@ -129,6 +144,7 @@ _此功能还未实现，嘤嘤嘤_
 .flex-col-right();
 
 .flex-center();
+.flex-column(@column, @children);
 
 /* layout.scss */
 .inblock-row();
@@ -138,7 +154,8 @@ _此功能还未实现，嘤嘤嘤_
 .scroller-y();
 
 /* form.scss */
-.input-file();
+.input-file(@children);
+.pure();
 
 /* position.scss */
 .cover(@type);
@@ -148,6 +165,11 @@ _此功能还未实现，嘤嘤嘤_
 .pos-bottom(@type);
 .pos-left(@type);
 .pos-right(@type);
+.pos-top-left(@type, @offset);
+.pos-top-right(@type, @offset);
+.pos-bottom-left(@type, @offset);
+.pos-bottom-right(@type, @offset);
+.pos-hide();
 
 /* text.scss */
 .text-overflow(@line);
@@ -157,10 +179,9 @@ _此功能还未实现，嘤嘤嘤_
 .reset();
 .normal-list();
 .clearfix();
-.rect-box(@width);
-.disabled();
+.rect-box(@size);
+.disabled(@grey);
 .ratio(@ratio);
-.image-ratio(@ratio, @fit);
+.image-ratio(@ratio, @fit, @children);
 .seo-only();
-.pos-hide();
 ```

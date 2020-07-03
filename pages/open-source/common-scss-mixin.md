@@ -1,11 +1,9 @@
-# 常用的 scss 的 mixin 方法
-
-且只有 mixin 方法，避免无端增加打包体积。
+常见而公用的 scss 的 mixin 方法，且只有 mixin 方法，避免无端增加打包体积。
 
 ## 1、如何使用
 
 ```
-npm i common-scss-mixin
+npm i -D common-scss-mixin
 ```
 https://www.npmjs.com/package/common-scss-mixin
 
@@ -115,7 +113,7 @@ $float-row-children: '*';
 $inblock-row-children: '*';
 $child-gap-children: '';
 $child-gap-children-not: ':last-of-type';
-$input-file-child: '[type="file"]';
+$input-file-children: '[type="file"]';
 $image-ratio-children: '*';
 ```
 

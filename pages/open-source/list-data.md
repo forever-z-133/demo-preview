@@ -5,7 +5,7 @@
 ## 如何安装
 
 ```js
-npm i list-data
+npm i -S list-data
 ```
 https://www.npmjs.com/package/list-data
 
@@ -31,23 +31,21 @@ new Vue({
   `,
   data() {
     const ListManager = new ListData();
-    const { list: someList } = ListManager;
     return {
       ListManager,
-      someList
+      someList: ListManager.list,
     };
   },
   created() {
     this.initSomeList();
+    this.ListManager.refresh();
   },
   methods: {
     initSomeList() {
-      const { ListManager } = this;
-      ListManager.ajax = this.someAjax.bind(this);
-      ListManager.refresh();
+      this.ListManager.ajax = this.someAjax.bind(this);
     },
     someAjax(params, calllback) {
-      this.$axios.get('https://some-url', params, callback);
+      this.$axios.get("https://some-url", params, callback);
     },
     onReachBottom() {
       // 触底加载 或 换页加载
@@ -60,17 +58,17 @@ new Vue({
     },
     changePage(page = 1) {
       // 表格类的应用，跳页功能
-      ListManager.list.page = page;
+      this.ListManager.list.page = page;
       this.ListManager.refresh();
-    }
-  }
+    },
+  },
 });
 ```
 
-react 与 vue 不同在于数据更新需使用 setState，所以只需在 initSomeList 再继续加上绑定即可。
+react 或 flutter 需使用 setState，所以只需在 initSomeList 再加上绑定即可。
 
 ```js
-ListManager.stateChange = state => this.setState({ someList: state });
+this.ListManager.stateChange = (state) => this.setState({ someList: state });
 ```
 
 ## 扩展使用
@@ -136,3 +134,9 @@ ListManager.convert = data => {
 
 其中，你也可以利用 ListData.prototype 做二次封装，  
 这样就不用每次 new ListData 时都修改实例方法了。
+
+## 使用 TypeScript
+
+```js
+import ListData from "~list-data/index.ts";
+```

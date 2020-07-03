@@ -91,8 +91,13 @@ listData.reduce((re, item) => {
 }, columns);
 ```
 
-<iframe height="400" style="width: 100%;" scrolling="no" title="瀑布流 分栏式计算" src="//codepen.io/foreverZ133/embed/rRxYzj/?height=400&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+<!-- <iframe height="400" style="width: 100%;" scrolling="no" title="瀑布流 分栏式计算" src="//codepen.io/foreverZ133/embed/rRxYzj/?height=400&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/foreverZ133/pen/rRxYzj/'>瀑布流 分栏式计算</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe> -->
+
+<iframe height="265" style="width: 100%;" scrolling="no" title="jquery 版瀑布流" src="https://codepen.io/foreverZ133/embed/vYLpYOY?height=265&theme-id=light&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/vYLpYOY'>jquery 版瀑布流</a> by 张永恒
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
