@@ -9,6 +9,7 @@
 - [setTimeout 在 js 加载前的问题探究](./articles/topic/setTimeout%20在%20js%20加载前的问题探究.md)
 - [如何合理使用用户协议等富文本](./articles/topic/如何合理使用用户协议等富文本.md)
 - [如何实现主题换肤功能](./articles/topic/如何实现主题换肤功能.md)
+- [如何做前端权限控制](./articles/topic/如何做前端权限控制.md)
 
 #### 学习笔记
 
