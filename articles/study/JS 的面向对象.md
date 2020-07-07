@@ -80,7 +80,26 @@ function AmountManager() {
 
 ## 原型链
 
-显然，当继承关系更复杂后，有个能知悉的方式就好了，因此有了原型链的概念。
+显然，当继承关系更复杂后，有个能知悉其关系的方式就好了，因此有了原型链的概念。
+虽然在没有 class 关键词前它其实并不能很好地帮忙排查，嘤嘤嘤。  
 
-虽然在没有 class 关键词前它其实并没有很好地帮忙排查，嘤嘤嘤。  
 所以基本也就能在面试过程中拿出来装装逼吧。
+
+```js
+const foo = { a: 1 };
+const bar = Object.create(foo); bar.b = 2;
+const baz = Object.create(bar); baz.c = 3;
+
+/// 判断某属性是否在原型链中
+function findPrototypeByProperty(obj, propertyName) {
+	let proto = obj;
+	while(proto != Object.prototype) {
+		if (proto.hasOwnProperty(propertyName)) return true;
+		proto = proto.__proto__;
+	}
+	return false;
+}
+console.log(findPrototypeByProperty(baz, 'a'));
+console.log(findPrototypeByProperty(baz, 'b'));
+console.log(findPrototypeByProperty(baz, 'c'));
+```
