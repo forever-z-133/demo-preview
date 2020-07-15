@@ -7,7 +7,7 @@
 - [addZero](#-自动补零)（自动补零）
 - [random](#-随机数)（随机数）
 - [getLength](#-获取长度)（获取长度）
-- [removeUndefined](#-删除对象中为空的键值对)（删除对象中为空的键值对）
+- [removeObjectValue](#-删除对象中为空的键值对)（删除对象中为空的键值对）
 - [returnObject](#-返回非空对象)（返回非空对象）
 - [returnArray](#-返回可用数组)（返回可用数组）
 - [returnNumber](#-返回可用数字)（返回可用数字）
@@ -64,9 +64,7 @@ function isEmpty(obj) {
 ```js
 function addZero(num, len = 2) {
   let numLen = (num + '').length;
-  while (numLen++ < len) {
-    num = '0' + num;
-  }
+  while (numLen++ < len) num = '0' + num;
   return num + '';
 }
 ```
@@ -86,9 +84,12 @@ function random(n1, n2 = 0) {
 ```js
 // 用于获取 object 的长度或 utf-16 字符串的实际长度
 function getLength(obj) {
+  if (!obj) return 0;
   let count = 0;
   if (typeof obj === 'string') {
     for (let char of obj) count++;
+  } else if (Object.keys) {
+    return Object.keys(obj).length;
   } else {
     for (let key in obj) if ({}.hasOwnProperty.call(obj, key)) count++;
   }
@@ -99,7 +100,7 @@ function getLength(obj) {
 ## \* 删除对象中为空的键值对
 
 ```js
-function removeUndefined(obj, match = undefined) {
+function removeObjectValue(obj, match = undefined) {
   for (const key in obj) {
     if ({}.hasOwnProperty.call(obj, key)) {
       const val = obj[key];
@@ -117,7 +118,6 @@ function removeUndefined(obj, match = undefined) {
 // returnObject({});  // null
 function returnObject(obj) {
   if (isEmpty(obj)) return null;
-  for (const key in obj) if ({}.hasOwnProperty.call(obj, key)) return false;
   return obj;
 }
 ```
@@ -233,16 +233,7 @@ function countPlus(str) {
 ```js
 // 请注意排除 null undefined
 function objectLength(obj) {
-  if (Object.keys) {
-    return Object.keys(obj).length;
-  }
-  let length = 0;
-  for (const key in obj) {
-    if ({}.hasOwnProperty.call(obj, key)) {
-      length++;
-    }
-  }
-  return length;
+  return getLength(obj);
 }
 ```
 

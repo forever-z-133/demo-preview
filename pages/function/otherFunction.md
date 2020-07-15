@@ -47,9 +47,7 @@ function trim(str, trimType) {
   return str.replace(reg, '');
 }
 if (!String.prototype.trim) {
-  String.prototype.trim = trimType => {
-    return trim(this, trimType);
-  };
+  String.prototype.trim = trimType => trim(this, trimType);
 }
 ```
 
@@ -70,12 +68,17 @@ function reverseString(str) {
 
 ```js
 // 用 for-of 避免 utf-16 字符的拆分
-function sliceString(str, start, end = str.length) {
-  if (end < 0) { console.error('不支持传入负数'); return ''; }
-  let i = -1;
+// UTF8 字符长度为实际长度，比如 😀 算 2 个，太多表情会超字数，常用于 textarea 判断截断
+// UTF16 字符长度为显示长度，比如看上去是 5 个表情，实际长度是 10 个会被多截，常用于显示超出判断
+function sliceString(str, start, end = str.length, type = 'UTF8') {
+  if (end < 0) end = Math.max(start, str.length + end);
+  let charIndex = 0;
   let result = '';
   for (let char of str) {
-    if (++i >= start && i <= end) result += char;
+    charIndex += type === 'UTF8' ? char.length : 1;
+    if (charIndex >= start && charIndex <= end) {
+      result += char;
+    }
   }
   return result;
 }
@@ -223,6 +226,7 @@ function jsonStringify(obj) {
 function jsonParse(str) {
   if (typeof str !== 'string') return str;
   if (!str) return ''; // 传空字符会报错
+  if (str === 'null') return null;
   if (str === 'undefined') return undefined;
   let value;
   try {
@@ -322,7 +326,7 @@ function throttle(fn, delta, context) {
   let safe = true;
   return (...args) => {
     if (!safe) return;
-    fn.call(context, args);
+    fn.apply(context, args);
     safe = false;
     setTimeout(() => {
       safe = true;
