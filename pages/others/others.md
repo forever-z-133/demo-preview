@@ -25,17 +25,37 @@
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
-<iframe height="265" style="width: 100%;" scrolling="no" title="movable-area" src="https://codepen.io/foreverZ133/embed/rNaaZyp?height=265&theme-id=default&default-tab=js,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+<iframe height="265" style="width: 100%;" scrolling="no" title="movable-area" src="https://codepen.io/foreverZ133/embed/rNaaZyp?height=265&theme-id=default&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/foreverZ133/pen/rNaaZyp'>movable-area</a> by 张永恒
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
-<iframe height="265" style="width: 100%;" scrolling="no" title="尖角边框" src="https://codepen.io/foreverZ133/embed/zYxLLZY?height=265&theme-id=default&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+<iframe height="265" style="width: 100%;" scrolling="no" title="尖角边框" src="https://codepen.io/foreverZ133/embed/zYxLLZY?height=265&theme-id=default&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/foreverZ133/pen/zYxLLZY'>尖角边框</a> by 张永恒
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
-<iframe height="265" style="width: 100%;" scrolling="no" title="高度不足底部也吸底" src="https://codepen.io/foreverZ133/embed/VwYREVM?height=265&theme-id=default&default-tab=css,result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+<iframe height="265" style="width: 100%;" scrolling="no" title="高度不足底部也吸底" src="https://codepen.io/foreverZ133/embed/VwYREVM?height=265&theme-id=default&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/foreverZ133/pen/VwYREVM'>高度不足底部也吸底</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+<iframe height="265" style="width: 100%;" scrolling="no" title="jquery 版瀑布流" src="https://codepen.io/foreverZ133/embed/vYLpYOY?height=265&theme-id=light&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/vYLpYOY'>jquery 版瀑布流</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+<iframe height="265" style="width: 100%;" scrolling="no" title="聊天界面-2" src="https://codepen.io/foreverZ133/embed/WNraojR?height=265&theme-id=light&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/WNraojR'>聊天界面-2</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+<iframe height="265" style="width: 100%;" scrolling="no" title="底部中间圆形菜单" src="https://codepen.io/foreverZ133/embed/PoZKgqx?height=265&theme-id=light&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/PoZKgqx'>底部中间圆形菜单</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+<iframe height="265" style="width: 100%;" scrolling="no" title="用渐变实现特别的样式" src="https://codepen.io/foreverZ133/embed/jObdvWr?height=265&theme-id=light&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/jObdvWr'>用渐变实现特别的样式</a> by 张永恒
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
