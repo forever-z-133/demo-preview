@@ -31,6 +31,7 @@
 - [我理解的前端-交互篇](./articles/minds/我理解的前端交互.md)
 - [有关埋点统计的知识梳理](./articles/minds/有关埋点统计的知识梳理.md)
 - [分组和标签的优缺点](./articles/minds/分组和标签的优缺点.md)
+- [关于版本管理的思考](./articles/minds/关于版本管理的思考.md)
 
 ## 开源项目
 

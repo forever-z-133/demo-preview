@@ -43,6 +43,7 @@
 - [我理解的前端-交互篇](https://forever-z-133.github.io/demo-preview/#/./articles/minds/我理解的前端交互.md)
 - [有关埋点统计的知识梳理](https://forever-z-133.github.io/demo-preview/#/./articles/minds/有关埋点统计的知识梳理.md)
 - [分组和标签的优缺点](https://forever-z-133.github.io/demo-preview/#/./articles/minds/分组和标签的优缺点.md)
+- [关于版本管理的思考](https://forever-z-133.github.io/demo-preview/#/./articles/minds/关于版本管理的思考.md)
 
 ## 开源项目
 
