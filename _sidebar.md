@@ -2,36 +2,36 @@
 
 #### 填坑记录
 
-- [字体文件的引用与压缩](./articles/topic/字体文件的引用与压缩.md)
-- [JS 数据类型方面的蹊跷](./articles/topic/JS%20数据类型方面的蹊跷.md)
-- [移动端视频播放方面的坑](./articles/topic/移动端视频播放方面的坑.md)
-- [webpack 打包时对 import 和 require 的处理](./articles/topic/webpack%20打包时对%20import%20和%20require%20的处理.md)
-- [setTimeout 在 js 加载前的问题探究](./articles/topic/setTimeout%20在%20js%20加载前的问题探究.md)
-- [如何合理使用用户协议等富文本](./articles/topic/如何合理使用用户协议等富文本.md)
-- [如何实现主题换肤功能](./articles/topic/如何实现主题换肤功能.md)
-- [如何做前端权限控制](./articles/topic/如何做前端权限控制.md)
+- [字体文件的引用与压缩](./articles/topic/methods-of-custom-font-family.md)
+- [JS 数据类型方面的蹊跷](./articles/topic/strangeness-of-javascript-data-type.md)
+- [移动端视频播放方面的坑](./articles/topic/strangeness-of-playing-video-in-web.md)
+- [webpack 打包时对 import 和 require 的处理](./articles/topic/require-async-in-webpack.md)
+- [setTimeout 在 js 加载前的问题探究](./articles/topic/strangeness-between-script-load-and-timeout.md)
+- [如何合理使用用户协议等富文本](./articles/topic/reasonable-use-rich-text.md)
+- [如何实现主题换肤功能](./articles/topic/methods-of-custom-style-theme.md)
+- [如何做前端权限控制](./articles/topic/methods-of-auth-control.md)
 
 #### 学习笔记
 
-- [惰性函数&偏函数&科里化](./articles/study/惰性函数&偏函数&科里化.md)
-- [SEO 概述](./articles/study/SEO%20概述.md)
-- [CSS 层叠上下文](./articles/study/CSS%20层叠上下文.md)
-- [响应式或自适应布局的流派](./articles/study/响应式或自适应布局的流派.md)
-- [正则小知识记录](./articles/study/正则小知识记录.md)
-- [打包的原理与实现](./articles/study/打包的原理与实现.md)
-- [JS 的面向对象](./articles/study/JS%20的面向对象.md)
+- [惰性函数&偏函数&科里化](./articles/study/currying-function.md)
+- [SEO 概述](./articles/study/summary-of-seo.md)
+- [CSS 层叠上下文](./articles/study/css-stacking-context.md)
+- [响应式或自适应布局的流派](./articles/study/school-of-media-resize.md)
+- [正则小知识记录](./articles/study/some-tips-of-regexp.md)
+- [打包的原理与实现](./articles/study/principle-of-webpack.md)
+- [JS 的面向对象](./articles/study/oop-in-javascript.md)
 
 #### 随笔感想
 
-- [闲谈 css 的 float](./articles/minds/闲谈%20css%20的%20float.md)
-- [读《面向前端的设计规范-文字初探》](./articles/minds/读《面向前端的设计规范-文字初探》.md)
-- [关于间距样式的两点建议](./articles/minds/关于间距样式的两点建议.md)
-- [我理解的前端-动画篇](./articles/minds/我理解的前端动画.md)
-- [我理解的前端-布局篇](./articles/minds/我理解的前端布局.md)
-- [我理解的前端-交互篇](./articles/minds/我理解的前端交互.md)
-- [有关埋点统计的知识梳理](./articles/minds/有关埋点统计的知识梳理.md)
-- [分组和标签的优缺点](./articles/minds/分组和标签的优缺点.md)
-- [关于版本管理的思考](./articles/minds/关于版本管理的思考.md)
+- [闲谈 css 的 float](./articles/minds/bullshit-about-css-float.md)
+- [读《面向前端的设计规范-文字初探》](./articles/minds/impressions-about-design-specification.md)
+- [关于间距样式的两点建议](./articles/minds/suggestion-about-css-spacing.md)
+- [我理解的前端-动画篇](./articles/minds/my-understanding-of-animation.md)
+- [我理解的前端-布局篇](./articles/minds/my-understanding-of-layout.md)
+- [我理解的前端-交互篇](./articles/minds/my-understanding-of-ux.md)
+- [有关埋点统计的知识梳理](./articles/minds/summary-of-event-tracking.md)
+- [分组和标签的优缺点](./articles/minds/difference-between-group-and-tag.md)
+- [关于版本管理的思考](./articles/minds/think-about-branch-manager.md)
 
 ## 开源项目
 
