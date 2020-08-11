@@ -20,6 +20,7 @@
 - [正则小知识记录](./articles/study/some-tips-of-regexp.md)
 - [打包的原理与实现](./articles/study/principle-of-webpack.md)
 - [JS 的面向对象](./articles/study/oop-in-javascript.md)
+- [Vue 的逻辑代码复用方案](./articles/study/vue-logic-code-reuse.md)
 
 #### 随笔感想
 

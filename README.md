@@ -32,6 +32,7 @@
 - [正则小知识记录](https://demo-preview-4v68bt1cl.vercel.app/#/./articles/study/some-tips-of-regexp.md)
 - [打包的原理与实现](https://demo-preview-4v68bt1cl.vercel.app/#/./articles/study/principle-of-webpack.md)
 - [JS 的面向对象](https://demo-preview-4v68bt1cl.vercel.app/#/./articles/study/oop-in-javascript.md)
+- [Vue 的逻辑代码复用方案](https://demo-preview-4v68bt1cl.vercel.app/#/./articles/study/vue-logic-code-reuse.md)
 
 > #### 随笔感想
 
