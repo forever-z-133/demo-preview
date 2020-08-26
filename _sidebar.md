@@ -7,7 +7,7 @@
 - [移动端视频播放方面的坑](./articles/topic/strangeness-of-playing-video-in-web.md)
 - [webpack 打包时对 import 和 require 的处理](./articles/topic/require-async-in-webpack.md)
 - [setTimeout 在 js 加载前的问题探究](./articles/topic/strangeness-between-script-load-and-timeout.md)
-- [如何合理使用用户协议等富文本](./articles/topic/reasonable-use-rich-text.md)
+- [跨端富文本显示问题](./articles/topic/reasonable-use-rich-text.md)
 - [如何实现主题换肤功能](./articles/topic/methods-of-custom-style-theme.md)
 - [如何做前端权限控制](./articles/topic/methods-of-auth-control.md)
 
