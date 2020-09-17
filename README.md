@@ -90,6 +90,7 @@
 
 ## 其他
 
+- [我的简历](https://forever-z.cn/#/./pages/others/job-wanted.md)
 - [常用工具集锦](https://forever-z.cn/#/./pages/others/tools.md)
 - [前端代码规范](https://forever-z.cn/#/./pages/doc/前端代码规范.md)
 - [Git 操作规范](https://forever-z.cn/#/./pages/doc/Git%20操作规范.md)

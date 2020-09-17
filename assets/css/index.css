@@ -65,6 +65,12 @@
   padding: 0 30px;
 }
 
+.markdown-section blockquote {
+  margin: 0 0;
+}
+.markdown-section h6 {
+  margin: 10px 0;
+}
 @media (max-width: 768px) {
   .markdown-section h1,
   .markdown-section h2,

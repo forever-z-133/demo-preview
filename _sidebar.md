@@ -78,6 +78,7 @@
 
 ## 其他
 
+- [我的简历](./pages/others/job-wanted.md)
 - [常用工具集锦](./pages/others/tools.md)
 - [前端代码规范](./pages/doc/前端代码规范.md)
 - [Git 操作规范](./pages/doc/Git%20操作规范.md)
