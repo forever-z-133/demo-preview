@@ -33,6 +33,7 @@
 - [有关埋点统计的知识梳理](./articles/minds/summary-of-event-tracking.md)
 - [分组和标签的优缺点](./articles/minds/difference-between-group-and-tag.md)
 - [关于版本管理的思考](./articles/minds/think-about-branch-manager.md)
+- [关于如何提升交互体验的思考](./articles/minds/how-tp-promote-ux-details.md)
 
 ## 开源项目
 
