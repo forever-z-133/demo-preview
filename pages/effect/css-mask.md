@@ -1,6 +1,6 @@
 # 遮罩/蒙版/裁剪效果
 
-![遮罩/蒙版的概念示意](https://user-images.githubusercontent.com/22021589/32707107-92dea508-c85c-11e7-9d86-bb09ca2c40c7.jpg)
+![遮罩/蒙版的概念示意](https://s1.ax1x.com/2020/10/23/BAjdg0.jpg)
 
 遮罩/蒙版/裁剪三个名词非常容易混淆，通俗点讲，
 

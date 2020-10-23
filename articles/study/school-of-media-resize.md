@@ -1,6 +1,6 @@
 # 响应式或自适应布局的流派
 
-![image.png](https://cdn.nlark.com/yuque/0/2019/png/158440/1574216258292-1aa86417-1817-4fd0-8fc7-23fed9dc2a3e.png#align=left&display=inline&height=439&name=image.png&originHeight=439&originWidth=850&size=72102&status=done&width=850)<br />_（此图有可能名称反了，但不重要，我个人更偏向于 bootstrap 被叫作响应式的）_
+![image.png](https://s1.ax1x.com/2020/10/23/BAjQjf.png)<br />_（此图有可能名称反了，但不重要，我个人更偏向于 bootstrap 被叫作响应式的）_
 
 本文旨在罗列实现响应式或自适应布局的几种方案。
 
@@ -150,7 +150,7 @@ metaEl.setAttribute(
 
 而如果将其设为 12rem 的话将出现一种很优秀的效果。<br />就是 Ctrl + 加号 去缩放屏幕时，并不会改变视图。
 
-![dgdsfgd.gif](https://cdn.nlark.com/yuque/0/2019/gif/158440/1574393174190-fd6695a1-9f81-445e-a71e-ee26775bec29.gif#align=left&display=inline&height=316&name=dgdsfgd.gif&originHeight=316&originWidth=656&size=384666&status=done&width=656)
+![dgdsfgd.gif](https://s1.ax1x.com/2020/10/23/BAjJEQ.gif)
 
 <a name="xkyiS"></a>
 

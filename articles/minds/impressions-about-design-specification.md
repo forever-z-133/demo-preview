@@ -23,7 +23,7 @@
 而经过文中稀奇古怪的推演之后，事情变得很是明朗 *（果然固定 px 布局才是王道）* 。  
 按黄金分割比基本原则来划分，`12、16、20、28、40、60` 即为最佳字阶。
 
-<img src="https://user-images.githubusercontent.com/22021589/42485798-c63e3efa-842b-11e8-9780-92636835233b.png" alt="图片来自阅文集团前端团队公众号" style="max-width: 800px">
+<img src="https://s1.ax1x.com/2020/10/23/BAXj74.png" alt="图片来自阅文集团前端团队公众号" style="max-width: 800px">
 
 ### 多行布局时的最佳行高
 
@@ -37,12 +37,12 @@
 
 所以文中给出了一个较好的通用方案，在给 `h1` 系列定值时，行高等于字号 + 8px。
 
-<img src="https://user-images.githubusercontent.com/22021589/42486302-f0b13d70-842d-11e8-843d-b7c18ea9ac24.jpg" alt="多行布局时的最佳行高" style="max-width: 800px">
+<img src="https://s1.ax1x.com/2020/10/23/BAXc1P.jpg" alt="多行布局时的最佳行高" style="max-width: 800px">
 
 举个简单的例子，原方案中字号越大则上下间距越大，  
 这就会造成 padding 的二次计算，而固定 4px 上间距的话就不会有这个问题
 
-![倍率行高 VS 加八行高](https://user-images.githubusercontent.com/22021589/43238143-84dda590-90bf-11e8-89d0-541bbd36315d.jpg)
+![倍率行高 VS 加八行高](https://s1.ax1x.com/2020/10/23/BAXIts.jpg)
 
 对设计师来说，带行高标注的事情依旧不麻烦，且对简单布局即使不标注也很精确的是 4px。
 
@@ -51,6 +51,6 @@
 其实这个问题也不简单，核心区分点是中英文。  
 按当初借鉴了众多 UI 库的数据和个人审美后，`1.48（英）`  和 `1.6（中）` 是比较好的状态。
 
-<img src="https://user-images.githubusercontent.com/22021589/42486787-61f1b33c-8430-11e8-97b8-671bdcc16068.png" alt="文章中的最佳行高" style="max-width: 800px">
+<img src="https://s1.ax1x.com/2020/10/23/BAXbcV.png" alt="文章中的最佳行高" style="max-width: 800px">
 
 其他感想可见我的另个博客 [关于间距规范的两点建议](https://github.com/forever-z-133/others/issues/98)

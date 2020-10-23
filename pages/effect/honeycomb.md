@@ -175,7 +175,7 @@ a { color: inherit; text-decoration: none; display: block; }
 ### 方法 6：特殊背景图
 
 原图长这个样子：
-![蜂巢状特殊背景原图](http://mall.kdcer.com/Content/img/comb.png)
+![蜂巢状特殊背景原图](https://s1.ax1x.com/2020/10/23/BAjDDU.png)
 
 <iframe height="265" style="width: 100%;" scrolling="no" title="蜂巢样式 background" src="//codepen.io/foreverZ133/embed/yvzqvX/?height=265&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
   See the Pen <a href='https://codepen.io/foreverZ133/pen/yvzqvX/'>蜂巢样式 background</a> by 张永恒

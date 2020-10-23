@@ -119,7 +119,7 @@ body
 起初我并不能理解下图是何含义，但当我发现 z-index: -1 在父级是否含有层叠上下文时的不同表现时才意识到，<br>
 层叠水平内部元素的覆盖关系，可能与普通元素的覆盖关系有所不同。
 
-![](https://cdn.nlark.com/yuque/0/2019/png/158440/1561019816571-2406a408-f6c6-4063-8464-b27f2ea40bd7.png#align=left&display=inline&height=375&originHeight=375&originWidth=599&size=0&status=done&width=599)
+![](https://s1.ax1x.com/2020/10/23/BAjK3t.png)
 
 如果父级不含层叠上下文，
 
