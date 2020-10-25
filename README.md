@@ -33,6 +33,7 @@
 - [打包的原理与实现](https://forever-z.cn/#/./articles/study/principle-of-webpack.md)
 - [JS 的面向对象](https://forever-z.cn/#/./articles/study/oop-in-javascript.md)
 - [Vue 的逻辑代码复用方案](https://forever-z.cn/#/./articles/study/vue-logic-code-reuse.md)
+- [为何我反对使用 flex: 1 简写](https://forever-z.cn/#/./articles/minds/why-no-flex-abbreviation.md)
 
 > #### 随笔感想
 
@@ -45,6 +46,7 @@
 - [有关埋点统计的知识梳理](https://forever-z.cn/#/./articles/minds/summary-of-event-tracking.md)
 - [分组和标签的优缺点](https://forever-z.cn/#/./articles/minds/difference-between-group-and-tag.md)
 - [关于版本管理的思考](https://forever-z.cn/#/./articles/minds/think-about-branch-manager.md)
+- [从手机导航方式思考交互的演进](https://forever-z.cn/#/./articles/minds/think-about-navigation-event.md)
 - [关于如何提升交互体验的思考](https://forever-z.cn/#/./articles/minds/how-tp-promote-ux-details.md)
 
 ## 开源项目

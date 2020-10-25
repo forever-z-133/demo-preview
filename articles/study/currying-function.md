@@ -50,6 +50,13 @@ if (xxx) {
 更多例子，同步运算，或者缓存结果，或者某公用但不想全局的变量，也可以用惰性函数来完成。
 
 ```javascript
+// 比如缓存些固定量
+function _electronVersion() {
+  const data = require("app-builder-lib/out/electron/electronVersion");
+  _electronVersion = function () { return data; };
+  return data;
+}
+// 或者组合些固定量
 function getParams(moreParams) {
   const user = { userId: 1 }; // 这是个某不变的量或运行结果
   getParams = function (moreParams) {
