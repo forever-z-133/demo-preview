@@ -33,7 +33,7 @@
 - [打包的原理与实现](https://forever-z.cn/#/./articles/study/principle-of-webpack.md)
 - [JS 的面向对象](https://forever-z.cn/#/./articles/study/oop-in-javascript.md)
 - [Vue 的逻辑代码复用方案](https://forever-z.cn/#/./articles/study/vue-logic-code-reuse.md)
-- [为何我反对使用 flex: 1 简写](https://forever-z.cn/#/./articles/minds/why-no-flex-abbreviation.md)
+- [为何我反对使用 flex: 1 简写](https://forever-z.cn/#/./articles/study/why-no-flex-abbreviation.md)
 
 > #### 随笔感想
 
