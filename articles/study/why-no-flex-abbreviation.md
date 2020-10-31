@@ -6,27 +6,30 @@
 另外文本宽度在 `flex-grow` 和 `overflow: hiiden` 的搭配下也有些许不同。  
 
 本文将细究一下浏览器在宽度计算时的规律和策略，以此来理解为何 `flex-basic: 0` 是有问题的。  
-_笔者看 w3c 不多，更常基于自研来理解，故文章所述并不见得正确，欢迎大佬勘误。_  
 
 ## width: auto
 
-在张鑫旭大佬的《CSS世界》书中有提到，元素的盒子其实不止表现出来的一种，  
-比如 inline-block 可认为是 inline 包了个 block 合成的，list-item 是 marker box 和 block 结合才有了圆点；  
-更甚至，block 下的伪元素可能也是 block > (before-inline + block + after-inline) 这样的插在其中的嵌套结构。  
+在张鑫旭大佬的《CSS世界》书中有提到，display 盒子其实可以看做是多个盒子共同作用的结果，  
+比如 `inline-block` 可认为是 `inline` 包了个 `block` 合成的，`list-item` 是 `marker box` 和 `block` 结合才有了圆点；  
+更甚至，`block` 下的伪元素可能也是 `block > (before-inline + block + after-inline)` 这样的插在其中的嵌套结构。  
+_注意，这里不是 display: inline 或 inline element 意思，而是 inline box 的概念。_  
 
-既然如此，inline 套 block ，或 block 套 inline，时候的宽度计算便是我们要思考的重点了。  
-_注意，这里不是 display: inline 或 inline element 意思，而是 inline box 的概念。_
+大多文章都把 `dom tree` 和 `cssom tree` 合成 `render tree` 这里一笔带过，   
+我看 w3c 官方文档也不多，以下论述 __仅个人总结和理解__，还请大佬们勘误。  
 
-block box 的初始宽度实为父级宽度，然后才读取的 width 属性并给定新宽度，  
-inline box 的初始宽度实为本元素宽度，然后判断父级剩余空间，若超出则压缩本元素宽度为父级宽度。  
-那 inline box 套 block box 听上去就挺死循环的不是吗。
+`block box` 的初始宽度实为父级宽度，然后才读取的 `width` 等属性再给出新的实际宽度，  
+`inline box` 的初始宽度实为本元素宽度，然后判断父级剩余空间，若超出则以父级宽度为准。  
 
-个人暂未找到实际渲染算法方面的资料，只能靠以往写 canvas 图形库的经验来猜测了。  
-在 dom tree 阶段我们就拿到了 inline box 的初始宽度和部分宽度属性，  
-在 cssdom tree 这边时开始处理 block box 的初始宽度，以及两者的结果宽度。  
+听上去就很容易死循环不是吗，比如子级宽度变了，父级可能会变，父级变了祖父级可能也得变。  
+我大胆猜测一下，其实只要有个稳定的父级宽度，即可避免掉上面这种死循环的，  
+比如当本元素宽度变化时，向父级寻找到 `block element` 即可，该父级之下的所有元素直接重新计算和渲染。  
+这应该也就是 __重排__ 的根本原因吧。下面我们尝试实际推演一下：  
 
-```css
-.parent { display: inline; }
+```html
+<body>
+  <div class="">
+  </div>
+</body>
 ```
 
 ## min/max-width

@@ -35,7 +35,7 @@
 - [分组和标签的优缺点](./articles/minds/difference-between-group-and-tag.md)
 - [关于版本管理的思考](./articles/minds/think-about-branch-manager.md)
 - [从手机导航方式思考交互的演进](./articles/minds/think-about-navigation-event.md)
-- [关于如何提升交互体验的思考](./articles/minds/how-tp-promote-ux-details.md)
+- [关于如何提升交互体验的思考](./articles/minds/how-to-promote-ux-details.md)
 
 ## 开源项目
 
