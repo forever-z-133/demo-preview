@@ -59,3 +59,8 @@
   See the Pen <a href='https://codepen.io/foreverZ133/pen/jObdvWr'>用渐变实现特别的样式</a> by 张永恒
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
+
+<iframe height="262" style="width: 100%;" scrolling="no" title="折角箭头动画" src="https://codepen.io/foreverZ133/embed/dyXrYQj?height=262&theme-id=light&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/dyXrYQj'>折角箭头动画</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
