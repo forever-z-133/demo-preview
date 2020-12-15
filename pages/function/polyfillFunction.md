@@ -63,3 +63,15 @@ function copyProperties(target, source) {
   }
 }
 ```
+
+## 为 label[for] 加拓展
+
+https://gitee.com/zhangxinxu/smart-for
+
+## 其他
+
+```js
+if (window.NodeList && !NodeList.prototype.forEach) {
+  NodeList.prototype.forEach = Array.prototype.forEach;
+}
+```

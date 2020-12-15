@@ -13,26 +13,38 @@
 - [readJson / writeJson](#-读写-JSON)（读写 JSON）
 - [includeFile](#-是否包含某文件)（是否包含某文件）
 
+## 遍历文件
+
+```js
+function forEachDir(dir, dirCallback, fileCallback) {
+  let files = getFilesInDirSync(dir);
+  files.forEach((file) => {
+    let _path = path.join(dir, file);
+    if (fs.statSync(_path).isDirectory()) {
+      // 如果自己是文件夹，则先继续递归，然后再处理自身
+       forEachDir(_path, dirCallback, fileCallback);
+      dirCallback && dirCallback(_path);
+    } else {
+      fileCallback && fileCallback(_path);
+    }
+  });
+}
+```
+
 ## \* 清空文件夹
 
 ```js
 // 包括其下所有文件及文件夹
 function emptyDirSync(dir) {
-  const files = [];
-  try {
-    files = fs.readdirSync(dir);
-  } catch (err) {
-    throw new Error(`${dir} 目录不存在`);
-  }
-  files.forEach(file => {
-    const url = `${dir}/${file}`;
-    if (fs.statSync(url).isDirectory()) {
-      emptyDirSync(url); // 递归删除文件夹
-      fs.rmdirSync(url);
-    } else {
-      fs.unlinkSync(url); // 删除文件
+  forEachDir(
+    dir,
+    (_dir) => {
+      fs.rmdirSync(_dir); // 递归删除文件夹
+    },
+    (_file) => {
+      fs.unlinkSync(_file); // 删除文件
     }
-  });
+  );
 }
 ```
 
@@ -58,9 +70,9 @@ function makeDirSync(dir) {
 ```js
 // 获取 x.js 或 /x.js 中的 x.js
 // 但不区分 "/x" "x" ".." 等情况哈
-function getFileName(url) {
-  const match = url.match(/(?<=^|\/)[^\/]+$/);
-  return match ? match[0] : '';
+function getFileName(filePath) {
+  filePath = filePath.replace(/[?#].*/, '');
+  return filePath.split(/[\/\\]/).slice(-1)[0];
 }
 ```
 
@@ -87,12 +99,27 @@ function getFileNetType(url) {
 ## \* 下载文件
 
 ```js
-function downloadFile(url, output, callback) {
-  const netType = getFileNetType(url);
-  const stream = fs.createWriteStream(output);
+function ajax(url, method = 'get', callback) {
+  const netType = fileNetType(url);
   const ajax = netType === 'https' ? require('https') : require('http');
-  ajax.get(url, res => {
-    res.on('data', chunk => stream.write(chunk));
+  return ajax[method](url, callback);
+}
+function downloadFile(url, output, fileName, callback) {
+  if (typeof fileName === 'function') {
+    callback = fileName;
+    fileName = null;
+  }
+  fileName = fileName || getFileName(url);
+  if (!fileName) throw new Error(' 没找到文件名');
+  let filePath = path.join(output);
+  if (filePath.lastIndexOf(fileName) < 0) {
+    filePath = path.join(output, fileName);
+  }
+  const stream = fs.createWriteStream(filePath);
+  ajax(url, 'get', (res) => {
+    res.on('data', (chunk) => {
+      stream.write(chunk);
+    });
     res.on('end', () => {
       stream.end();
       callback && callback(filePath);
