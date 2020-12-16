@@ -16,18 +16,27 @@
 ## 遍历文件
 
 ```js
-function forEachDir(dir, dirCallback, fileCallback) {
+function getFilesInDirSync(dir) {
+  let files = [];
+  try {
+    files = fs.readdirSync(dir);
+  } catch (err) {}
+  return files;
+}
+function forEachDir(dir, dirCallback, fileCallback, depth = 99) {
+  if (depth < 1) return;
   let files = getFilesInDirSync(dir);
   files.forEach((file) => {
     let _path = path.join(dir, file);
     if (fs.statSync(_path).isDirectory()) {
       // 如果自己是文件夹，则先继续递归，然后再处理自身
-       forEachDir(_path, dirCallback, fileCallback);
+      forEachDir(_path, dirCallback, fileCallback, depth - 1);
       dirCallback && dirCallback(_path);
     } else {
       fileCallback && fileCallback(_path);
     }
   });
+  depth--;
 }
 ```
 
