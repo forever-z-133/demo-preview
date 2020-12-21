@@ -10,6 +10,7 @@
 - [returnChineseNumber](#-转中文数字)（转中文数字）
 - [toAngle / toRadian](#-角度弧度转化)（角度弧度转化）
 - [distence](#-两点间距离)（两点间距离）
+- [fitWidth / fitHeight](#-尺寸适配)（尺寸适配）
 - [camelize / hyphenate](#-驼峰或连字符)（驼峰或连字符）
 - [htmlToString](#-html-转义)（html 转义）
 - [stringToHtml](#-html-字符串反转义)（html 字符串反转义）
@@ -169,6 +170,23 @@ function distence(x1, y1, x2, y2) {
     return Math.abs(x1 - y1);
   }
   return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
+}
+```
+
+## \* 尺寸适配
+
+```js
+/// 按新宽度计算新尺寸
+function fitWidth(maxWidth, imgWidth, imgHeight) {
+  const newWidth = maxWidth;
+  const newHeight = newWidth / imgWidth * imgHeight;
+  return newHeight;
+}
+/// 按新高度计算新尺寸
+function fitHeight(maxHeight, imgWidth, imgHeight) {
+  const newHeight = maxHeight;
+  const newWidth = newHeight / imgHeight / imgWidth;
+  return newWidth;
 }
 ```
 

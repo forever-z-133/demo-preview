@@ -1,5 +1,6 @@
 # NodeJS 相关的公共方法
 
+- [forEachDir](#-遍历所有文件)（遍历所有文件）
 - [emptyDirSync](#-清空文件夹)（清空文件夹）
 - [removeDirSync](#-删除文件夹)（删除文件夹）
 - [makeDirSync](#-新建文件夹)（新建文件夹）
@@ -13,7 +14,7 @@
 - [readJson / writeJson](#-读写-JSON)（读写 JSON）
 - [includeFile](#-是否包含某文件)（是否包含某文件）
 
-## 遍历文件
+## 遍历所有文件
 
 ```js
 function getFilesInDirSync(dir) {
@@ -204,8 +205,8 @@ function includeFile(dir, fileName, deep = Infinity) {
   if (!files || !files.length) retrun [];
   const result = files.reduce((re, url) => {
     if (fs.statSync(url).isDirectory() && --deep > 0) result.concat(includeFile(url, fileName, deep));
-    if (typeOf(fileName) === 'regexp' && fileName.test(url)) return re.concat([url]);
-    if (typeOf(fileName) === 'string' && url.includes(fileName)) return re.concat([url]);
+    else if (typeOf(fileName) === 'regexp' && fileName.test(url)) return re.concat([url]);
+    else if (typeOf(fileName) === 'string' && url.includes(fileName)) return re.concat([url]);
     return re;
   }, []);
   return result;
