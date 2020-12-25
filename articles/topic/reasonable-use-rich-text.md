@@ -28,7 +28,8 @@
 因此，想更纯粹地获取 html 字符串，算是有两个方案：
 
 1. 要么本地跑富文本编辑器，通过程序实例获取
-2. 要么直接导出，不走二次转换，比如 word 里 `文件 -> 另存为 -> *.htm` 等工具。
+2. 要么直接用工具导出为 html 文件，比如 word 里 `文件 -> 另存为 -> *.htm` 等工具
+3. 转其他格式后再转 html 文件，比如下文的 markdown
 
 ## 转 markdown
 
@@ -44,7 +45,7 @@
 
 ## 去冗余
 
-如果你获得的是 html 字符串，那多半会有一堆无用的标签和属性，或者低版本废弃的标签。如下：
+拿到了 html 字符串后，可能会有一堆无用的标签和属性，或者低版本废弃的标签。如下：
 
 ```html
 <body style="tab-interval:21pt;text-justify-trim:punctuation;" ><!--StartFragment--><div class="Section0"  style="layout-grid:15.6000pt;" ><h1 align=center  style="text-align:center;" ><b><span style="mso-spacerun:'yes';font-family:΢���ź�;color:rgb(0,0,0);
@@ -55,8 +56,8 @@ font-weight:bold;font-size:14.0000pt;mso-font-kerning:22.0000pt;" ><font face="�
 
 在去冗余方面有以下几种方案：
 
-1. 将文本保存为 html 浏览器打开，按 F12 复制 dom
-2. 将文本 append 到临时 div 中再获取新 innerHTML
+1. 将文本保存为 html 文件，浏览器打开，按 F12 复制 dom，浏览器会自动忽略一些
+2. 将文本 append 到临时 div 中再获取新 innerHTML，用于运行时环境，原理同上
 3. 将文本中 `<([^ >]+)([^>]*?)>` 标签部分不标准的 replace 掉
 4. 将文本转为虚拟 dom 的数组，递归遍历掉无用的部分
 
@@ -118,8 +119,8 @@ html 也比较常见，可通过函数再转其他显示方案。
 
 1. 存为变量字符串（直接打包调用方便/但占内存）
 2. 存在数据库（异步获取可后台修改/但流程复杂）
-3. 存为 txt 文件走请求获取（同上）
-4. 存为 html 文件走 web-view（各种简便且跨平台/但启动缓慢）
+3. 存为 txt 或 json 文件走请求获取（同上）
+4. 存为 html 文件走 web-view（简便且跨平台/但启动缓慢）
 
 再加一些奇奇怪怪的环境限制：
 
