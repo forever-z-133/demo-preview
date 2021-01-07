@@ -64,3 +64,8 @@
   See the Pen <a href='https://codepen.io/foreverZ133/pen/dyXrYQj'>折角箭头动画</a> by 张永恒
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
+
+<iframe height="500" style="width: 100%;" scrolling="no" title="表格固定头部 fixedTableHead.js" src="https://codepen.io/foreverZ133/embed/rRvxjB?height=265&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/foreverZ133/pen/rRvxjB'>表格固定头部 fixedTableHead.js</a> by 张永恒
+  (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
