@@ -614,6 +614,12 @@ function getDataFromUrl(name, url = location.href) {
   const obj = stringToObject(url.split('?')[1], /[#?&]/);
   return name ? obj[name] : obj;
 }
+
+function getDataFromUrl(name, url = location.href) {
+  var reg = new RegExp('(^|\\?|&)' + name + '=([^&]*)');
+  var r = url.match(reg);
+  if (r != null) return decodeURIComponent(r[2]); return null;
+}
 ```
 
 ## \* 对象是否相等

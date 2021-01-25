@@ -63,7 +63,7 @@
 - [数据处理的公共方法](https://forever-z.cn/#/./pages/function/someFunction.md)
 - [不常用的公共方法](https://forever-z.cn/#/./pages/function/otherFunction.md)
 - [时间相关的公共方法](https://forever-z.cn/#/./pages/function/dateFunction.md)
-- [NodeJS 相关的公共方法](https://forever-z.cn/#/./pagesfunction//nodeFunction.md)
+- [NodeJS 相关的公共方法](https://forever-z.cn/#/./pages/function/nodeFunction.md)
 - [DOM 相关的公共方法](https://forever-z.cn/#/./pages/function/domFunction.md)
 - [常用的 CSS 原子类](https://forever-z.cn/#/./pages/function/someCSS.md)
 - [各种判断函数](https://forever-z.cn/#/./pages/function/someRegExp.md)
