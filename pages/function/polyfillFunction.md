@@ -2,7 +2,10 @@
 
 - [on](#-给元素原型增加方法)（给元素原型增加方法）
 - [for-of](#-让对象也能遍历)（让对象也能遍历）
-- [mixin](#-类的多继承)（类的多继承）
+- [mix](#-类的多继承)（类的多继承）
+- [label[for]](#-为-labelfor-加拓展)（为 label[for] 加拓展）
+- [NodeList.forEach](#-nodelistforeach)（NodeList.forEach）
+- [softBind](#-软绑定-softBind)（软绑定 softBind）
 
 ## \* 给元素原型增加方法
 
@@ -64,14 +67,32 @@ function copyProperties(target, source) {
 }
 ```
 
-## 为 label[for] 加拓展
+## \* 为 label[for] 加拓展
 
 https://gitee.com/zhangxinxu/smart-for
 
-## 其他
+## \* NodeList.forEach
 
 ```js
-if (window.NodeList && !NodeList.prototype.forEach) {
+if (window && window.NodeList && !NodeList.prototype.forEach) {
   NodeList.prototype.forEach = Array.prototype.forEach;
+}
+```
+
+## \* 软绑定 softBind
+
+```js
+// 1. 解决只能 bind 一次，后续调整 this 无效的问题
+// 2. 在 bind 时可科里化，提前或分批传入参数
+if (!Function.prototype.softBind) {
+  Function.prototype.softBind = function (obj) {
+    var fn = this;
+    var curried = Array.prototype.slice.call(arguments, 1);
+    var bound = function () {
+      return fn.apply((!this || this === (window || global)) ? obj : this, curried.concat.apply(curried, arguments));
+    }
+    bound.prototype = Object.create(fn.prototype);
+    return bound;
+  }
 }
 ```
