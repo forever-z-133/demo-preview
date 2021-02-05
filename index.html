@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
+
 <head>
   <meta charset="utf-8" />
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta http-equiv="Content-Type" content="text/html" />
   <meta http-equiv="Cache-Control" content="no-siteapp" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+  <meta name="viewport"
+    content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   <meta name="format-detection" content="telephone=no" />
   <meta name="wap-font-scale" content="no">
-  <link rel="shortcut icon" href="favicon.png"/>
+  <link rel="shortcut icon" href="favicon.png" />
   <title>永恒的案例库</title>
   <meta name="description" content="demo,案例,foreverZ133">
-  <link rel="stylesheet" href="https://unpkg.com/docsify/lib/themes/vue.css">
-  <link rel="stylesheet" href="https://unpkg.com/vuep/dist/vuep.css">
-  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <link rel="stylesheet" href="./static/vue.min.css">
+  <link rel="stylesheet" href="./static/vuep.min.css">
+  <link rel="stylesheet" href="./static/gitalk.css">
   <link rel="stylesheet" href="./assets/css/index.css">
 </head>
+
 <body>
   <div id="app">加载中...</div>
   <script>
@@ -28,13 +31,14 @@
       repo: 'https://github.com/forever-z-133/demo-preview/',
     }
   </script>
-  <script src="https://unpkg.com/docsify/lib/docsify.min.js"></script>
-  <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
-  <script src="https://unpkg.com/vuep/dist/vuep.min.js"></script>
-  <script src="https://unpkg.com/docsify/lib/plugins/gitalk.min.js"></script>
-  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-  <script src="https://unpkg.com/prismjs@1.15.0/components/prism-scss.min.js"></script>
-  <script src="https://unpkg.com/prismjs@1.15.0/components/prism-pug.min.js"></script>
+  <script src="./static/docsify.min.js"></script>
+  <script src="./static/vue.min.js"></script>
+  <script src="./static/vuep.min.js"></script>
+  <script src="./static/gitalk.plugins.min.js"></script>
+  <script src="./static/gitalk.min.js"></script>
+  <script src="./static/prism-scss.min.js"></script>
+  <script src="./static/prism-less.min.js"></script>
+  <script src="./static/prism-pug.min.js"></script>
   <script src="./assets/js/md5.js"></script>
   <script>
     const gitalk = new Gitalk({
@@ -52,4 +56,5 @@
     gitalk.render('app');
   </script>
 </body>
+
 </html>
