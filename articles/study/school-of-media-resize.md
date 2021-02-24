@@ -35,38 +35,24 @@
 虽然有着  device-width 文字得到了放大，<br />但 320px 小屏中的 12px 与 414px 小屏中的 12px 视觉上还是有较大差异的。<br />那么，用 em 去跟随这些细小的适配粒度，再放大一次呢。
 
 ```css
-html {
-  font-size: 10px;
-}
+html { font-size: 10px; }
 @media screen and (min-width: 321px) and (max-width: 375px) {
-  html {
-    font-size: 11px;
-  }
+  html { font-size: 11px; }
 }
 @media screen and (min-width: 376px) and (max-width: 414px) {
-  html {
-    font-size: 12px;
-  }
+  html { font-size: 12px; }
 }
 @media screen and (min-width: 415px) and (max-width: 639px) {
-  html {
-    font-size: 15px;
-  }
+  html { font-size: 15px; }
 }
 @media screen and (min-width: 640px) and (max-width: 719px) {
-  html {
-    font-size: 20px;
-  }
+  html { font-size: 20px; }
 }
 @media screen and (min-width: 720px) and (max-width: 749px) {
-  html {
-    font-size: 22.5px;
-  }
+  html { font-size: 22.5px; }
 }
 @media screen and (min-width: 750px) and (max-width: 799px) {
-  html {
-    font-size: 23.5px;
-  }
+  html { font-size: 23.5px; }
 }
 ```
 
@@ -180,9 +166,9 @@ vw 方案则比较好地能**部分解决**这个问题，毕竟它并没有改�
 <meta name="viewport" content="user-scalable=no" />
 ```
 
-```css
+```scss
 @function px($px, $designWidth: 750) {
-  return (735 / $designWidth) * $px * 1pt;
+  @return (735 / $designWidth) * $px * 1pt;
 }
 ```
 

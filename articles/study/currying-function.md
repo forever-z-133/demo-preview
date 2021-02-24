@@ -91,7 +91,7 @@ let greet = (x, y) => return `${x} ${y}`;
 
 // 偏函数改造
 greet = partial(greet, 'hello');
-console.log(greet('xb'));   // "hello xb"
+console.log(greet('zyh'));   // "hello zyh"
 ```
 
 ```javascript
@@ -141,14 +141,14 @@ log = curry(log);
 const todayLog = log(new Date());
 todayLog('ERROR', 'xxx');
 const todayTimeoutLog = log(new Date(), 'TIMEOUT');
-todayTimeoutLog('某 api 请求超时');
+todayTimeoutLog('xxx');
 ```
 
 可见，科里化与偏函数根本的区别就是，<br />科里化使得变量可以更便捷地分批传入，而并不是说偏函数不能够，<br />所以至于实际情况用哪个，见仁见智，都是很不错的。
 
 ```javascript
-todayLog = partial(log, new Date());
-todayTimeoutLog = partial(todayLog, 'TIMEOUT');
+const todayLog = partial(log, new Date());
+const todayTimeoutLog = partial(todayLog, 'TIMEOUT');
 ```
 
 ## 其他
@@ -184,6 +184,7 @@ console.log(addInfinity(1, 2)(3)(4));
 众所周知，不想存全局变量时，存在 function 变量上也是可以的。
 
 ```javascript
+// 比如常见的请求拦截，正在请求中则调用无效，不用另外搞个变量了
 function getData() {
   if (getData.loading) return;
   getData.loading = true;

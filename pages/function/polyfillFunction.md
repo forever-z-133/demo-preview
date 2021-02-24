@@ -6,6 +6,7 @@
 - [label[for]](#-为-labelfor-加拓展)（为 label[for] 加拓展）
 - [NodeList.forEach](#-nodelistforeach)（NodeList.forEach）
 - [softBind](#-软绑定-softBind)（软绑定 softBind）
+- [codePointAt / fromCodePoint](#-utf16-字符串获取)（utf16 字符串获取）
 
 ## \* 给元素原型增加方法
 
@@ -93,6 +94,41 @@ if (!Function.prototype.softBind) {
     }
     bound.prototype = Object.create(fn.prototype);
     return bound;
+  }
+}
+```
+
+## \* utf16 字符串获取
+
+```js
+// '𠮷'.codePointAt(0); 
+// String.fromCodePoint(0x20BB7);
+if (!String.prototype.codePointAt) {
+  String.prototype.codePointAt = function(idx = 0) {
+    const code = this.charCodeAt(idx);
+    if(code >= 0xD800 && code <= 0xDBFF) {
+      const high = code;
+      const low = this.charCodeAt(idx + 1);
+      return ((high - 0xD800) * 0x400) + (low - 0xDC00) + 0x10000;
+    }
+    return code;
+  }
+}
+if (!String.fromCodePoint) {
+  String.fromCodePoint = function(...codePoints) {
+    let str = '';
+    for(let i = 0; i < codePoints.length; i++) {
+      let codePoint = codePoints[i];
+      if(codePoint <= 0xFFFF) {
+        str += String.fromCharCode(codePoint);
+      } else {
+        codePoint -= 0x10000;
+        const high = (codePoint >> 10) + 0xD800;
+        const low = (codePoint % 0x400) + 0xDC00;
+        str += String.fromCharCode(high) + String.fromCharCode(low);
+      }
+    }
+    return str;
   }
 }
 ```
