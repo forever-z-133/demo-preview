@@ -7,6 +7,7 @@
 - [getFileName](#-获取文件名)（获取文件名）
 - [getFileExtName](#-获取文件后缀)（获取文件后缀）
 - [getFileNetType](#-获取文件网络类型)（获取文件网络类型）
+- [ajax](#-发起请求)（发起请求）
 - [downloadFile](#-下载文件)（下载文件）
 - [readUrl](#-读取文件)（读取文件）
 - [moveDirSync](#-移动文件夹)（移动文件夹）
@@ -103,6 +104,24 @@ function getFileNetType(url) {
   if (/^https/.test(url)) return 'https';
   if (/^http/.test(url)) return 'http';
   return 'local';
+}
+```
+
+## \* 发起请求
+
+```js
+const axios = require('axios');
+async function ajax(url, method, data, options = {}) {
+  if (/^get$/i.test(method)) {
+    return axios.get(url, { params: data }, { ...options });
+  } else if (/^post$/i.test(method)) {
+    return axios.post(url, data, { ...options });
+  } else if (/^form-?data$/i.test(method)) {
+    const fd = new FormData();
+    for (let key in data) fd.append(key, data[key]);
+    return axios.post(url, fd, { ...options, 'Content-Type': 'multipart/form-data' });
+  }
+  return axios({ url, method, ...options });
 }
 ```
 
