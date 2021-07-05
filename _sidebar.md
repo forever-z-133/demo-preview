@@ -24,6 +24,7 @@
 - [为何我反对使用 flex: 1 简写](./articles/study/why-no-flex-abbreviation.md)
 - [如何判断是否点击在元素内部](./articles/study/justify-click-inner.md)
 - [从 cc._decorator 中学习 ts 装饰器](./articles/study/study-decorator-in-cocos.md)
+- [服务端渲染 SSR 梳理](./articles/study/study-react-ssr.md)
 
 #### 随笔感想
 
