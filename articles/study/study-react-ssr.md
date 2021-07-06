@@ -82,7 +82,7 @@ render(<Home />, document.getElementById("root"));
 <html>
   <body>
     <div id="root"></div>
-    <script src="bundle.js"></script>
+    <script src="public/bundle-client.js"></script>
   </body>
 </html>
 ```
@@ -133,7 +133,7 @@ const app = express();
 app.use(express.static("public"));
 app.get("*", (req, res) => {
   const content = renderToString(<Home text="hello ssr" />);
-  const html = `<html><body>${content}</body></html>`
+  const html = `<html><body>${content}</body></html>`;
   res.send(html);
 });
 app.listen(8001, () => console.log("listening on port 8001"));
@@ -153,9 +153,62 @@ app.listen(8001, () => console.log("listening on port 8001"));
 npm run prod:build:server && npm run test:server
 ```
 
+实例代码：https://github.com/forever-z-133/test-react-ssr/tree/simple-ssr
+
 ## 其他框架下的配置
 
 #### CRA 脚手架中的配置
+
+在 `create-react-app` 脚手架中，服务端的打包也是类似的。
+
+```
+npm i -D react-scripts react-app-rewired
+```
+
+```js
+// config-overrides.js
+const path = require("path");
+const webpackNodeExternals = require("webpack-node-externals");
+const isSSR = process.env.TARGET === 'ssr ';
+module.exports = {
+  webpack: config => {
+    if (isSSR) {
+      config.target = 'node'; // 导出 node 环境代码
+      config.entry = path.resolve(__dirname, 'src/server.js');
+      config.output.filename = 'bundle-server.js'; // output 不分包命名
+      delete config.optimization.splitChunks;
+      delete config.optimization.runtimeChunk;
+      const rules = config.module.rules[1].oneOf; // 加入 @babel/preset-react
+      rules.forEach(rule => {
+        if (!rule.loader || !rule.loader.includes('babel-loader')) return;
+        rule.options.presets.push('@babel/preset-react');
+      });
+      if (!config.externals) config.externals = []; // 规避不必要的 node_modules 导出
+      config.externals.push(webpackNodeExternals());
+      const excludes = ['HtmlWebpackPlugin', 'InlineChunkHtmlPlugin', 'InterpolateHtmlPlugin', 'ManifestPlugin']; // 去除不必要的 plugins
+      config.plugins = config.plugins.filter(plugin => !excludes.includes(plugin.constructor.name));
+    }
+    return config;
+  },
+};
+```
+
+```json
+// package.json
+{
+  "scripts": {
+    "build:server": "set TARGET=ssr && react-app-rewired build",
+    "test:server": "node ./build/bundle-server.js"
+  }
+}
+```
+
+```
+npm run build:server && npm run test:server
+```
+
+实例代码：https://github.com/forever-z-133/test-react-ssr/tree/cra-ssr
+
 #### koa 服务框架的配置
 #### 快速调试
 
