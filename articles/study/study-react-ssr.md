@@ -34,7 +34,6 @@ npm i react react-dom
 npm i express
 npm i -D webpack webpack-cli webpack-node-externals
 npm i -D @babel/core @babel/preset-env @babel/preset-react babel-loader
-npm i -D nodemon npm-run-all
 ```
 
 > ##### 配置 babelrc，完成 client 端代码
@@ -210,12 +209,67 @@ npm run build:server && npm run test:server
 实例代码：https://github.com/forever-z-133/test-react-ssr/tree/cra-ssr
 
 #### koa 服务框架的配置
+
+```
+npm i -D koa koa-router koa-mount koa-static
+```
+
+```js
+// src/server.js
+import React from "react";
+import path from "path";
+import "regenerator-runtime";
+import Koa from "koa";
+import Router from 'koa-router';
+import mount from 'koa-mount';
+import staticly from 'koa-static';
+import { renderToString } from "react-dom/server";
+import Home from "./pages/Home";
+const app = new Koa();
+const router = new Router();
+router.get("/", async ctx => {
+  const content = renderToString(<Home text="hello ssr" />);
+  const html = `<html><body>${content}</body></html>`;
+  ctx.body = html;
+});
+app.use(router.routes()).use(router.allowedMethods());
+app.use(mount('/', staticly(path.join(__dirname, './build'), { maxage: 24 * 60 * 60 * 1000 })));
+app.listen(8001, () => console.log("listening on port 8001"));
+```
+
 #### 快速调试
+
+若想监听文件变化进行 hot reload，则得靠 `webpack --watch` 和 `nodemon` 了。
+
+```
+npm i -D nodemon npm-run-all
+```
+
+```json
+// package.json
+{
+  "scripts": {
+    "dev": "npm-run-all --parallel dev:server:* dev:client",
+    "dev:client": "webpack --mode development --config webpack.client.js --watch",
+    "dev:server:build": "webpack --mode development --config webpack.server.js --watch",
+    "dev:server:start": "nodemon ./build/bundle-server.js"
+  }
+}
+```
 
 ## 更多服务端渲染问题
 
 #### 样式
+
+
 #### 事件
+
+
 #### 路由
+
+其实有两套方案，各有优劣，可依实际需求而定：
+
+* 访问后返回该页的渲染，并带上所有代码，后续只有刷新才会重新请求服务端渲染
+* 导出每页的渲染，非单页应用，后续每次跳页都是会请求服务端渲染
 
 ## Vue 栈 SSR 展示
