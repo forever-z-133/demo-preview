@@ -52,6 +52,7 @@
 - [从手机导航方式思考交互的演进](https://forever-z.cn/#/./articles/minds/think-about-navigation-event.md)
 - [关于如何提升交互体验的思考](https://forever-z.cn/#/./articles/minds/how-to-promote-ux-details.md)
 - [交互体验提升之元素布局篇](https://forever-z.cn/#/./articles/minds/ux-details-at-ui.md)
+- [记一次底部菜单扩展性优化](https://forever-z.cn/#/./articles/minds/menu-expandability.md)
 
 ## 开源项目
 
