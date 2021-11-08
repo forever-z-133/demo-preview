@@ -37,6 +37,7 @@
 - [如何判断是否点击在元素内部](https://forever-z.cn/#/./articles/study/justify-click-inner.md)
 - [从 cc._decorator 中学习 ts 装饰器](https://forever-z.cn/#/./articles/study/study-decorator-in-cocos.md)
 - [服务端渲染 SSR 梳理](https://forever-z.cn/#/./articles/study/study-react-ssr.md)
+- [记一次底部菜单扩展性优化](https://forever-z.cn/#/./articles/minds/menu-expandability.md)
 
 > #### 随笔感想
 
@@ -52,7 +53,7 @@
 - [从手机导航方式思考交互的演进](https://forever-z.cn/#/./articles/minds/think-about-navigation-event.md)
 - [关于如何提升交互体验的思考](https://forever-z.cn/#/./articles/minds/how-to-promote-ux-details.md)
 - [交互体验提升之元素布局篇](https://forever-z.cn/#/./articles/minds/ux-details-at-ui.md)
-- [记一次底部菜单扩展性优化](https://forever-z.cn/#/./articles/minds/menu-expandability.md)
+- [职场上如何带新人](https://forever-z.cn/#/./articles/minds/how-to-teach-new-comer.md)
 
 ## 开源项目
 
