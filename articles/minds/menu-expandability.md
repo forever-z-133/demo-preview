@@ -8,23 +8,24 @@
 
 - 需要支持多主题
 - 可权限控制按钮显隐
-- 对应底部栏的弹起要操作方便
-- 定制化会有不同的交互
+- 定制化会有不同的样式与交互
+- 底部栏的弹起要操作方便
 
-## UI 组件粒度划分
+## 组件粒度拆分
 
-通常来讲，`<Item>` 类型的元素都是使用同一个组件。
+最初的底部栏代码如下，通俗易懂，易于增删。
 
 ```jsx
-const MAIN_FOOTER_BUTTONS = [
+const ADD_FOOTER_BUTTONS = [
   { type: 'add-text', icon: '', label: '添加文字' },
   { type: 'add-image', icon: '', label: '添加图片' },
 ];
+
 function AddFooter() {
   const onClick = () => {};
   return (
     <div className="add-footer">
-      {MAIN_FOOTER_BUTTONS.map(item => (
+      {ADD_FOOTER_BUTTONS.map(item => (
         <div className={classnames('item', item.type)} onClick={onClick}>
           <img src={item.icon} alt="">
           <p>{item.label}</p>
@@ -35,8 +36,17 @@ function AddFooter() {
 }
 ```
 
-然后你会发现，这样写的话 `onClick` 根据 `type` 区分会写得非常庞大，若还有部分元素才有 `doudleClick` 区分起来也麻烦。  
-可见这种配置式的渲染方式并不适用于复杂的事件处理，故而应当拆分独立的组件比较好。
+然而，你会发现，这样写在行为和样式上都不易于拓展。  
+
+- 部分按钮结构与样式不一样时破坏性很大
+- 若 `onClick` 根据 `item.type` 区分，会写得非常庞大
+- 部分元素才有 `onTouchStart` 的话，区分起来比较难看
+
+虽然你可以继续补漏，把样式作为组件放进配置、把事件放进配置、给事件加工厂 等等，但既然都这样了何直接做成组件呢。  
+
+可见，**复杂的场景下，业务需要下沉，分拆到子场景中去**。
+
+比如经过下面的改造，各按钮间的事件与样式就独立开来了，清晰且纯粹。
 
 ```jsx
 function AddFooter() {
@@ -47,23 +57,59 @@ function AddFooter() {
     </div>
   );
 }
-function AddText(props) {
-  const { className, ...restProps } = props;
-  const onClick = () => {};
+function AddText(props) {}
+function AddImage(props) {}
+```
+
+此处所说的“复杂”是很笼统的，还需要你更多的实际体验后可能才有所感悟。
+
+再举个运营位业务拓展的例子，即点击 banner 进行不同的事件。  
+每种业务也有不同的样式与行为，但由于样式变动小和行为特例少那就不必拆分得很散，可能仅仅一层壳套就足够了。
+
+<img src="https://z3.ax1x.com/2021/11/12/ID0DG8.png" alt="运营位业务的设置" style="max-width:500px" />
+
+```jsx
+// 运营位业务公共部分的抽离
+function useBusinessButton(initialValue) {
+  const { type, jumpUrl, params } = initialValue;
+  const onClick = e => {
+    switch(type) {}
+  }
+  const BusinessButton = props => {
+    const { children, ...rest } = props;
+    const _props = {};
+    switch(type) {}
+    return <button {..._props} {...rest}>{children}</button>
+  }
+  return [BusinessButton, onClick];
+}
+
+// 具体使用
+function IndexSwiperItem(props) {
+  const { item } = props;
+  const [BusinessButton, onClick] = useBusinessButton(item);
   return (
-    <div className={classnames('add-text', className)} onClick={onClick} {...restProps}>
-      <img src="" alt="">
-      <p>添加文字</p>
-    </div>
+    <BusinessButton onClick={onClick}>
+      <span>我是业务触发按钮</span>
+    </BusinessButton>
   );
 }
 ```
 
-这时候 `AddFooter` 就相当纯粹了，重心转向维护子组件的逻辑处理上。
+可见，**特例化较少的场景下，可用自定义 hooks 来拆分**。
 
-**总结：回调过于庞大可以将业务下沉**
+当 `switch` 行数够多，但又没复杂到需要业务下沉的程度，那用 **模块化** 或 **设计模式** 都是阔以的。  
+
+至于 **UI 组件** 通常都不是优化的核心，能节省代码优化结构，但不见得能很大优化开发体验，且这个提炼过程还挺需要开发水平的。
 
 ## 业务下沉后数据传递
+
+由于本项目的按钮类型和事件处理实在太多了，故而采用了业务下沉方案。
+
+事实上，当业务下沉后，各子组件间其实是可能面临数据通信更复杂的问题的，  
+原本所有的逻辑和状态都在 `AddFooter` 这层互相采用处理的，但下沉后 `AddFooter` 其实就不做事了。  
+
+因此你极有可能是需要一个全局状态的，
 
 ## 相同功能的组件
 
