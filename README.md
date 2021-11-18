@@ -38,6 +38,7 @@
 - [从 cc._decorator 中学习 ts 装饰器](https://forever-z.cn/#/./articles/study/study-decorator-in-cocos.md)
 - [服务端渲染 SSR 梳理](https://forever-z.cn/#/./articles/study/study-react-ssr.md)
 - [记一次底部菜单扩展性优化](https://forever-z.cn/#/./articles/minds/menu-expandability.md)
+- [常用于定时任务中的 cron 表达式](https://forever-z.cn/#/./articles/study/learn-cron-in-timeout.md)
 
 > #### 随笔感想
 
