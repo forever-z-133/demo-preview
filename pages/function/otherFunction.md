@@ -15,6 +15,7 @@
 - [htmlToString](#-html-转义)（html 转义）
 - [stringToHtml](#-html-字符串反转义)（html 字符串反转义）
 - [jsonStringify / jsonParse](#-JSON-处理)（JSON 处理）
+- [getFileSizeString](#-返回文件体积字符串)（返回文件体积字符串）
 - [urlParse](#-返回链接对象)（返回链接对象）
 - [imageToBase64](#-图片链接转-base64)（图片链接转 base64）
 - [base64ToFile](#-base64-转-File-对象)（base64 转 File 对象）
@@ -254,6 +255,23 @@ function jsonParse(str) {
   }
   return value;
 }
+```
+
+# 返回文件体积字符串
+
+```js
+const SIZE_UNIT = ['b', 'kb', 'M', 'G', 'T'];
+const getFileSizeString = size => {
+  let index = 0;
+  let num = size / (1024 ** index);
+  let result = '';
+  while (num >= 1) {
+    result = `${toFixed(num, 3)}${SIZE_UNIT[index]}`;
+    index += 1;
+    num = size / (1024 ** index);
+  }
+  return result;
+};
 ```
 
 ## \* 返回链接对象

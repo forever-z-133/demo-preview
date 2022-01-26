@@ -1,4 +1,4 @@
-# 多项目管理 yarn 的 workspaces
+# 用 yarn 的 workspaces 体验多项目管理 
 
 ```
 npm i -g yarn
