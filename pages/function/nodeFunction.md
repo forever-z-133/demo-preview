@@ -6,7 +6,8 @@
 - [makeDirSync](#-新建文件夹)（新建文件夹）
 - [getFileName](#-获取文件名)（获取文件名）
 - [getFileExtName](#-获取文件后缀)（获取文件后缀）
-- [getFileNetType](#-获取文件网络类型)（获取文件网络类型）
+- [getFileSizeString](#-返回文件体积字符串)（返回文件体积字符串）
+- [getUrlNetType](#-获取文件网络类型)（获取文件网络类型）
 - [ajax](#-发起请求)（发起请求）
 - [downloadFile](#-下载文件)（下载文件）
 - [readUrl](#-读取文件)（读取文件）
@@ -97,10 +98,27 @@ function getFileExtName(url) {
 }
 ```
 
+# \* 返回文件体积字符串
+
+```js
+const FILE_SIZE_UNIT = ['b', 'kb', 'M', 'G', 'T'];
+const getFileSizeString = size => {
+  let index = 0;
+  let num = size / (1024 ** index);
+  let result = '';
+  while (num >= 1) {
+    result = `${toFixed(num, 3)}${FILE_SIZE_UNIT[index]}`;
+    index += 1;
+    num = size / (1024 ** index);
+  }
+  return result;
+};
+```
+
 ## \* 获取文件网络类型
 
 ```js
-function getFileNetType(url) {
+function getUrlNetType(url) {
   if (/^https/.test(url)) return 'https';
   if (/^http/.test(url)) return 'http';
   return 'local';
