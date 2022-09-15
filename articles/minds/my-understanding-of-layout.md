@@ -1,6 +1,6 @@
 # 我理解的前端-布局篇
 
-简单回顾一下 [上篇内容](https://www.yuque.com/docs/share/60e5cf65-c147-4ac7-b9fc-1a1965be5bd8) ，动画由起始数值/结束数值/运行时长/动画节奏组成。后面的暂停重复反转等动画链，或者位移旋转加速等数值抽象概念，再或者过程思维和结果思维等开发习惯，再或者播放式动画和即时反馈式动画等表现形态，都算是延伸的产物了。
+简单回顾一下上篇内容 [我理解的前端-动画篇](https://www.yuque.com/docs/share/60e5cf65-c147-4ac7-b9fc-1a1965be5bd8) ，动画由起始数值/结束数值/运行时长/动画节奏组成。后面的暂停重复反转等动画链，或者位移旋转加速等数值抽象概念，再或者过程思维和结果思维等开发习惯，再或者播放式动画和即时反馈式动画等表现形态，都算是延伸的产物了。
 
 那么布局的核心是什么，又延伸了那些产物呢？请看下文。
 
@@ -12,9 +12,9 @@
 虽然这些属性在设计之初也本来就不是拿来做布局的，<br />
 那么为什么不发明一款更实用的横排布局呢，之后 flex 就出现了。<br />
 _写于 06 年的博客：_[https://www.cnblogs.com/foreverZ/p/no-float-is-better.html](https://www.cnblogs.com/foreverZ/p/no-float-is-better.html)<br />
-那么是否还有其他你觉得更应该存在的属性呢？
+那么是否还有其他你觉得也应该存在的样式属性呢？
 
-有个 [大佬说过](https://www.zhihu.com/question/39659757) ，不管 CSS 的形式如何改变，它都只是个 DSL 语言而已，那布局的语义和语法该是什么？<br />
+有位 [大佬说过](https://www.zhihu.com/question/39659757) ，不管 CSS 的形式如何改变，它都只是个 DSL 语言而已，那布局的语义和语法该是什么？<br />
 比如我们会写很多 scss mixin，或者像 flutter 的样式组件那样，那是否就代表着其实样式可以缩写的，或者说指定我们自己的 DSL。（或者低码平台经常讲的 Schema）<br />
 _广告位：_[https://www.npmjs.com/package/common-scss-mixin](https://www.npmjs.com/package/common-scss-mixin)
 
@@ -113,8 +113,8 @@ _广告位：_[https://www.npmjs.com/package/common-scss-mixin](https://www.npmj
 
 ## 样式与行为的关系
 
-CSS 这门语言在旧时代并不具备太多的信号输入功能，随着时代发展倒是有了些变化。<br />
-比如像 CSS3 中也有了 `content: attr()` 或 `:focus-within` `:target` 等这些存在；<br />
+CSS 这门语言在旧时代并不具备太多的交互响应功能，随着时代发展倒是有了些变化。<br />
+比如像 W3C 中也有了 `:focus-within` `:target` 或 `<output>` 等这些存在；<br />
 比如像 Tailwind CSS 有了些带交互的样式类，比如 `dark:bg-black` `group-hover:text-blue-500` 等；<br />
 比如像下方代码这样，直接将信息输入给 CSS var 变量去进行处理的，这种做简单交互真的很香。
 
