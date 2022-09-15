@@ -11,6 +11,11 @@
 - [从手机导航方式思考交互的演进](/articles/trash/think-about-navigation-event.md)
 - [项目管理必备的十大工具](/articles/trash/ten-tools-of-pm.md)
 - [设计需求走查（如何进行需求分析）](/articles/trash/how-to-analysis-demand-value.md)
+- [验证码设计的梳理](/articles/trash/verification-code.md)
+
+> #### 设计
+
+- [卡片设计、分割线、无框设计](/articles/trash/gap-design.md)
 
 > #### 人文
 
