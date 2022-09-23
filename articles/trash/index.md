@@ -2,6 +2,7 @@
 
 > #### 技术
 
+- [SEO 概述](/articles/trash/summary-of-seo.md)
 - [Glob 通配符](/articles/trash/glob-wildcard.md)
 - [用 yarn 的 workspaces 体验多项目管理](/articles/trash/yarn-workspaces.md)
 
@@ -15,6 +16,7 @@
 
 > #### 设计
 
+- [交互体验提升之元素布局篇](/articles/trash/ux-details-at-ui.md)
 - [卡片设计、分割线、无框设计](/articles/trash/gap-design.md)
 
 > #### 人文

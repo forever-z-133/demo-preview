@@ -26,7 +26,6 @@
 > #### 学习笔记
 
 - [惰性函数&偏函数&科里化](https://forever-z.cn/#/articles/study/currying-function.md)
-- [SEO 概述](https://forever-z.cn/#/articles/study/summary-of-seo.md)
 - [CSS 层叠上下文](https://forever-z.cn/#/articles/study/css-stacking-context.md)
 - [响应式或自适应布局的流派](https://forever-z.cn/#/articles/study/school-of-media-resize.md)
 - [正则小知识记录](https://forever-z.cn/#/articles/study/some-tips-of-regexp.md)
@@ -51,8 +50,8 @@
 - [分组和标签的优缺点](https://forever-z.cn/#/articles/minds/difference-between-group-and-tag.md)
 - [关于版本管理的思考](https://forever-z.cn/#/articles/minds/think-about-branch-manager.md)
 - [关于如何提升交互体验的思考](https://forever-z.cn/#/articles/minds/how-to-promote-ux-details.md)
-- [交互体验提升之元素布局篇](https://forever-z.cn/#/articles/minds/ux-details-at-ui.md)
 - [职场上如何带新人](https://forever-z.cn/#/articles/minds/how-to-teach-new-comer.md)
+- [代码修改的影响范围的思考](https://forever-z.cn/#/articles/minds/think-about-standard-of-scope.md)
 
 ## 开源项目
 

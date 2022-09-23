@@ -10,27 +10,21 @@
 ## width: auto
 
 在张鑫旭大佬的《CSS世界》书中有提到，display 盒子其实可以看做是多个盒子共同作用的结果，<br />
+
 比如 `inline-block` 可认为是 `inline` 包了个 `block` 合成的，`list-item` 是 `marker box` 和 `block` 结合才有了圆点；<br />
 更甚至，`block` 下的伪元素可能也是 `block > (before-inline + block + after-inline)` 这样的插在其中的嵌套结构。<br />
 _注意，这里不是 display: inline 或 inline element 意思，而是 inline box 的概念。_<br />
 
 大多文章都把 `dom tree` 和 `cssom tree` 合成 `render tree` 这里一笔带过，<br />
-我看 w3c 官方文档也不多，以下论述 __仅个人总结和理解__，还请大佬们勘误。<br />
+我看 w3c 官方文档也不多，以下论述 **仅个人总结和理解**，还请大佬们勘误。<br />
 
 `block box` 的初始宽度实为父级宽度，然后才读取的 `width` 等属性再给出新的实际宽度，<br />
 `inline box` 的初始宽度实为本元素宽度，然后判断父级剩余空间，若超出则以父级宽度为准。<br />
 
 听上去就很容易死循环不是吗，比如子级宽度变了，父级可能会变，父级变了祖父级可能也得变。<br />
+
 我大胆猜测一下，其实只要有个稳定的父级宽度，即可避免掉上面这种死循环的，<br />
 比如当本元素宽度变化时，向父级寻找到 `block element` 即可，该父级之下的所有元素直接重新计算和渲染。<br />
-这应该也就是 __重排__ 的根本原因吧。下面我们尝试实际推演一下：<br />
-
-```html
-<body>
-  <div class="">
-  </div>
-</body>
-```
 
 ## min/max-width
 
@@ -99,4 +93,5 @@ _注意，这里不是 display: inline 或 inline element 意思，而是 inline
 
 
 ## 文件
-https://mp.weixin.qq.com/s/WtGzVMzh1RupixD_4474mg<br />
+
+https://lisongfeng.cn/2018/08/04/flexbox-essentials.html<br />

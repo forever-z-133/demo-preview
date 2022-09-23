@@ -14,7 +14,6 @@
 #### 学习笔记
 
 - [惰性函数&偏函数&科里化](/articles/study/currying-function.md)
-- [SEO 概述](/articles/study/summary-of-seo.md)
 - [CSS 层叠上下文](/articles/study/css-stacking-context.md)
 - [响应式或自适应布局的流派](/articles/study/school-of-media-resize.md)
 - [正则小知识记录](/articles/study/some-tips-of-regexp.md)
@@ -39,8 +38,8 @@
 - [分组和标签的优缺点](/articles/minds/difference-between-group-and-tag.md)
 - [关于版本管理的思考](/articles/minds/think-about-branch-manager.md)
 - [关于如何提升交互体验的思考](/articles/minds/how-to-promote-ux-details.md)
-- [交互体验提升之元素布局篇](/articles/minds/ux-details-at-ui.md)
 - [职场上如何带新人](/articles/minds/how-to-teach-new-comer.md)
+- [代码修改的影响范围的思考](/articles/minds/think-about-standard-of-scope.md)
 
 ## 开源项目
 
