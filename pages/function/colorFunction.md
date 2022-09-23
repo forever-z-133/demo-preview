@@ -15,11 +15,10 @@ const rgb_reg = new RegExp(`rgba?\(\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*,\s*([+-]?\d
 ```js
 function typeOfColor(str) {
   const prefix = str.slice(0, 4);
-  
 }
 ```
 
 ## 借鉴
-https://github.com/Qix-/color-string  
-https://github.com/Qix-/color-convert  
-https://github.com/colorjs/color-name  
+https://github.com/Qix-/color-string<br />
+https://github.com/Qix-/color-convert<br />
+https://github.com/colorjs/color-name<br />

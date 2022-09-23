@@ -60,7 +60,7 @@
   overflow: hidden;
   height: 3em;
   line-height: 1.5em;
-  
+
   &:before {
     content: "";
     float: left;
@@ -71,7 +71,7 @@
     float: right;
     width: 100%;
     margin-left: -5px;
-  }        
+  }
   &:after {
     content: "\02026"; /* 字符 ... */
     position: relative;

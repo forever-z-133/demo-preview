@@ -73,7 +73,7 @@ ctx.restore();
 </iframe>
 
 ### globalCompositeOperation（canvas）
-注意：本 save 范围之外有底色，也会被看作有底色，且底色透明度都可继承，实在是不太妙的一种方案。  
+注意：本 save 范围之外有底色，也会被看作有底色，且底色透明度都可继承，实在是不太妙的一种方案。<br />
 拓展：`globalCompositeOperation` 的其他属性值也很有意思，[预览](https://foreverz133.github.io/demos/single/globalCompositeOperation.html)。
 ```js
 ctx.save();
@@ -132,7 +132,7 @@ ctx.drawImage(_canvas, x, y, width, height);
 多半搭配 CSS 的 `clip-path`，使剪切后的元素的点击范围与元素形态也变得与形状一致。
 
 ### 扩展阅读
-https://github.com/foreverZ133/blogs/issues/21  
-https://www.zhangxinxu.com/wordpress/2016/03/better-black-mask-guide-overlay-method/  
-https://codepen.io/airen/pen/VPKQxb  
+https://github.com/foreverZ133/blogs/issues/21<br />
+https://www.zhangxinxu.com/wordpress/2016/03/better-black-mask-guide-overlay-method/<br />
+https://codepen.io/airen/pen/VPKQxb<br />
 https://foreverz133.github.io/demos/works/mask/

@@ -1,7 +1,7 @@
 # 对象的深拷贝
 
-除了深拷贝与浅拷贝的区别之外，还有拷贝的数据类型方面的问题，  
-比如 `NaN` `Date` `Function` `RegRex` `Symbol` `Error` `Infinity` 等特殊对象，拷贝结果并不如意。  
+除了深拷贝与浅拷贝的区别之外，还有拷贝的数据类型方面的问题，<br />
+比如 `NaN` `Date` `Function` `RegRex` `Symbol` `Error` `Infinity` 等特殊对象，拷贝结果并不如意。<br />
 所以去了解些写法和彼此利弊当然要更好咯。
 
 ### 方法一、JSON 装换

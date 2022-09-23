@@ -76,6 +76,6 @@ $change.addEventListener("click", () => {
   (<a href='https://codepen.io/foreverZ133'>@foreverZ133</a>) on <a href='https://codepen.io'>CodePen</a>.
 </iframe>
 
-其他参考：  
-https://github.com/forever-z-133/others/issues/170  
-https://darkmodejs.learn.uno/  
+其他参考：<br />
+https://github.com/forever-z-133/others/issues/170<br />
+https://darkmodejs.learn.uno/<br />

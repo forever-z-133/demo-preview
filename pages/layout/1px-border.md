@@ -1,6 +1,6 @@
 # 四种 1px 毛细线样式
 
-毛细线样式，即研究 1px 问题，  
+毛细线样式，即研究 1px 问题，<br />
 即是处理高 dpr 设备上 1px 的 border 看上去像 2px 一样粗。
 
 <iframe height="500" style="width: 100%;" scrolling="no" title="1px border" src="//codepen.io/foreverZ133/embed/OJLNezZ/?height=265&theme-id=0&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">
@@ -21,7 +21,7 @@
 
 ### 二、background
 
-有三种设置 `background` 的办法，更推荐 base64 图片，  
+有三种设置 `background` 的办法，更推荐 base64 图片，<br />
 渐变或 svg 亦可，并且可修改颜色。
 
 ```scss

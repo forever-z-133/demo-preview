@@ -132,7 +132,7 @@ ListManager.convert = data => {
 }
 ```
 
-其中，你也可以利用 ListData.prototype 做二次封装，  
+其中，你也可以利用 ListData.prototype 做二次封装，<br />
 这样就不用每次 new ListData 时都修改实例方法了。
 
 ## 使用 TypeScript

@@ -69,12 +69,12 @@
 
 ### 其他、min-height 定值
 
-当已知某子级最大高度时，给所有子级定值 min-height 也是种办法。  
+当已知某子级最大高度时，给所有子级定值 min-height 也是种办法。<br />
 如果未知或强调精确，JS 获取由于图片高度问题其实也不美妙，所以还是采用上述几种吧。
 
 ### 其他、视觉欺骗
 
-这是相当拙劣的一种方案，看上去仿佛是等高的，  
+这是相当拙劣的一种方案，看上去仿佛是等高的，<br />
 用来充数看看就好，项目中很难会这样来用的。
 
 <iframe height="265" style="width: 100%;" scrolling="no" title="子级等高 背景色" src="//codepen.io/foreverZ133/embed/KEzWEZ/?height=265&theme-id=dark&default-tab=result" frameborder="no" allowtransparency="true" allowfullscreen="true">

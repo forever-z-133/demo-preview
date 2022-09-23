@@ -1,7 +1,7 @@
 # 常用的 CSS 原子类
 
-有兴趣可查看下方链接的源码：  
-https://www.npmjs.com/package/common-scss-mixin  
+有兴趣可查看下方链接的源码：<br />
+https://www.npmjs.com/package/common-scss-mixin<br />
 https://www.npmjs.com/package/common-less-mixin
 
 ```css

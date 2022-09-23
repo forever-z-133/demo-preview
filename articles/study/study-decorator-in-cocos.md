@@ -28,11 +28,11 @@ cc.Class({
   },
 });
 ```
-撇开干扰项 `export default`，装饰器的感性认识还是挺直接的。  
-阔以认为它是一种语法糖，将原本的包裹关系，用 `@` 标识符简化了一丢丢写法，看上去更平面化了。  
-将其看做是返回一个函数的偏函数也行，更妙的是属性也能装饰。  
+撇开干扰项 `export default`，装饰器的感性认识还是挺直接的。<br />
+阔以认为它是一种语法糖，将原本的包裹关系，用 `@` 标识符简化了一丢丢写法，看上去更平面化了。<br />
+将其看做是返回一个函数的偏函数也行，更妙的是属性也能装饰。<br />
 
-同理，我们感性认识上就很容易想到装饰器的美妙用法了。  
+同理，我们感性认识上就很容易想到装饰器的美妙用法了。<br />
 
 ```typescript
 @readonly
@@ -50,9 +50,9 @@ onDataABChange(newValue, oldValue) {}
 price: '1000'
 ```
 ## cc._decorator 有哪些装饰器
-众所周知，使用 VScode 的 `Ctrl + 左键` 是有一定的代码溯源功能的，就能看到该属性或方法的 declare 声明或实际实现。  
+众所周知，使用 VScode 的 `Ctrl + 左键` 是有一定的代码溯源功能的，就能看到该属性或方法的 declare 声明或实际实现。<br />
 
-那么在 `cc._decorator` 上进行溯源，也就能看到它内部在当时设计时会有哪些东西了。  
+那么在 `cc._decorator` 上进行溯源，也就能看到它内部在当时设计时会有哪些东西了。<br />
 
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/158440/1614567222238-3895545f-72d6-474d-9f73-561a1cd1854c.png#align=left&display=inline&height=632&margin=%5Bobject%20Object%5D&name=image.png&originHeight=632&originWidth=1247&size=85640&status=done&style=none&width=1247)
 
@@ -61,7 +61,7 @@ price: '1000'
 #### @menu(path)
 在组件菜单中插入一项，方便快速引入。
 #### @requireComponent(comp)
-表示必须带上某个组件，在引入时也会同时引入。  
+表示必须带上某个组件，在引入时也会同时引入。<br />
 比如某个需要画图的就带上 `cc.Graphics`，比如某个题目必会带上 `NormalMessage` 之类的。
 
 ![1.gif](https://cdn.nlark.com/yuque/0/2021/gif/158440/1614591263950-54fe1266-5d83-4979-917d-a2e0167a2f7d.gif#align=left&display=inline&height=497&margin=%5Bobject%20Object%5D&name=1.gif&originHeight=497&originWidth=560&size=97156&status=done&style=none&width=560)
@@ -69,7 +69,7 @@ price: '1000'
 #### @disallowMultiple
 一个节点不可带有两个相同组件，类似 `cc.Sprite` 不可多个那样的功能
 #### @executeInEditMode
-通常是在运行时渲染，加上后可在 CocosCreator 中也渲染，如图所示。  
+通常是在运行时渲染，加上后可在 CocosCreator 中也渲染，如图所示。<br />
 _但需注意，对于没有把握的代码，比如刚玩 gif 渲染做测试就不要开启，不然很容易造成编辑器卡死。_
 
 ![image.png](https://cdn.nlark.com/yuque/0/2021/png/158440/1614650986873-7c241f4a-8010-4d2c-9a3f-d5eebe54668d.png#align=left&display=inline&height=580&margin=%5Bobject%20Object%5D&name=image.png&originHeight=580&originWidth=857&size=62191&status=done&style=none&width=857)
@@ -77,11 +77,11 @@ _但需注意，对于没有把握的代码，比如刚玩 gif 渲染做测试�
 #### @playOnFocus
 需与 `@executeInEditMode` 合用，当鼠标选中时渲染效果更优，暂时没遇到好场景。
 #### @executionOrder
-渲染顺序，默认为 `0`，越小越先，越大越后。除 `onLoad` `start` 外，且每次 `onEnable` 都如此。  
-举个场景，比如先渲染子组件，然后父组件才开始使用它。  
+渲染顺序，默认为 `0`，越小越先，越大越后。除 `onLoad` `start` 外，且每次 `onEnable` 都如此。<br />
+举个场景，比如先渲染子组件，然后父组件才开始使用它。<br />
 #### @inspector(path)
-直接修改编辑器的属性检查器面板，需要写一些 `Vue.component` 注册的代码，`path` 指向该 js 的路径。  
-_个人暂未进行试验，有兴趣的阔以按官网推荐进行试玩：_  
+直接修改编辑器的属性检查器面板，需要写一些 `Vue.component` 注册的代码，`path` 指向该 js 的路径。<br />
+_个人暂未进行试验，有兴趣的阔以按官网推荐进行试玩：_<br />
 
 [http://docs.cocos.com/creator/manual/zh/extension/extends-inspector.html](http://docs.cocos.com/creator/manual/zh/extension/extends-inspector.html)
 
@@ -92,14 +92,14 @@ _个人暂未进行试验，有兴趣的阔以按官网推荐进行试玩：_
 会多一个帮助文档按钮，`@help('https://www.baidu.com')` 你懂的
 
 ## 什么是装饰器
-官方解释如下，基于上文的感性认知与案例后，想必也能够理解了。  
-> 装饰器是一种特殊类型的声明，它能够被附加到类声明，方法，访问符，属性或参数上。  
-> 装饰器使用 @expression 这种形式，expression 必须是一个函数，它会在运行时被调用，被装饰的声明信息做为参数传入。  
+官方解释如下，基于上文的感性认知与案例后，想必也能够理解了。<br />
+> 装饰器是一种特殊类型的声明，它能够被附加到类声明，方法，访问符，属性或参数上。<br />
+> 装饰器使用 @expression 这种形式，expression 必须是一个函数，它会在运行时被调用，被装饰的声明信息做为参数传入。<br />
 
-在其他编程语言中也常有，因为确实是很方便的语法糖。  
-但需要区分的是，它是语言自带的还是阔以自建的，  
-比如 `@override` 就是 dart 语言系统自带的，但它不能创建 proposal-decorators。  
-而 typescript 只需在配置中进行开启，就阔以书写自定义的了。  
+在其他编程语言中也常有，因为确实是很方便的语法糖。<br />
+但需要区分的是，它是语言自带的还是阔以自建的，<br />
+比如 `@override` 就是 dart 语言系统自带的，但它不能创建 proposal-decorators。<br />
+而 typescript 只需在配置中进行开启，就阔以书写自定义的了。<br />
 拓展阅读：[https://babel.docschina.org/blog/2018/09/17/decorators/](https://babel.docschina.org/blog/2018/09/17/decorators/)
 
 
@@ -177,14 +177,14 @@ class Demo {
 const x = new Demo();
 x.demo();
 ```
-其中，`target` 为所在的类的实例，`propertyKey` 为装饰的方法名，`descriptor` 为对象描述信息。算是方法装饰器比较特别的吧。  
+其中，`target` 为所在的类的实例，`propertyKey` 为装饰的方法名，`descriptor` 为对象描述信息。算是方法装饰器比较特别的吧。<br />
 _此时，[对象描述信息](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Enumerability_and_ownership_of_properties) 又是一个可以去拓展学习的点了 ，其实也是就是对象是否可配置可枚举可改写的那些配置。_
 
 
 重新审视下上面的装饰器，你有发现什么问题吗？
 
 
-是有问题的，假如我又写了个 `middleware2` 装饰在 `demo` 上，此时 `target[propertyKey]` 其实都是原函数，那么第二次修改的 `descriptor.value` 其实把第一次修改的相当于给覆盖掉了。   
+是有问题的，假如我又写了个 `middleware2` 装饰在 `demo` 上，此时 `target[propertyKey]` 其实都是原函数，那么第二次修改的 `descriptor.value` 其实把第一次修改的相当于给覆盖掉了。<br />
 具体分析可自行写代码来理解：[https://codepen.io/foreverZ133/pen/MWbGVqL](https://codepen.io/foreverZ133/pen/MWbGVqL)
 
 
@@ -196,8 +196,8 @@ function middleware(target: any, propertyKey: string) { }
 语法相似，`target` 与 `propertyKey` 同上。
 
 
-其实这玩意在我知道它只在初始化时才进行装饰时，有点希望破灭了的感觉，好像没卵用了呀。  
-当其实看多一些 React 项目就不难发现，mbox 的 `@observable` 等不就是属性装饰器嘛。  
+其实这玩意在我知道它只在初始化时才进行装饰时，有点希望破灭了的感觉，好像没卵用了呀。<br />
+当其实看多一些 React 项目就不难发现，mbox 的 `@observable` 等不就是属性装饰器嘛。<br />
 可能它更多的还是用在一些比较考验第三方能力的场景下，或者我还未能接触到的依赖注入等场景，思考不深。
 ```typescript
 class Demo {

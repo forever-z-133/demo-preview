@@ -20,7 +20,7 @@ a { color: inherit; text-decoration: none; display: block; }
 .comb {
   -webkit-clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
   clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
-  
+
   &:before { /* 用来撑起高度 */
     content: "";
     display: block;
