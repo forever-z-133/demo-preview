@@ -2,6 +2,7 @@
 
 > #### 技术
 
+- [四种对象的深拷贝](/pages/others/deep-clone.md)
 - [SEO 概述](/articles/trash/summary-of-seo.md)
 - [Glob 通配符](/articles/trash/glob-wildcard.md)
 - [用 yarn 的 workspaces 体验多项目管理](/articles/trash/yarn-workspaces.md)

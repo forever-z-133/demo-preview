@@ -102,6 +102,6 @@
 - [常用工具集锦](https://forever-z.cn/#/pages/others/tools.md)
 - [前端代码规范](https://forever-z.cn/#/pages/doc/前端代码规范.md)
 - [Git 操作规范](https://forever-z.cn/#/pages/doc/Git%20操作规范.md)
-- [四种对象的深拷贝](https://forever-z.cn/#/pages/others/deep-clone.md)
+- [Windows 软件推荐](https://forever-z.cn/#/pages/others/windows-software.md)
 - [日常的瞎鸡儿玩](https://forever-z.cn/#/pages/others/others.md)
 - [悄咪咪的其他文章](https://forever-z.cn/#/articles/trash/index.md)
