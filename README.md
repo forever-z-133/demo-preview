@@ -22,6 +22,7 @@
 - [跨端富文本显示问题](https://forever-z.cn/#/articles/topic/reasonable-use-rich-text.md)
 - [如何实现主题换肤功能](https://forever-z.cn/#/articles/topic/methods-of-custom-style-theme.md)
 - [如何做前端权限控制](https://forever-z.cn/#/articles/topic/methods-of-auth-control.md)
+- [记一次底部菜单扩展性优化](https://forever-z.cn/#/articles/minds/menu-expandability.md)
 
 > #### 学习笔记
 
@@ -35,8 +36,7 @@
 - [为何我反对使用 flex: 1 简写](https://forever-z.cn/#/articles/study/why-no-flex-abbreviation.md)
 - [如何判断是否点击在元素内部](https://forever-z.cn/#/articles/study/justify-click-inner.md)
 - [从 cc._decorator 中学习 ts 装饰器](https://forever-z.cn/#/articles/study/study-decorator-in-cocos.md)
-- [记一次底部菜单扩展性优化](https://forever-z.cn/#/articles/minds/menu-expandability.md)
-- [常用于定时任务中的 cron 表达式](https://forever-z.cn/#/articles/study/learn-cron-in-timeout.md)
+- [微前端原理与实现整理](https://forever-z.cn/#/articles/study/principle-of-micro-frontends.md)
 
 > #### 随笔感想
 
