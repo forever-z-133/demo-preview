@@ -11,9 +11,13 @@
 - 定制化会有不同的样式与交互
 - 底部栏的弹起要操作方便
 
+本次优化经验可以应用在大多数状态颇多的场景，<br />
+比如 订单/合同/审批 里的按钮，都是至少 5 种状态对应不同的 ui 和事件，面临和本文类似的问题。<br />
+希望 “业务下沉” 的思路对你也有所帮助。
+
 ## 组件粒度拆分
 
-最初的底部栏代码如下，通俗易懂，易于增删。
+先介绍下项目前提，最初的底部栏代码如下，通俗易懂，易于增删。
 
 ```jsx
 const ADD_FOOTER_BUTTONS = [
@@ -22,11 +26,14 @@ const ADD_FOOTER_BUTTONS = [
 ];
 
 function AddFooter() {
-  const onClick = () => {};
+  const onClick = item => () => {};
   return (
     <div className="add-footer">
       {ADD_FOOTER_BUTTONS.map(item => (
-        <div className={classnames('item', item.type)} onClick={onClick}>
+        <div
+          className={classnames('item', item.type)}
+          onClick={onClick(item)}
+        >
           <img src={item.icon} alt="">
           <p>{item.label}</p>
         </div>
@@ -38,22 +45,22 @@ function AddFooter() {
 
 然而，你会发现，这样写在行为和样式上都不易于拓展。<br />
 
-- 部分按钮结构与样式不一样时破坏性很大
-- 若 `onClick` 根据 `item.type` 区分，会写得非常庞大
+- 若部分按钮的 结构与样式 不一样时，对现有结构破坏性很大
+- `onClick` 根据 `item.type` 区分，会写得非常庞大
 - 部分元素才有 `onTouchStart` 的话，区分起来比较难看
 
-虽然你可以继续补漏，把样式作为组件放进配置、把事件放进配置、给事件加工厂 等等，但既然都这样了何不直接做成组件呢。
+虽然你可以继续补漏，把样式字符串放进配置、把事件放进配置、给事件加工厂 等等，但既然都这样了何不直接做成组件呢。
 
 可见，**复杂的场景下，业务需要下沉，分拆到子组件中去**。
 
-比如经过下面的改造，各按钮间的事件与样式就独立开来了，清晰且纯粹。
+比如经过下面的改造，各按钮间的 结构/样式/事件 都独立开来了，清晰且易于改造。
 
 ```jsx
 function AddFooter() {
   return (
     <div className="add-footer">
-      <AddText className="item" />
-      <AddImage className="item" />
+      <AddText />
+      <AddImage />
     </div>
   );
 }
@@ -61,20 +68,21 @@ function AddText(props) {}
 function AddImage(props) {}
 ```
 
-此处所说的“复杂”是很笼统的，还需要你更多的实际体验后可能才有所感悟。 
+<img src="https://s1.ax1x.com/2022/11/08/xz1rgP.jpg" alt="改造后的文件目录" style="width:100%;max-width:100px">
 
-举个例子，假设你已做了拆分，但业务并不复杂就两个跳页按钮，<br />
-在想修改时，你的第一反应如果不是去找那个子模块，那说明其内容还不够复杂和丰富到需要下沉。<br />
+---
 
-<img src="https://z3.ax1x.com/2021/11/22/IzukZj.png" alt="业务不复杂还是先不要下沉" style="max-width:300px" />
+上述所说的“复杂的场景”是很笼统的，还需要你更多的实际体验后可能才有所感悟。 
 
-再举个运营位业务拓展的例子，比如点击 banner 会进行不同的事件。<br />
-每种业务也有不同的样式与行为，但由于样式和行为的特例其实并不多，那就不必拆分得很散，可能仅仅多一层壳套就足够了。
+比如上传图片组件，虽说有 3-5 种上传状态对应不同 UI，但实际并不复杂，可能只需要拆 UI 组件就已足够。
+
+再举个运营组件的例子，比如点击 banner 或落地页按钮，<br />
+每种业务有不同的结构与行为，但特例也不算多，可能仅仅多一层壳套就足够了。
 
 <img src="https://z3.ax1x.com/2021/11/12/ID0DG8.png" alt="运营位业务的设置" style="max-width:500px" />
 
 ```jsx
-// 运营位业务公共部分的抽离
+// 运营业务公共部分的抽离
 function useBusinessButton(initialValue) {
   const { type, jumpUrl, params } = initialValue;
   const onClick = e => {
@@ -82,7 +90,7 @@ function useBusinessButton(initialValue) {
   }
   const BusinessButton = props => {
     const { children, ...rest } = props;
-    const _props = {};
+    const _props = type === 'share' ? { 'open-type': 'share' } : {};
     switch(type) {} // 样式
     return <button {..._props} {...rest}>{children}</button>
   }
@@ -90,7 +98,7 @@ function useBusinessButton(initialValue) {
 }
 
 // 具体使用
-function IndexSwiperItem(props) {
+function IndexSwipeItem(props) {
   const { item } = props;
   const [BusinessButton, onClick] = useBusinessButton(item);
   return (
@@ -101,99 +109,83 @@ function IndexSwiperItem(props) {
 }
 ```
 
-可见，**特例化较少的场景下，不要下沉，可用自定义 hooks 来拆分**。
 
-当 `switch` 行数太多，但又没复杂到需要业务下沉的程度，那用 **模块化** 或 **设计模式** 也是阔以的。<br />
+再比如 `switch` 行数太多，但其他的不复杂，那用 **模块化** 或 **设计模式** 更好。<br />
 
-至于 **UI 组件** 通常都不是优化的核心，也更侧重 UI 而非事件处理，<br />
-能节省代码优化结构，但不见得能很大优化开发体验，且这个提炼过程还挺需要开发水平的。
-
-其实这段写得很纠结，分不清业务与架构的界限，也分不清业务集中或分散的优劣，感觉存在某个临界点才需要做优化，否则是不需要的。
-
-## 业务下沉后数据传递
+## 业务下沉后的数据传递
 
 由于本项目的事件处理分支实在太多了，特例也多，故而采用了业务下沉方案。
 
-事实上，当业务下沉后，各子组件间其实是可能面临数据通信更复杂的问题的。<br />
-例如原本所有的逻辑和状态都在 `AddFooter` 这层互相采用处理的，但下沉后 `AddFooter` 其实就不做事了。<br />
-其次，数据从外向内的流程可能很长，且中间过程的传递可能仅仅就是传递，无论是传递还是 `prop-types` 都太冗余了。<br />
+然而，当业务下沉后，各子组件间其实就可能要面临数据通信更复杂的问题了。
 
-因此你极有可能是需要一个上下文状态的，使用 `Context API` 或者 `mobx` 等都是阔以的，当然都不用也是阔以的。<br />
+比如原本所有的逻辑和状态都在 `AddFooter` 这层处理的，但下沉后父级数据就下沉到兄弟层级了，那么兄弟间的数据沟通就得换方式了。<br />
+其次，数据从父级向子级传递的流程可能会变得很长，且中间过程的传递可能并无意义，另外过程中的组件的 `prop-types` 也不必要。<br />
 
-而更麻烦的一件事在于，
+因此你极有可能是需要一个上下文状态的，使用 `Context API` 或者 `mobx` 等来轻松处理它。<br />
+
+此外，例如 React 父级的刷新会让子级都渲染一次，还得做好这方面的优化。
 
 ## 相同功能的组件
 
-有这样个问题，在文本编辑中会有字号表单组件，在个人信息编辑中也有字号表单组件，那么这个组件要合并吗？
+假如 `TextFooter` 和 `AddressFooter` 都有 `FontSize` 子组件，<br />
+为了文件目录的一目了然，肯定是都要保留的，但代码却不需两份。<br />
+
+你可以用 `symlink`，即文件的软连接。既引用得到，又不存在两份相同代码。
+
+但它有个问题，软连接上 git 仓库并不美妙，所以你需要写 node 脚本去处理这件事。
+
+## 对应的弹窗管理
+
+编辑器按钮会对应不同的弹窗弹出，比如是字号相关的表单，或是时间选择。<br />
+另外，一个按钮可能触发多个弹窗，比如添加日期按钮需要先选日期再选样式模板后再添加进视图。
+
+最初的方案是弹窗与按钮放一起，状态操作都在这一层完成。<br />
+但在小程序端无法 `appendToBody`，而 `fixed` 布局又容易被层叠上下文影响而失效，是个小缺陷。
 
 ```jsx
-function TextEditFooter() {
+function FontSize(props) {
   return (
-    <div className="text-edit-footer">
-      <TextContent />
-      <FontSize />
-      <FontColor />
-      <FontAlign />
-    </div>
-  );
-}
-function UserinfoEditFooter() {
-  return (
-    <div className="userinfo-edit-footer">
-      <UserinfoContent />
-      <FontSize />
-      <FontColor />
-    </div>
+    <IconButton label="字号" />
+    <FontSizeDialog appendToBody />
   );
 }
 ```
 
-## 定制化的配置结构
-
-## 底部栏弹起管理
-
-```js
-[
-  {
-    type: 'text',
-    children: [
-      { type: 'font-size', panel: FontSize },
-      { type: 'font-family', panel: FontFamily },
-      { type: 'font-style', panel: FontStyle },
-    ]
-  },
-  {
-    type: 'image',
-    children: [
-      { type: 'image-replace', panel: ImageReplace },
-      { type: 'image-crop', panel: ImageCrop },
-    ]
-  }
-]
-```
-
-优点是一目了然且易做权限，但不适合大型项目和个性化拓展。<br />
-明显能感觉到，这个配置会越来越复杂而变得难以维护。<br />
-
-## 思路二：命令式弹窗
+所以弹窗组件只能放至父级，那么子级想打开弹窗就需要调 `setFooterDialogStatus` 等函数去状态控制。<br />
+缺点嘛，state 不直观，其次父级想改子级状态只能把回调放进 state 不太美妙。
 
 ```js
-const res = await showFooterModal('font-size', { defaultValue: '' });
+function FontSize(props) {
+  const { setFooterDialogStatus, setFooterDialogData } = props;
+  const onClick = () => {
+    setFooterDialogStatus({ fontSize: true });
+    setFooterDialogData({ fontSize: { onConfirm: () => {} } })
+  };
+  return <IconButton label="字号" onClick={onClick} />;
+}
+
+function App() {
+  const [footerDialogStatus, setFooterDialogStatus] = useState({ fontSize: false });
+  const [footerDialogData, setFooterDialogData] = useState({ fontSize: {} });
+
+  return (
+    <Footer
+      setFooterDialogStatus={setFooterDialogStatus}
+      setFooterDialogData={setFooterDialogData}
+    />
+    <FontSizeDialog
+      visible={footerDialogStatus.fontSize}
+      data={footerDialogData.fontSize}
+    />
+  );
+}
 ```
 
-优点是模块绝对独立，增删模块或权限配置都很容易，要个人化可再起一个新模块。<br />
-缺点是弹窗的状态管理复杂，比如 A 模块想打开它，而 B 模块又想关闭它，既难共享数据也难操作。
-
-## 思路三：状态统一控制
+所以命令式弹窗是比较雅观的方式，
 
 ```js
-state = {
-  footerModalStatus: {
-    fontSize: false,
-    fontFamily: false,
-    fontStyle: { defaultValue: '' },
-  }
-};
+showFontSizeDialog({
+  onInput: () => {},
+  onConfirm: () => {},
+});
 ```
-
-所有子组件需调用祖父组件的 `setFooterModalStatus` 来让弹窗显隐。
