@@ -17,8 +17,23 @@ const TemplateList = props => {
 然而，产品来了需求，支持某机构特别的场景，该机构完全不显示官网模板。此时你有两种修改方案：
 
 * 在组件的调用处修改入参，保持本组件的纯粹性
+
+```jsx
+const App = () => {
+  return <TemplateList tplType={xxx ? 1 : 2}>
+};
+```
+
 * 在组件的内部搞个新变量，统一直接处理该场景
 
-这个命题可大可小，可以说是开发习惯页可以说是编程哲学，反正最近来劲就写点想法吧。
+```jsx
+const TemplateList = props => {
+  const { tplType: 1 } = props;
+  const realTplType = xxx ? tplType : 2;
+  return <></>
+};
+```
+
+这个命题可大可小，可以说是开发习惯也可以说是编程哲学，最近我刚好也有了点想法。
 
 类似的场景还有，vue template 中的判断越写越长是否应该统一使用 computed

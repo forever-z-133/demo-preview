@@ -2,6 +2,7 @@
 
 > #### 技术
 
+- [命令式弹窗的实现](/pages/others/deep-clone.md)
 - [四种对象的深拷贝](/pages/others/deep-clone.md)
 - [SEO 概述](/articles/trash/summary-of-seo.md)
 - [Glob 通配符](/articles/trash/glob-wildcard.md)

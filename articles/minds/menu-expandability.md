@@ -139,8 +139,8 @@ function IndexSwipeItem(props) {
 编辑器按钮会对应不同的弹窗弹出，比如是字号相关的表单，或是时间选择。<br />
 另外，一个按钮可能触发多个弹窗，比如添加日期按钮需要先选日期再选样式模板后再添加进视图。
 
-最初的方案是弹窗与按钮放一起，状态操作都在这一层完成。<br />
-但在小程序端无法 `appendToBody`，而 `fixed` 布局又容易被层叠上下文影响而失效，是个小缺陷。
+最初的方案是弹窗与按钮放一起，状态操作都在这一层完成，比较直观。<br />
+但在小程序端无法 `appendToBody`，而 `fixed` 布局又容易被层叠上下文影响而失效，是个缺陷。
 
 ```jsx
 function FontSize(props) {
@@ -151,10 +151,10 @@ function FontSize(props) {
 }
 ```
 
-所以弹窗组件只能放至父级，那么子级想打开弹窗就需要调 `setFooterDialogStatus` 等函数去状态控制。<br />
-缺点嘛，state 不直观，其次父级想改子级状态只能把回调放进 state 不太美妙。
+所以弹窗组件只能放至父级，那么子级想打开弹窗就需要调 `setFooterDialogStatus` 等函数去搞状态控制。<br />
+也不是不能用，但用多了还是能感受到不美妙：state 结构不直观，props 传递冗长，频繁刷新父级 等。
 
-```js
+```jsx
 function FontSize(props) {
   const { setFooterDialogStatus, setFooterDialogData } = props;
   const onClick = () => {
@@ -181,11 +181,16 @@ function App() {
 }
 ```
 
-所以命令式弹窗是比较雅观的方式，
+所以命令式弹窗是比较雅观的方式，让按钮与弹窗有紧密的相关性，也少了状态传递的负面影响。
 
-```js
-showFontSizeDialog({
-  onInput: () => {},
-  onConfirm: () => {},
-});
+至于命令式弹窗各端有所不同，React 用 `createPortal()` 或 `render()`, 小程序用 `selectComponent().method` 等，具体可参考 [命令式弹窗的实现](/articles/trash/open-dialog-with-command)。
+
+```jsx
+import { openFontSizeDialog } from '/FontSizeDialog/module';
+function FontSize(props) {
+  const onClick = () => {
+    openFontSizeDialog({ onConfirm: () => {} });
+  };
+  return <IconButton label="字号" onClick={onClick} />;
+}
 ```
