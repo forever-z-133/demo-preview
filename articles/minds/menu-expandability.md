@@ -1,5 +1,7 @@
 # 记一次底部菜单扩展性优化
 
+比如 订单/合同/审批 里的按钮，都是至少 5 种状态对应不同的样式和事件，面临与本文类似的问题。
+
 如下图的交互，会有很多个底部栏，底部栏之间可能会有相关性。
 
 <img src="https://z3.ax1x.com/2021/10/12/5mytG8.png" style="width:100%;max-width:400px;">
@@ -10,10 +12,6 @@
 - 可权限控制按钮显隐
 - 定制化会有不同的样式与交互
 - 底部栏的弹起要操作方便
-
-本次优化经验可以应用在大多数状态颇多的场景，<br />
-比如 订单/合同/审批 里的按钮，都是至少 5 种状态对应不同的 ui 和事件，面临和本文类似的问题。<br />
-希望 “业务下沉” 的思路对你也有所帮助。
 
 ## 组件粒度拆分
 
@@ -72,7 +70,7 @@ function AddImage(props) {}
 
 ---
 
-上述所说的“复杂的场景”是很笼统的，还需要你更多的实际体验后可能才有所感悟。 
+上述所说的“复杂的场景”是很笼统的，还需要你更多的实际体验后可能才有所感悟。
 
 比如上传图片组件，虽说有 3-5 种上传状态对应不同 UI，但实际并不复杂，可能只需要拆 UI 组件就已足够。
 
@@ -183,8 +181,6 @@ function App() {
 
 所以命令式弹窗是比较雅观的方式，让按钮与弹窗有紧密的相关性，也少了状态传递的负面影响。
 
-至于命令式弹窗各端有所不同，React 用 `createPortal()` 或 `render()`, 小程序用 `selectComponent().method` 等，具体可参考 [命令式弹窗的实现](/articles/trash/open-dialog-with-command)。
-
 ```jsx
 import { openFontSizeDialog } from '/FontSizeDialog/module';
 function FontSize(props) {
@@ -194,3 +190,21 @@ function FontSize(props) {
   return <IconButton label="字号" onClick={onClick} />;
 }
 ```
+
+至于命令式弹窗各端有所不同，React 用 `createPortal()` 或 `render()`, 小程序用 `selectComponent().method` 等，具体可参考 [命令式弹窗的实现](/articles/trash/open-dialog-with-command)。
+
+```js
+// 比如这是小程序弹窗的命令式触发
+function openFontSizeDialog(options) {
+  const context = (pages = getCurrentPages())[pages.length - 1];
+  const dialog = context.selectComponent('#FontSizeDialog');
+  dialog.open(options);
+}
+```
+
+## 总结
+
+* 优化大组件代码，能拆模块拆模块，能拆组件拆组件，但都复杂时可以采用业务下沉的思路
+* 业务下沉会带来状态传递问题，需尽早使用跨组件通信方案
+* 为了清爽而规范的代码和目录结构，会产生不少相同文件，可采用软链接方式组织文件
+* 子组件触发的弹窗若受框架限制，可采用命令式触发避免业务复杂化

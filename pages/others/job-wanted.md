@@ -79,7 +79,8 @@ GitHub：[https://github.com/forever-z-133](https://github.com/forever-z-133)<br
 
 > ###### SHOW 藏社区
 
-* 用 flutter 开发社区APP，搭配 uni-app 开发拍卖小程序，和 vue2 开发管理后台，多应用间通过 socket 高频沟通。
+* 用 flutter 开发社区APP，搭配 uni-app 开发拍卖小程序，和 vue2 开发管理后台。
+* 多应用间通过 socket 高频沟通，抽象成类似 http 回调得公共函数。
 * 研究 flutter 源码，搭建脚手架，学习安卓与 iOS 概念和部署。
 * 进行 uni-app 的跨端研究，让拍卖业务兼容多端运行。
 * 在小程序中实现龙骨动画，减少资源体积并使动效更丰富。
