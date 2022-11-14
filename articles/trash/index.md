@@ -24,3 +24,5 @@
 > #### 未完成
 
 - [从手机导航方式思考交互的演进](/articles/trash/think-about-navigation-event.md)
+- [前端架构的演变](/articles/topic/evolution-of-front-end-architecture.md)
+- [代码条件判断优化之道](/articles/topic/optimization-of-if.md)
