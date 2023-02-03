@@ -16,16 +16,16 @@ GitHub：[https://github.com/forever-z-133](https://github.com/forever-z-133)<br
 ## 个人总结
 
 * 熟练使用 es6/ts 等编程语言，也掌握 less/scss/pug/dart 等辅助语言
-* 使用 vue2/react/uni-app/flutter/小程序/cocos 等框架都有过完整项目实践
+* 使用 vue/react/uni-app/flutter/小程序/cocos 等框架都有过完整项目实践
 * 在 性能优化/开发规范/工程化/自动化 等方面皆有产出和总结
-* 对 webpack/eslint/three.js/Electron 等也有涉猎研究
+* 对 webpack/eslint/jest/three.js/Electron 等也有涉猎研究
 * 有写文档和博客的习惯，喜欢分享，拥抱规范和开源
 
 ## 工作经历
 
 > ###### 腾讯云科技（武汉）有限责任公司（2021年4月-至今）
 
-主要业务为海报编辑器、低代码平台和电子合同小程序，开发通用平台工具。
+前期为海报编辑器、低代码平台；中期为电子合同小程序；后期为数字孪生三维编辑器。
 
 > ###### 广东三七互娱妙小程（2020年10月-2021年3月）
 
@@ -70,7 +70,7 @@ GitHub：[https://github.com/forever-z-133](https://github.com/forever-z-133)<br
 
 > ###### 创意云视图编辑器
 
-* 开发商城装修编辑器、海报编辑器、表单编辑器、网站编辑器 等无码设计平台的业务。
+* 开发商城装修编辑器、海报编辑器、表单编辑器、网站编辑器 等无代码设计平台的业务。
 * 使用 node 脚本解析 psd 文件，再对结果进行清洗，赋予语义，转化为 DSL。
 * 搭建简单的 SSR 服务，再使用 popputeer 对运行结果进行截图，生成海报。
 

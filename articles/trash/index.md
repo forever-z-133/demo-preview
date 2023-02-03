@@ -20,6 +20,7 @@
 
 - [“躺平”的年轻人啊，怎样才能激励你](/articles/trash/how-to-encourage-youth.md)
 - [“上网”本身，变得焦虑了](/articles/trash/why-so-anxiety.md)
+- [“上网”本身，变得焦虑了](/articles/trash/choose-insurance.md)
 
 > #### 未完成
 
