@@ -3,6 +3,7 @@
 > #### 技术
 
 - [四种对象的深拷贝](/pages/others/deep-clone.md)
+- [怎么写组件才不会被喷？](/articles/minds/how-to-write-good-component.md)
 
 > #### 产品
 
