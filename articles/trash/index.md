@@ -12,6 +12,7 @@
 - [项目管理必备的十大工具](/articles/trash/ten-tools-of-pm.md)
 - [设计需求走查（如何进行需求分析）](/articles/trash/how-to-analysis-demand-value.md)
 - [验证码设计的梳理](/articles/trash/verification-code.md)
+- [视频平台的付费模式](/articles/trash/payment-model-for-video-platform.md)
 
 > #### 设计
 
@@ -22,7 +23,7 @@
 
 - [“躺平”的年轻人啊，怎样才能激励你](/articles/trash/how-to-encourage-youth.md)
 - [“上网”本身，变得焦虑了](/articles/trash/why-so-anxiety.md)
-- [“上网”本身，变得焦虑了](/articles/trash/choose-insurance.md)
+- [给父母的保险怎么选？](/articles/trash/choose-insurance.md)
 
 > #### 未完成
 
