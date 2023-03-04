@@ -23,7 +23,7 @@
 - [如何实现主题换肤功能](https://forever-z.cn/#/articles/topic/methods-of-custom-style-theme.md)
 - [如何做前端权限控制](https://forever-z.cn/#/articles/topic/methods-of-auth-control.md)
 - [记一次底部菜单扩展性优化](https://forever-z.cn/#/articles/minds/menu-expandability.md)
-- [小程序打包体积优化](https://forever-z.cn/#/articles/topic/menu-expandability.md)
+- [小程序打包体积优化](https://forever-z.cn/#/articles/topic/optimization-of-mp-size.md)
 
 > #### 学习笔记
 
