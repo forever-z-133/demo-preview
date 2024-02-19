@@ -28,6 +28,7 @@
 - [Glob 通配符](/articles/trash/glob-wildcard.md)
 - [用 yarn 的 workspaces 体验多项目管理](/articles/trash/yarn-workspaces.md)
 - [常用于定时任务中的 cron 表达式](/articles/study/learn-cron-in-timeout.md)
+- [Vue3 性能优化之缓存](/articles/study/vue3-performance-optimisation.md)
 
 #### 随笔感想
 
