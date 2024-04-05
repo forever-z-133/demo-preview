@@ -4,6 +4,7 @@
 
 - [字体文件的引用与压缩](/articles/topic/methods-of-custom-font-family.md)
 - [JS 数据类型方面的蹊跷](/articles/topic/strangeness-of-javascript-data-type.md)
+- [JS 小数的精度问题的总结](/articles/topic/js-numer-precision.md)
 - [移动端视频播放方面的坑](/articles/topic/strangeness-of-playing-video-in-web.md)
 - [webpack 打包时对 import 和 require 的处理](/articles/topic/require-async-in-webpack.md)
 - [setTimeout 在 js 加载前的问题探究](/articles/topic/strangeness-between-script-load-and-timeout.md)
