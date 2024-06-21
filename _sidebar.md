@@ -14,6 +14,7 @@
 - [记一次底部菜单扩展性优化](/articles/minds/menu-expandability.md)
 - [小程序打包体积优化](/articles/topic/optimization-of-mp-size.md)
 - [记一次 vue2 项目升级](/articles/topic/vue2-upgrade-to-vite.md)
+- [UniApp 的全局组件注入的问题记录](/articles/topic/uniapp-global-components.md)
 
 #### 学习笔记
 
