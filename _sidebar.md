@@ -45,6 +45,7 @@
 - [分组和标签的优缺点](/articles/minds/difference-between-group-and-tag.md)
 - [为何我反对使用 flex: 1 简写](/articles/study/why-no-flex-abbreviation.md)
 - [关于版本管理的思考](/articles/minds/think-about-branch-manager.md)
+- [前端部署的演进](/articles/minds/improve-of-deploy.md)
 - [关于如何提升交互体验的思考](/articles/minds/how-to-promote-ux-details.md)
 - [职场上如何带新人](/articles/minds/how-to-teach-new-comer.md)
 - [代码修改的影响范围的思考](/articles/minds/think-about-standard-of-scope.md)
