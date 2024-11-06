@@ -93,22 +93,24 @@ html.dark {
 
 ## 方案五：使用 less 方法在运行时编译
 
-在运行 `js` 时再赋予主题色的变量值，类似于 `document.documentElement.style.setProperty('--color', 'red')`。
+在运行 `js` 时再赋予主题色的变量值，所以能支持任意主题色。
 
 #### less.modifyVars
 
 ```html
 <!-- ./index.html -->
-<link rel="stylesheet/less" href="/src/styles/index.less" />
-<script src="/less.min.js"></script>
-<script>
-less.modifyVars({ '@color': 'red' });
-</script>
+<link rel="stylesheet/less" href="/index.less" />
 ```
 
-TODO：此处的 `less` 文件要未编译的原始 `less` 文件，在 `vite` 框架中会被编译，暂未找到办法跳过，尚在摸索。
+```js
+import { modifyVars } from 'less';
 
-### less.render
+modifyVars({ '@color': 'red' });
+```
+
+由于 `less` 文件 `vite` 框架引入后都会被编译，暂未找到办法跳过，所以只能将 `index.less` 置于 `public` 文件夹中。
+
+#### less.render
 
 ```js
 import('./styles/index.less?raw').then(async (res) => {
@@ -126,7 +128,7 @@ import('./styles/index.less?raw').then(async (res) => {
 });
 ```
 
-TODO: 在 `less` 中使用 `@import` 会报错，尚在摸索。
+TODO: 在 `less` 中使用 `@import` 会报找不到路径的错误，尚在摸索。
 
 ## 方案六：使用 CSS 变量
 
