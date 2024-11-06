@@ -2,8 +2,6 @@
 
 > #### 技术
 
-- [四种对象的深拷贝](/pages/others/deep-clone.md)
-- [怎么写组件才不会被喷？](/articles/trash/how-to-write-good-component.md)
 - [Vue 的逻辑代码复用方案](/articles/study/vue-logic-code-reuse.md)
 
 > #### 产品

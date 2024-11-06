@@ -3,8 +3,6 @@
 #### 填坑记录
 
 - [字体文件的引用与压缩](/articles/topic/methods-of-custom-font-family.md)
-- [JS 数据类型方面的蹊跷](/articles/topic/strangeness-of-javascript-data-type.md)
-- [JS 小数的精度问题的总结](/articles/topic/js-numer-precision.md)
 - [移动端视频播放方面的坑](/articles/topic/strangeness-of-playing-video-in-web.md)
 - [webpack 打包时对 import 和 require 的处理](/articles/topic/require-async-in-webpack.md)
 - [setTimeout 在 js 加载前的问题探究](/articles/topic/strangeness-between-script-load-and-timeout.md)
@@ -12,14 +10,35 @@
 - [如何实现主题换肤功能](/articles/topic/methods-of-custom-style-theme.md)
 - [如何做前端权限控制](/articles/topic/methods-of-auth-control.md)
 - [记一次底部菜单扩展性优化](/articles/minds/menu-expandability.md)
+- [前端如何做加密](/articles/topic/encryption-of-frontend.md)
 - [小程序打包体积优化](/articles/topic/optimization-of-mp-size.md)
 - [记一次 vue2 项目升级](/articles/topic/vue2-upgrade-to-vite.md)
 - [UniApp 的全局组件注入的问题记录](/articles/topic/uniapp-global-components.md)
+- [为何我反对使用 flex: 1 简写](/articles/study/why-no-flex-abbreviation.md)
+- [JS 数据类型方面的蹊跷](/articles/topic/strangeness-of-javascript-data-type.md)
+- [JS 小数的精度问题的总结](/articles/topic/js-numer-precision.md)
+
+#### 随笔感想
+
+- [前端部署的演进](/articles/minds/improve-of-deploy.md)
+- [有关埋点统计的知识梳理](/articles/minds/summary-of-event-tracking.md)
+- [关于如何提升交互体验的思考](/articles/minds/how-to-promote-ux-details.md)
+- [怎么写组件才不会被喷？](/articles/trash/how-to-write-good-component.md)
+- [关于版本管理的思考](/articles/minds/think-about-branch-manager.md)
+- [职场上如何带新人](/articles/minds/how-to-teach-new-comer.md)
+- [代码修改的影响范围的思考](/articles/minds/think-about-standard-of-scope.md)
+- [闲谈 css 的 float](/articles/minds/bullshit-about-css-float.md)
+- [读《面向前端的设计规范-文字初探》](/articles/minds/impressions-about-design-specification.md)
+- [关于间距样式的两点建议](/articles/minds/suggestion-about-css-spacing.md)
+- [我理解的前端-动画篇](/articles/minds/my-understanding-of-animation.md)
+- [我理解的前端-布局篇](/articles/minds/my-understanding-of-layout.md)
+- [我理解的前端-交互篇](/articles/minds/my-understanding-of-ux.md)
+- [分组和标签的优缺点](/articles/minds/difference-between-group-and-tag.md)
 
 #### 学习笔记
 
-- [前端开发应该掌握的计算几何基础](/articles/study/base-geometry.md)
 - [微前端原理与实现整理](/articles/study/principle-of-micro-frontends.md)
+- [前端开发应该掌握的计算几何基础](/articles/study/base-geometry.md)
 - [惰性函数&偏函数&科里化](/articles/study/currying-function.md)
 - [CSS 层叠上下文](/articles/study/css-stacking-context.md)
 - [响应式或自适应布局的流派](/articles/study/school-of-media-resize.md)
@@ -32,23 +51,6 @@
 - [用 yarn 的 workspaces 体验多项目管理](/articles/trash/yarn-workspaces.md)
 - [常用于定时任务中的 cron 表达式](/articles/study/learn-cron-in-timeout.md)
 - [Vue3 性能优化之缓存](/articles/study/vue3-performance-optimisation.md)
-
-#### 随笔感想
-
-- [闲谈 css 的 float](/articles/minds/bullshit-about-css-float.md)
-- [读《面向前端的设计规范-文字初探》](/articles/minds/impressions-about-design-specification.md)
-- [关于间距样式的两点建议](/articles/minds/suggestion-about-css-spacing.md)
-- [我理解的前端-动画篇](/articles/minds/my-understanding-of-animation.md)
-- [我理解的前端-布局篇](/articles/minds/my-understanding-of-layout.md)
-- [我理解的前端-交互篇](/articles/minds/my-understanding-of-ux.md)
-- [有关埋点统计的知识梳理](/articles/minds/summary-of-event-tracking.md)
-- [分组和标签的优缺点](/articles/minds/difference-between-group-and-tag.md)
-- [为何我反对使用 flex: 1 简写](/articles/study/why-no-flex-abbreviation.md)
-- [关于版本管理的思考](/articles/minds/think-about-branch-manager.md)
-- [前端部署的演进](/articles/minds/improve-of-deploy.md)
-- [关于如何提升交互体验的思考](/articles/minds/how-to-promote-ux-details.md)
-- [职场上如何带新人](/articles/minds/how-to-teach-new-comer.md)
-- [代码修改的影响范围的思考](/articles/minds/think-about-standard-of-scope.md)
 
 ## 开源项目
 
@@ -92,8 +94,9 @@
 - [四种瀑布流布局的实现](/pages/effect/masonry.md)
 - [黑暗模式效果的实现](/pages/effect/dark-mode.md)
 - [服务端渲染 SSR 梳理](/articles/study/study-react-ssr.md)
+- [四种对象的深拷贝](/pages/others/deep-clone.md)
 - [判断点击在元素内部](/articles/study/justify-click-inner.md)
-- [命令式弹窗的实现](/pages/others/deep-clone.md)
+- [命令式弹窗的实现](/articles/trash/open-dialog-with-command.md)
 
 ## 其他
 
