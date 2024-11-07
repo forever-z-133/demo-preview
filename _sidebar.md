@@ -92,7 +92,6 @@
 - [尖角与箭头的实现](/pages/effect/css-arrow.md)
 - [饼状图的实现](/pages/effect/css-pie.md)
 - [四种瀑布流布局的实现](/pages/effect/masonry.md)
-- [黑暗模式效果的实现](/pages/effect/dark-mode.md)
 - [服务端渲染 SSR 梳理](/articles/study/study-react-ssr.md)
 - [四种对象的深拷贝](/pages/others/deep-clone.md)
 - [判断点击在元素内部](/articles/study/justify-click-inner.md)

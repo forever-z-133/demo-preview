@@ -77,11 +77,11 @@ app.listen(5172);
 
 只不过，可能调试起来相对麻烦一丢丢。
 
-## 方案四：使用 CSS filter 属性反转
+## 方案四：使用 filter: invert() 反转颜色
 
 如果你只需要黑白两色主题，也可以使用 `filter` 属性来反转颜色。
 
-```css
+```less
 html.light {}
 html.dark {
   filter: invert(0.9) hue-rotate(.5turn);
@@ -91,7 +91,50 @@ html.dark {
 
 此方案足够简单。但可以会有预期外的表现，比如避免 `img` 等资源是负片效果就需要再次反转处理。
 
-## 方案五：使用 less 方法在运行时编译
+## 方案五：使用 mix-blend-mode: difference 反转颜色
+
+此方案与方案四类似，也只支持黑白两色主题，也会有预期外的表现。
+
+```less
+/** ./styles/index.css */
+/** 注意：一定要有个白底 */
+body {
+  background: #fff;
+}
+.dark-mode-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+html.light {}
+html.dark {
+  .dark-mode-layer {
+    background: #fff;
+    mix-blend-mode: difference;
+    z-index: 99999;
+  }
+  img, video {
+    position: relative;
+    z-index: 99999;
+  }
+}
+```
+
+```html
+<html class="light">
+  <body>
+    <div class="dark-mode-layer"></div>
+    <div id="app"></div>
+  </body>
+</html>
+```
+
+由于一定要有白底，且有层叠方面的骚操作，会比方案四的限制还多些，不太推荐。
+
+## 方案六：使用 less 方法在运行时编译
 
 在运行 `js` 时再赋予主题色的变量值，所以能支持任意主题色。
 
@@ -130,7 +173,7 @@ import('./styles/index.less?raw').then(async (res) => {
 
 TODO: 在 `less` 中使用 `@import` 会报找不到路径的错误，尚在摸索。
 
-## 方案六：使用 CSS 变量
+## 方案七：使用 CSS 变量
 
 ```less
 /* 定义阶段 */
