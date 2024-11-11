@@ -3,6 +3,7 @@
 > #### 技术
 
 - [Vue 的逻辑代码复用方案](/articles/study/vue-logic-code-reuse.md)
+- [关于 Rust 锈化趋势的思考](/articles/trash/think-about-rust-builder.md)
 
 > #### 产品
 
