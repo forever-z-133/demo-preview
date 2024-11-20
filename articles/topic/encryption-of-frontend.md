@@ -6,17 +6,16 @@
   - a. 隐藏文件，易破解
   - b. 改个诡异的文件名，比如 app.png，难发现但易破解
   - c. 压缩成 zip 并设密码，反编译可破解
-- 2. 内容层加密，内容乱码化，都可暴力破解
-  - a. stringify 后转数字或 base64
-  - b. crypto 相关，比如 rsa 等，其他公私钥或对称等策略
+- 2. 内容层加密，都可暴力破解
+  - a. 先 stringify，然后 base64、移位、字节代替等
+  - b. aes、rsa 等，若为网页端还需对私钥进一步加密
 - 3. 代码层加密，配置打进 js 包
   - a. uglify 丑化 obfuscator 混淆
   - b. electron 代码转字节码，https://github.com/alex8088/electron-vite/blob/master/src/plugins/bytecode.ts 
-  - c. webassembly
+  - c. webassembly，旧项目难以改造
 - 4. 运行层加密，必加
-  - a. Object.freeze（传出对象方便查验）
+  - a. Object.freeze
   - b. 外发函数，不传出可查看的对象
 - 5. 第三方加密
-  - a. 前端网关层加密
-  - b. 后端加密
+  - a. 前端网关层或后端存私钥，提供加解密接口
   - c. 算法层通过内存地址读取
