@@ -10,6 +10,7 @@
 - [如何实现主题换肤功能](/articles/topic/methods-of-custom-style-theme.md)
 - [如何做前端权限控制](/articles/topic/methods-of-auth-control.md)
 - [前端资源优化导览](/articles/topic/optimization-of-sources.md)
+- [前端卡顿问题优化导览](/articles/topic/optimization-of-bad-ux.md)
 - [记一次底部菜单扩展性优化](/articles/minds/menu-expandability.md)
 - [前端如何做加密](/articles/topic/encryption-of-frontend.md)
 - [小程序打包体积优化](/articles/topic/optimization-of-mp-size.md)
