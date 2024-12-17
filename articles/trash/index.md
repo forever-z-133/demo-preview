@@ -23,6 +23,7 @@
 - [“躺平”的年轻人啊，怎样才能激励你](/articles/trash/how-to-encourage-youth.md)
 - [“上网”本身，变得焦虑了](/articles/trash/why-so-anxiety.md)
 - [给父母的保险怎么选？](/articles/trash/choose-insurance.md)
+- [我的看房过程记录](/articles/trash/notes-of-view-the-apartment.md)
 
 > #### 未完成
 
