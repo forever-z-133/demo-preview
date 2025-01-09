@@ -1,6 +1,7 @@
 # 颜色相关的公共方法
 
-* [typeOfColor](#-颜色类型)（颜色类型）
+* [rgb2hex](#RGB-转-HEX)（RGB 转 HEX）
+* [hex2rgb](#HEX-转-RGB)（HEX 转 RGB）
 
 ## * 公共的正则
 ```js
@@ -11,10 +12,22 @@ const hex_6_reg = new RegExp(`#(${color_hex_unit_reg}{6})(${color_hex_unit_reg}{
 const rgb_reg = new RegExp(`rgba?\(\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*,\s*([+-]?\d+)\s*(?:,\s*([+-]?[\d\.]+)\s*)?\)`);
 ```
 
-## * 颜色类型
+## RGB 转 HEX
 ```js
-function typeOfColor(str) {
-  const prefix = str.slice(0, 4);
+function rgb2hex(r, g, b) {
+  return ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+```
+
+## HEX 转 RGB
+```js
+function hex2rgb(hex) {
+  var result = /^(#|0x)?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
 }
 ```
 
