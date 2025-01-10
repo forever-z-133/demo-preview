@@ -11,6 +11,8 @@
 - [downloadFile](#-下载文件)（下载文件）
 - [readJson / writeJson](#-读写-JSON)（读写 JSON）
 - [includeFile](#-是否包含某文件)（是否包含某文件）
+- [askText / askChoice](#-询问用户输入)（询问用户输入）
+- [commander](#-自定义命令行提示)（自定义命令行提示）
 
 ## 遍历所有文件
 
@@ -120,4 +122,50 @@ import glob from 'fast-glob';
 const files = glob.sync('node_modules/**/async.d.ts', {});
 const included = files.length > 0;
 console.log(included);
+```
+
+## \* 询问用户输入
+```js
+import inquirer from 'inquirer';
+
+// 用户在命令行输入 - 文本
+export async function askText(title) {
+  const params = [{ type: 'input', name: 'text', message: title }];
+  const result = await inquirer.prompt(params);
+  const { text } = result || {};
+  return text;
+}
+
+// 用户在命令行输入 - 选择
+// 其中 choices 为 { value: any, name: string }[] 格式
+export async function askChoice(title, choices) {
+  const params = [{ type: 'list', name: 'choice', choices, message: title }];
+  const result = await inquirer.prompt(params);
+  const { choice } = result || {};
+  return choice;
+}
+```
+
+## \* 自定义命令行提示
+
+```js
+import { program } from 'commander'
+
+program
+  .name('forZ')
+  .description('来自 forever-z-133 的脚本')
+  .version('0.0.1')
+
+program
+  .command('check')
+  .description('番号名称规范检查')
+  .action(() => console.log('check'))
+
+program
+  .command('rm')
+  .description('批量清理文件')
+  .argument('[file...]', '要清理的文件夹')
+  .action(args => run('rm', args.join(' ')))
+
+program.parse()
 ```
