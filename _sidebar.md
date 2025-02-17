@@ -19,6 +19,7 @@
 - [为何我反对使用 flex: 1 简写](/articles/study/why-no-flex-abbreviation.md)
 - [JS 数据类型方面的蹊跷](/articles/topic/strangeness-of-javascript-data-type.md)
 - [JS 小数的精度问题的总结](/articles/topic/js-numer-precision.md)
+- [批量下载图片的速率优化](/articles/topic/optimize-of-donwload-image.md)
 
 #### 随笔感想
 
