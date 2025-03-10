@@ -7,6 +7,7 @@
 - [NodeList.forEach](#-nodelistforeach)（NodeList.forEach）
 - [softBind](#-软绑定-softBind)（软绑定 softBind）
 - [codePointAt / fromCodePoint](#-utf16-字符串获取)（utf16 字符串获取）
+- [asyncReplaceAll](#-asyncReplaceAll-支持异步函数)（asyncReplaceAll 支持异步函数）
 
 ## \* 给元素原型增加方法
 
@@ -130,5 +131,31 @@ if (!String.fromCodePoint) {
     }
     return str;
   }
+}
+```
+
+## \* asyncReplaceAll 支持异步函数
+```js
+String.prototype.asyncReplaceAll = async function(pattern, replacer) {
+  if (typeof pattern === 'string') {
+    pattern = new RegExp(pattern, 'g');
+  } else if (pattern instanceof  RegExp) {
+    if (!pattern.global) {
+       throw new TypeError('pattern should have the global flag set');
+    }
+    pattern = new RegExp(pattern);
+  } else {
+    throw new TypeError('pattern must be a string or a RegExp');
+  }
+
+  if (typeof replacer === 'string') {
+    return this.replaceAll(pattern, replacer)
+  } else if (typeof replacer !== 'function') {
+     throw new TypeError('replacer must be a string or a async function');
+  }
+  
+  const matches = this.match(pattern);
+  const values = await Promise.all(matches.map(replacer));
+  return this.replace(pattern, () => values.shift());
 }
 ```
