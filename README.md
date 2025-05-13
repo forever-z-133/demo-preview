@@ -52,6 +52,7 @@
 
 > #### 学习笔记
 
+- [记一次单仓库微服务部署](https://forever-z.cn/#/articles/study/deploy-of-microservices.md)
 - [编写 ts 类型建模的心得分享](https://forever-z.cn/#/articles/study/ideas-of-ts-model.md)
 - [微前端原理与实现整理](https://forever-z.cn/#/articles/study/principle-of-micro-frontends.md)
 - [前端开发应该掌握的计算几何基础](https://forever-z.cn/#/articles/study/base-geometry.md)

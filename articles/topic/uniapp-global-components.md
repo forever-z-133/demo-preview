@@ -15,7 +15,7 @@ export function createApp () {
 }
 ```
 在这种方式下，打包后组件才位于 `app.json` 中，是真正的全局组件
-```
+```json
 {
   "usingComponents": {
     "base-icon": "/global-components/base-icon"

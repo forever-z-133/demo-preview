@@ -9,7 +9,7 @@
 
 CSS3 的 `@font-face` 超屌的，使用也方便，兼容性如今也完全没问题。
 
-```
+```css
 @font-face {
   font-family: 'xxxx';
   src: url('./font/汉仪秀英体简.TTF');
@@ -89,7 +89,7 @@ body {
 线下版的代表有 [Font Spider](http://font-spider.org/)。<br />
 根据现有 html 提取其 dom 中的文字，然后把他们打包，非常自动化。
 
-```cmd
+```bash
 npm install font-spider -g
 
 font-spider ./demo/*.html

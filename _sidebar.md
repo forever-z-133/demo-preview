@@ -40,6 +40,7 @@
 
 #### 学习笔记
 
+- [记一次单仓库微服务部署](/articles/study/deploy-of-microservices.md)
 - [编写 ts 类型建模的心得分享](/articles/study/ideas-of-ts-model.md)
 - [微前端原理与实现整理](/articles/study/principle-of-micro-frontends.md)
 - [前端开发应该掌握的计算几何基础](/articles/study/base-geometry.md)
