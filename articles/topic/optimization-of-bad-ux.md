@@ -37,7 +37,7 @@ https://www.51cto.com/article/780992.html
 
 #### CSS 卡顿
 
-比如动画开销：https://forever-z-133.github.io/demos/others/funny/css-stuck.html
+比如动画开销：大量 transition 造成卡顿，需开启 transform: translateZ(0) 硬件加速。
 
 ## 代码原因的卡顿
 

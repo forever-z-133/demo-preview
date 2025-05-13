@@ -92,7 +92,6 @@
 
 #### 效果实现
 
-- [六种蜂巢形样式](/pages/effect/honeycomb.md)
 - [遮罩/蒙版/裁剪效果](/pages/effect/css-mask.md)
 - [尖角与箭头的实现](/pages/effect/css-arrow.md)
 - [饼状图的实现](/pages/effect/css-pie.md)

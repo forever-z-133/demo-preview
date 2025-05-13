@@ -125,8 +125,7 @@ _此处的图形暂不包含线条哈，我个人感觉会比较难讲。_<br />
 <a name="sPBt8"></a>
 #### 对称中心问题
 
-[https://forever-z-133.github.io/demos/single/edit-size-box2.html](https://forever-z-133.github.io/demos/single/edit-size-box2.html)<br />
-如上链案例，旋转到颠倒后再缩放，原增加宽度的逻辑就该改为减少了。<br />
+若旋转到颠倒后再缩放，原增加宽度的逻辑就该改为减少了。<br />
 
 对称中心在图形动画中会产生相当大程度的影响，像旋转中心和宽度计算中心等。
 
@@ -159,8 +158,6 @@ _此处的图形暂不包含线条哈，我个人感觉会比较难讲。_<br />
 
 摩擦(friction)，节制(dampening)，重力(gravity)，惯性(inertia) 也是如此，是表现抽象为数值的过程。<br />
 晃动、闪烁、翻转、弹簧等等诸多动画，即是这些抽象数值组合的结果。
-
-示例：[https://forever-z-133.github.io/demos/single/coolHover.html](https://forever-z-133.github.io/demos/single/coolHover.html)
 
 <a name="bW5na"></a>
 ## 动画的触发

@@ -4,7 +4,7 @@
 
 本博客使用 [docsify](https://docsify.js.org/#/?id=docsify) + [gittalk](https://github.com/gitalk/gitalk) + [codepen](https://codepen.io/foreverZ133/pens/public) 搭建。
 
-收录了 [永恒君](https://github.com/forever-z-133) 前端开发过程中的测验、实战、总结与感想，与君共勉。
+收录了 [永恒君](https://github.com/letmefly98) 前端开发过程中的测验、实战、总结与感想，与君共勉。
 
 ## 在线预览
 
@@ -104,7 +104,6 @@
 
 > #### 效果实现
 
-- [六种蜂巢形样式](https://forever-z.cn/#/pages/effect/honeycomb.md)
 - [遮罩/蒙版/裁剪效果](https://forever-z.cn/#/pages/effect/css-mask.md)
 - [尖角与箭头的实现](https://forever-z.cn/#/pages/effect/css-arrow.md)
 - [饼状图的实现](https://forever-z.cn/#/pages/effect/css-pie.md)

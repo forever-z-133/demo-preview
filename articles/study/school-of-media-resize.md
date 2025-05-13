@@ -98,8 +98,6 @@ flexable(7.5); // 7.5rem = 100vw
 
 ### 改动 viewport
 
-[https://foreverz133.github.io/demos/works/lib-flexible/js/lib-flexible.js](https://foreverz133.github.io/demos/works/lib-flexible/js/lib-flexible.js)
-
 众所周知，小数和单数的尺寸数值其实并不精准，甚至 1px 就能造成 float 布局的错位，<br />而 rem 方案中转化为实际 px 其实相当多情况都是小数，所以会更注重毛细线效果的结果。
 
 而  initial-scale 一定程度上可以稍稍减小误差的概率。<br />也能让高清屏得到  initial-scale 放大，显得更清晰细致（不包括图片）。

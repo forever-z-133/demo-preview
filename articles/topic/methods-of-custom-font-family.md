@@ -100,13 +100,6 @@ font-spider ./demo/*.html
 调用 draw 后根据类名将其 dom 中的文字重新打包。
 
 但有字库比较商业化，有数量限制且需设置域名白名单，常用的话需要充钱的。<br />
-DEMO: https://forever-z-133.github.io/demos/single/FontFamily.html
-
-```js
-// <script src="https://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
-$youziku.load('.text2', '492565fa765c4ad381d6bdfba2fc918b', 'minijianyaya');
-$youziku.draw();
-```
 
 ## 字体分包来优化效果
 

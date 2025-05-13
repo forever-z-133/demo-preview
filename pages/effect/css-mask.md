@@ -74,7 +74,7 @@ ctx.restore();
 
 ### globalCompositeOperation（canvas）
 注意：本 save 范围之外有底色，也会被看作有底色，且底色透明度都可继承，实在是不太妙的一种方案。<br />
-拓展：`globalCompositeOperation` 的其他属性值也很有意思，[预览](https://foreverz133.github.io/demos/single/globalCompositeOperation.html)。
+拓展：`globalCompositeOperation` 的其他属性值也很有意思，[预览](https://test.forever-z.cn/#/canvas-globalCompositeOperation)。
 ```js
 ctx.save();
 ctx.fillRect(x, y, width, height);  // 需要有底色
@@ -134,5 +134,4 @@ ctx.drawImage(_canvas, x, y, width, height);
 ### 扩展阅读
 https://github.com/foreverZ133/blogs/issues/21<br />
 https://www.zhangxinxu.com/wordpress/2016/03/better-black-mask-guide-overlay-method/<br />
-https://codepen.io/airen/pen/VPKQxb<br />
-https://foreverz133.github.io/demos/works/mask/
+https://codepen.io/airen/pen/VPKQxb
